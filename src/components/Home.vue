@@ -1,11 +1,13 @@
 <template>
   <div class="root-container">
-    <header class="home-header">
+    <header class="home-header clearfix">
       <div class="float-left">
-        <div class="global-logo"><i><img src=""/></i></div>
+        <div class="global-logo"><img src="@/assets/images/logo_height_30px.png"/></div>
       </div>
       <div class="float-right">
-        <a class="link" href="/sign-in">로그인</a>
+        <div class="link">
+          <a href="/sign-in">로그인</a>
+        </div>
       </div>
     </header>
     <main>
@@ -19,7 +21,7 @@
 
 <script>
 export default {
-  name: 'HelloWorld',
+  name: 'Home',
   data () {
     return {
       msg: 'Welcome to Your Vue.js App'
@@ -28,7 +30,19 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
+  header.home-header {
+    margin: 10px auto 10px auto;
+    clear: both;
+    height: 54px;
+  }
+  header.home-header div {
+    height: inherit;
+  }
+  header div.link a{
+    font-size: 1.2em;
+    height: inherit;
+    vertical-align: middle;
+    line-height: 54px;
+  }
 </style>

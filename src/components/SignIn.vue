@@ -1,15 +1,23 @@
 <template>
-  <div>
+  <div class="root-container center-block">
     <main>
-      <div class="global-logo">logo</div>
-      <h2>로그인</h2>
+      <div class="heading">
+        <div class="global-logo"><img src="@/assets/images/logo_height_52px.png"/></div>
+        <h2>로그인</h2>
+      </div>
       <form>
-        <input name="username" type="text"/>
-        <input name="password" type="password"/>
-        <button>로그인</button>
+        <div class="text-input-wrapper">
+          <input name="username" type="text" placeholder="사용자명"/>
+        </div>
+        <div class="text-input-wrapper">
+          <input name="password" placeholder="비밀번호" type="password"/>
+        </div>
+        <div class="button-wrapper">
+          <button>로그인</button>
+        </div>
       </form>
       <div class="context-switch">
-        <div class="">계정이 없으시면</div>
+        <div class="tip-text">계정이 없으세요?</div>
         <a href="/sign-up">계정 만들기</a>
       </div>
     </main>
@@ -19,10 +27,55 @@
 <script>
 
 export default {
-  name: 'home'
+  name: 'SignIn'
 }
 </script>
 
 <style scoped>
+div.heading {
+  margin-top: 100px;
+  margin-bottom: 50px;
+}
+div.center-block {
+  margin-left: auto;
+  width: 30%;
+  min-width: 480px;
+}
+div {
+  text-align: center;
+}
+form {
+  background-color: white;
+  max-height: 350px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  border: 1px solid #e5e5e5;
+}
+div.text-input-wrapper {
+  margin: 1.5em 0px 1.5em 0px;
+}
+div.button-wrapper {
+  margin: 1.5em 0px 1.5em 0px;
+}
+button {
+  width: 292px;
+}
+div.context-switch {
+  margin-top: 1em;
+  margin-bottom: 1em;
+  color: #999999;
+}
+div.tip-text {
+  height: 1.5em;
+  line-height: 1.5em;
+}
+div.context-switch a{
+  color: #004e8c;
+}
+</style>
 
+<style>
+html {
+  background-color: #f3f3f3;
+}
 </style>
