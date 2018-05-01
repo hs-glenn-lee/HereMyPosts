@@ -69,3 +69,7 @@ span.underline-link {
 span.underline-link:hover {
   cursor: pointer;
 }
+
+.hidden {
+  display: none;
+}

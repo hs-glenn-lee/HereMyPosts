@@ -20,14 +20,24 @@
         <div class="tip-text">계정이 없으세요?</div>
         <a href="/sign-up">계정 만들기</a>
       </div>
+      <button @click="isUniqueNewUsername">test</button>
     </main>
   </div>
 </template>
 
 <script>
-
+import { axiosAppJson } from '@/model/axios-instances'
 export default {
-  name: 'SignIn'
+  name: 'SignIn',
+  mounted () {
+    document.querySelector('html').style.backgroundColor = '#f3f3f3'
+  },methods: {
+    isUniqueNewUsername() {
+      axiosAppJson.post('/isUniqueNewUsername',{
+        'username':'hayley'
+      })
+    }
+  }
 }
 </script>
 
@@ -71,11 +81,5 @@ div.tip-text {
 }
 div.context-switch a{
   color: #004e8c;
-}
-</style>
-
-<style>
-html {
-  background-color: #f3f3f3;
 }
 </style>

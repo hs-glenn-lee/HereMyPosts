@@ -47,6 +47,9 @@ import Account from '@/model/account'
 import _ from 'lodash'
 export default {
   name: 'SignUp',
+  created () {
+    document.querySelector('html').style.backgroundColor = '#f3f3f3'
+  },
   data () {
     return {
       account: new Account(),
@@ -139,11 +142,5 @@ div.context-switch a{
 }
 label.checkbox-container {
   color: #2c3e50;
-}
-</style>
-
-<style>
-html {
-  background-color: #f3f3f3;
 }
 </style>

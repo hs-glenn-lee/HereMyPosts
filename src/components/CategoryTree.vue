@@ -1,21 +1,30 @@
 <template>
-  <div class="manager">
-    <nav class="side-bar">
-    </nav>
-    <div style="width: 100%; height: 100%;">
-    </div>
+  <div class="category-root">
   </div>
 </template>
 
 <script>
+import {axiosAppJson} from "../model/axios-instances";
+import Category from '@/model/Category'
 
 export default {
-  name: 'Manage'
+  name: 'Manage',
+  data() {
+    return {
+      list: {},
+      tree: {}
+    }
+  },
+  methods: {
+    getAll() {
+
+    }
+  }
 }
 </script>
 
 <style scoped>
-.manager {
+.category-root {
   position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px;
 }
 </style>

@@ -11,7 +11,7 @@
       </div>
     </header>
     <main>
-      <h1>Features</h1>
+      <h1 class="hidden">Features</h1>
       <div>
         개발자가 쓰기에 쉽고 편한 블로그
       </div>
