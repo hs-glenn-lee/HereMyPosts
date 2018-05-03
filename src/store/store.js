@@ -1,12 +1,14 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import sign from './modules/sign'
+import Sign from './modules/sign'
 
-export const store = new Vuex.$Store({
+Vue.use(Vuex)
+
+export const store = new Vuex.Store({
   state: {
 
   },
   modules: {
-    sign
+    Sign
   }
 })

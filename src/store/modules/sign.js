@@ -1,20 +1,41 @@
+import { axiosAppJson } from "../../model/axios-instances";
+
 const state = {
-  account: undefined
+  account: {}
 }
 const getters = {
-
+  getAccount: state => {
+    return state.account;
+  }
 }
 const mutations = {
-  textMutation: state => {
-    state.account = {};
+  setAccount: (state, payload) => {
+    state.account = payload;
   }
 }
 const actions = {
-  test: context => {
-    context.commit('textMutation')
-  },
-  test2: ({context}, payload) => {
-    //this.$store.dispatch('increment', by);
-    //payload
+  getMyAccount: ({ commit }) => {
+    return new Promise((resolve, reject) => {
+      axiosAppJson.get('/getMyAccount')
+        .then(res => {
+          if(res.status === 200) {
+            commit('setAccount', res.data)
+            resolve(res.data)
+          }else {
+            reject(res.message)
+          }
+        })
+        .catch(err=>reject(err))
+    })
+
   }
+}
+/*
+* import {mapActions} from 'vuex';
+* */
+export default {
+  state,
+  mutations,
+  actions,
+  getters
 }

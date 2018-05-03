@@ -3,14 +3,21 @@
     <nav class="side-bar">
     </nav>
     <div style="width: 100%; height: 100%;">
+      <button @click="getMyAccount">test</button>
     </div>
+
   </div>
 </template>
 
 <script>
-
+import { mapActions } from 'vuex';
 export default {
-  name: 'Manage'
+  name: 'Manage',
+  methods: {
+    ...mapActions([
+      'getMyAccount'
+    ])
+  }
 }
 </script>
 
