@@ -7,20 +7,20 @@
       </div>
       <form>
         <div class="text-input-wrapper">
-          <input name="username" type="text" placeholder="사용자명"/>
+          <input v-model="username" name="username" type="text" placeholder="사용자명"/>
         </div>
         <div class="text-input-wrapper">
-          <input name="password" placeholder="비밀번호" type="password"/>
+          <input v-model="password" name="password" placeholder="비밀번호" type="password"/>
         </div>
         <div class="button-wrapper">
-          <button>로그인</button>
+          <button type="button" @click="signIn">로그인</button>
         </div>
       </form>
       <div class="context-switch">
         <div class="tip-text">계정이 없으세요?</div>
         <a href="/sign-up">계정 만들기</a>
       </div>
-      <button @click="isUniqueNewUsername">test</button>
+      <!--<button @click="isUniqueNewUsername">test</button>-->
     </main>
   </div>
 </template>
@@ -29,13 +29,29 @@
 import { axiosAppJson } from '@/model/axios-instances'
 export default {
   name: 'SignIn',
+  data() {
+    return {
+      'username': '',
+      'password': ''
+    }
+  },
   mounted () {
     document.querySelector('html').style.backgroundColor = '#f3f3f3'
-  },methods: {
-    isUniqueNewUsername() {
+  },
+  methods: {
+/*    isUniqueNewUsername() {
       axiosAppJson.post('/isUniqueNewUsername',{
         'username':'hayley'
       })
+    },*/
+    signIn() {
+      axiosAppJson.post('/sign-in',{
+        'username': this.username,
+        'password': this.password
+      })
+        .then(res => {
+          console.log(res.data);
+        })
     }
   }
 }
