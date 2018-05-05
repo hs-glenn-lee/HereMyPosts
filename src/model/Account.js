@@ -3,4 +3,8 @@ export default class Account {
   username = ''
   password = ''
   email = ''
+
+  checkInavlidCharacter = function(val) {
+
+  }
 }

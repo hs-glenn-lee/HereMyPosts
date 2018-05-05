@@ -25,7 +25,7 @@ export default new Router({
       component: SignUp
     },
     {
-      path: '/:username/manage',
+      path: '/manage',
       component: Manage
     },
     {

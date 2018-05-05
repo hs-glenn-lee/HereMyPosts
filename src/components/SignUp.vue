@@ -7,23 +7,42 @@
       </div>
 
       <form>
+        <div>
+          <p :class="{'alert-message': isFail}">{{alertMessage}}</p>
+        </div>
         <div class="input-component">
-          <input v-model="account.username" name="username" type="text" placeholder="사용자명"/>
-          <div class="guide-message">{{userNameDescription}}</div>
+          <input v-model="account.username"
+                 name="username"
+                 type="text"
+                 placeholder="사용자명"/>
+          <div class="guide-message"
+                v-class="{'false-color': !isUserNameValidate, 'true-color': isUserNameValidate}">
+            {{userNameDescription}}
+          </div>
         </div>
 
         <div class="input-component">
-          <input v-model="account.email" name="email" type="text" placeholder="이메일"/>
-          <div class="guide-message"></div>
+          <input v-model="account.email"
+                 name="email"
+                 type="text"
+                 placeholder="이메일"/>
+          <div class="guide-message"
+               v-class="{'false-color': !isEmailValidate, 'true-color': isEmailValidate}">{{emailDescription}}</div>
         </div>
 
         <div class="input-component">
-          <input v-model="account.password" type="password" placeholder="비밀번호"/>
-          <div class="guide-message"></div>
+          <input v-model="account.password"
+                 type="password"
+                 placeholder="비밀번호"/>
+          <div class="guide-message"
+               v-class="{'false-color': !isPasswordValidate, 'true-color': isPasswordValidate}">{{passwordDescription}}</div>
         </div>
 
         <div class="input-component">
-          <input v-model="repeatPassword" name="password-confirmation" type="text" placeholder="비밀번호 한번 더 입력"/>
+          <input v-model="repeatPassword"
+                 name="password-confirmation"
+                 type="text"
+                 placeholder="비밀번호 한번 더 입력"/>
           <div class="guide-message"></div>
         </div>
 
@@ -43,7 +62,8 @@
 </template>
 
 <script>
-import Account from '@/model/account'
+import Account from '@/model/account';
+import { mapActions } from 'vuex';
 import _ from 'lodash'
 export default {
   name: 'SignUp',
@@ -53,11 +73,20 @@ export default {
   data () {
     return {
       account: new Account(),
-      userNameDescription: '사용자명은 반드시 입력해야 합니다.',
-      repeatPassword: ''
+      userNameDescription: '',
+      isUserNameValidate: false,
+      emailDescription: '',
+      isEmailValidate: false,
+      passwordDescription: '',
+      isPasswordValidate: false,
+      repeatPassword: '',
+      alertMessage: '123',
     }
   },
   methods: {
+    ...mapActions([
+      'signUp'
+    ]),
     validateUsername: _.debounce(
       function () {
 
@@ -75,7 +104,16 @@ export default {
 
       },
       1000
-    )
+    ),
+    signUpAndShowConfirmMessage() {
+      this.signUp(this.account)
+        .then(data => {
+
+        })
+        .catch(message => {
+
+        })
+    }
   },
   watch: {
     'account.username': function (newVal, oldVal) {
@@ -118,10 +156,12 @@ div.guide-message {
   padding-bottom: 0.5em;
   color: #6f6f6f;
 }
-.red-text-alert {
+.false-color {
   color: red;
 }
-
+.true-color {
+  color: #004e8c;
+}
 div.button-wrapper {
   margin: 1.5em 0px 1.5em 0px;
 }

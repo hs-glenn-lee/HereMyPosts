@@ -15,37 +15,31 @@ const mutations = {
 }
 const actions = {
   getMyAccount: ({ commit }) => {
-    return new Promise((resolve, reject) => {
-      axiosAppJson.get('/getMyAccount')
+    return axiosAppJson.get('/getMyAccount')
+        .then(res => { return res })
+        .catch(err=>{ console.log(err) })
         .then(res => {
           if(res.data.status === 'success') {
             commit('setAccount', res.data.data)
-            resolve(res.data)
+            return res.data.data
           }else {
-            reject(res.data.message)
+            return reject(res.data.message)
           }
         })
-        .catch(err=>{
-          reject(err)
-          console.log(err)
-        })
-    })
   },
   signIn: ({ commit }, payload) => {
     return axiosAppJson.post('/sign-in', payload)
+        .then(res => { return res })
+        .catch(err => {
+          console.log(err)
+        })
         .then(res => {
-          console.log(res)
           if(res.data.status === 'success') {
             commit('setAccount', res.data)
             return res.data;
           }else {
-            console.log('???')
             return Promise.reject(res.data.message);
           }
-        })
-        .catch(err => {
-          console.log(err)
-          return Promise.reject(err);
         })
   },
   isUniqueNewname({ commit }, payload) {
@@ -60,17 +54,17 @@ const actions = {
     })
   },
   signUp({ commit }, payload) {
-    return new Promise((resolve, reject) => {
-      axiosAppJson.post('/sign-up', payload)
-        .then(res => {
-          if(res.data.status === 'success') {
-            resolve(res.data);
-          }else {
-            reject(res.data.message)
-          }
-        })
-        .catch(err => console.log(err))
-    })
+    return axiosAppJson.get('/sign-up')
+      .then(res => { return res })
+      .catch(err=>{ console.log(err) })
+      .then(res => {
+        if(res.data.status === 'success') {
+          commit('setAccount', res.data.data)
+          return res.data.data
+        }else {
+          return reject(res.data.message)
+        }
+      })
   }
 }
 /*

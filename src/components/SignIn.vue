@@ -6,11 +6,22 @@
         <h2>로그인</h2>
       </div>
       <form>
-        <div class="text-input-wrapper">
-          <input v-model="username" name="username" type="text" placeholder="사용자명"/>
+        <div>
+          <p :class="{'alert-message': isFail}">{{alertMessage}}</p>
         </div>
         <div class="text-input-wrapper">
-          <input v-model="password" name="password" placeholder="비밀번호" type="password"/>
+          <input v-model="username"
+                 v-on:keyup.enter="signInGoToManage"
+                 name="username"
+                 type="text"
+                 placeholder="사용자명"/>
+        </div>
+        <div class="text-input-wrapper">
+          <input v-model="password"
+                 v-on:keyup.enter="signInGoToManage"
+                 name="password"
+                 placeholder="비밀번호"
+                 type="password"/>
         </div>
         <div class="button-wrapper">
           <button type="button" @click="signInGoToManage">로그인</button>
@@ -33,7 +44,9 @@ export default {
   data() {
     return {
       'username': '',
-      'password': ''
+      'password': '',
+      alertMessage: '아이디와 비밀번호를 입력하세요',
+      isFail: false
     }
   },
   mounted () {
@@ -50,12 +63,11 @@ export default {
         password: this.password
       })
         .then(data => {
-          console.log('sign in gr suc')
-          //this.$router.push({ path: "/"+this.username+"/manage"})
+          this.$router.push({ path: "/manage"})
         })
         .catch(message => {
-          console.log('ign in  fail')
-          alert('message')
+          this.alertMessage = '! ' + message
+          this.isFail = true;
         })
     }
   }
@@ -102,5 +114,9 @@ div.tip-text {
 }
 div.context-switch a{
   color: #004e8c;
+}
+
+p.alert-message {
+  color: red;
 }
 </style>
