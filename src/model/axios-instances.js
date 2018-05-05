@@ -5,7 +5,10 @@ const axiosAppJson = axios.create({
   headers: {
     'Content-Type': 'application/json'
   },
-  json: true
+  json: true,
+  validateStatus: function (status) {
+    return status >= 200 && status < 300; // default
+  }
 })
 
 //axiosAppJson.defaults.headers.common['SOMETHING'] = 'something'

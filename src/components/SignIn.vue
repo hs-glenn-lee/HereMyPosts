@@ -13,7 +13,7 @@
           <input v-model="password" name="password" placeholder="비밀번호" type="password"/>
         </div>
         <div class="button-wrapper">
-          <button type="button" @click="signIn">로그인</button>
+          <button type="button" @click="signInGoToManage">로그인</button>
         </div>
       </form>
       <div class="context-switch">
@@ -27,6 +27,7 @@
 
 <script>
 import { axiosAppJson } from '@/model/axios-instances'
+import { mapActions } from 'vuex';
 export default {
   name: 'SignIn',
   data() {
@@ -39,18 +40,22 @@ export default {
     document.querySelector('html').style.backgroundColor = '#f3f3f3'
   },
   methods: {
-/*    isUniqueNewUsername() {
-      axiosAppJson.post('/isUniqueNewUsername',{
-        'username':'hayley'
+    ...mapActions([
+      'getMyAccount',
+      'signIn'
+    ]),
+    signInGoToManage() {
+      this.signIn({
+        username: this.username,
+        password: this.password
       })
-    },*/
-    signIn() {
-      axiosAppJson.post('/sign-in',{
-        'username': this.username,
-        'password': this.password
-      })
-        .then(res => {
-          console.log(res.data);
+        .then(data => {
+          console.log('sign in gr suc')
+          //this.$router.push({ path: "/"+this.username+"/manage"})
+        })
+        .catch(message => {
+          console.log('ign in  fail')
+          alert('message')
         })
     }
   }

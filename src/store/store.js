@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import Sign from './modules/sign'
+import Sign from './modules/account'
 
 Vue.use(Vuex)
 
