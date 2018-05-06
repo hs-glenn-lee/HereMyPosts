@@ -3,7 +3,7 @@
     <main>
       <div class="heading">
         <div class="global-logo"><img src="@/assets/images/logo_height_52px.png"/></div>
-        <h2>로그인</h2>
+        <h2>로그인 하기</h2>
       </div>
       <form>
         <div>
@@ -76,13 +76,13 @@ export default {
 
 <style scoped>
 div.heading {
-  margin-top: 100px;
-  margin-bottom: 50px;
+  margin-top: 30px;
+  margin-bottom: 15px;
 }
 div.center-block {
   margin-left: auto;
-  width: 30%;
-  min-width: 480px;
+  width: 25%;
+  min-width: 430px;
 }
 div {
   text-align: center;

@@ -42,13 +42,14 @@ const actions = {
           }
         })
   },
-  isUniqueNewname({ commit }, payload) {
+  isUniqueNewUsername({ commit }, payload) {
     return new Promise((resolve, reject) => {
       axiosAppJson.post('/isUniqueNewUsername',{
-        'username':'hayley'
+        'username':payload
       })
         .then(res => {
-          resolve(res.isUniqueNewUserName)
+          console.log(res)
+          resolve(res.data.isUniqueNewUserName)
         })
         .catch(err => console.log(err) );
     })

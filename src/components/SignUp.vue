@@ -3,20 +3,17 @@
     <main>
       <div class="heading">
         <div class="global-logo"><i><img src="@/assets/images/logo_height_52px.png"/></i></div>
-        <h2>계정 생성</h2>
+        <h2>계정 만들기</h2>
       </div>
 
       <form>
-        <div>
-          <p :class="{'alert-message': isFail}">{{alertMessage}}</p>
-        </div>
         <div class="input-component">
           <input v-model="account.username"
                  name="username"
                  type="text"
                  placeholder="사용자명"/>
           <div class="guide-message"
-                v-class="{'false-color': !isUserNameValidate, 'true-color': isUserNameValidate}">
+                :class="{'false-color': !isUserNameValidate, 'true-color': isUserNameValidate}">
             {{userNameDescription}}
           </div>
         </div>
@@ -27,7 +24,7 @@
                  type="text"
                  placeholder="이메일"/>
           <div class="guide-message"
-               v-class="{'false-color': !isEmailValidate, 'true-color': isEmailValidate}">{{emailDescription}}</div>
+               :class="{'false-color': !isEmailValidate, 'true-color': isEmailValidate}">{{emailDescription}}</div>
         </div>
 
         <div class="input-component">
@@ -35,22 +32,25 @@
                  type="password"
                  placeholder="비밀번호"/>
           <div class="guide-message"
-               v-class="{'false-color': !isPasswordValidate, 'true-color': isPasswordValidate}">{{passwordDescription}}</div>
+               :class="{'false-color': !isPasswordValidate, 'true-color': isPasswordValidate}">{{passwordDescription}}</div>
         </div>
 
         <div class="input-component">
           <input v-model="repeatPassword"
                  name="password-confirmation"
-                 type="text"
+                 type="password"
                  placeholder="비밀번호 한번 더 입력"/>
-          <div class="guide-message"></div>
+          <div class="guide-message"
+               :class="{'false-color': !isRepeatPasswordValid, 'true-color': isRepeatPasswordValid}">{{repeatPasswordDescription}}</div>
         </div>
 
         <label class="checkbox-container">
-          <input type="checkbox"><span class="underline-link">사용 약관</span>과 <span class="underline-link">개인정보 취급방침</span>에 동의합니다.
+          <input type="checkbox"
+                 v-model="isCheckedOnAgreement">
+          <span class="underline-link">사용 약관</span>과 <span class="underline-link">개인정보 취급방침</span>에 동의합니다.
         </label>
         <div class="button-wrapper">
-          <button>계정 생성</button>
+          <button type="button" v-on:click="signUpAndInAndGoToManage">계정 생성</button>
         </div>
       </form>
       <div class="context-switch">
@@ -80,44 +80,125 @@ export default {
       passwordDescription: '',
       isPasswordValidate: false,
       repeatPassword: '',
-      alertMessage: '123',
+      repeatPasswordDescription: '',
+      isRepeatPasswordValid: false,
+      isCheckedOnAgreement: false
     }
   },
   methods: {
     ...mapActions([
-      'signUp'
+      'signUp',
+      'isUniqueNewUsername',
+      'signIn'
     ]),
     validateUsername: _.debounce(
       function () {
+        var username = this.account.username;
 
-      },
-      1000
-    ),
-    validatePassword: _.debounce(
-      function () {
+        var isValidateUsername = this.account.isValidUsername(username)
+        if(!isValidateUsername.isValid) {
+          this.isUserNameValidate = false;
+          this.userNameDescription = isValidateUsername.message
+          console.log(isValidateUsername.message)
+          return
+        }
+
+
+        this.isUniqueNewUsername(username)
+          .then(ret => {
+            console.log(ret)
+            if(ret) {
+              this.isUserNameValidate = true;
+              this.userNameDescription = 'good!'
+            }else {
+              this.isUserNameValidate = false;
+              this.userNameDescription = '이미 사용중인 사용자명입니다.'
+            }
+          })
 
       },
       1000
     ),
     validateEmail: _.debounce(
       function () {
-
+        var email = this.account.email;
+        var ret = this.account.isValidEmil(email)
+        if(ret.isValid) {
+          this.isEmailValidate = true;
+          this.emailDescription = 'good!'
+        }else {
+          this.isEmailValidate = false;
+          this.emailDescription = ret.message;
+        }
       },
       1000
     ),
-    signUpAndShowConfirmMessage() {
-      this.signUp(this.account)
-        .then(data => {
-
-        })
-        .catch(message => {
-
-        })
+    validatePassword: _.debounce(
+      function () {
+        var password = this.account.password
+        var ret = this.account.isValidPassword(password)
+        if(ret.isValid) {
+          this.isPasswordValidate = true;
+          this.passwordDescription = 'good!'
+          return
+        }else {
+          this.isPasswordValidate = false;
+          this.passwordDescription = ret.message
+          return
+        }
+      },
+      1000
+    ),
+    validateRepeatPassword: _.debounce(
+      function () {
+        if(this.repeatPassword === this.account.password) {
+          this.isRepeatPasswordValid = true;
+          this.repeatPasswordDescription = 'good!'
+        }else {
+          this.isRepeatPasswordValid = false;
+          this.repeatPasswordDescription = '비밀번호가 일치하지 않습니다.'
+        }
+      },
+      1000
+    ),
+    isFormValidate() {
+      return this.isRepeatPasswordValid && this.isUserNameValidate && this.isPasswordValidate && this.isEmailValidate && this.isCheckedOnAgreement
+    },
+    signUpAndInAndGoToManage() {
+      if(this.isFormValidate()) {
+        this.signUp(this.account)
+          .then(data => {
+            this.signIn({
+              username: this.account.username,
+              password: this.account.password
+            })
+              .then(data => {
+                this.$router.push({ path: "/manage"})
+              })
+              .catch(message => {
+                alert(mesage)
+              })
+          })
+          .catch(message => {
+              alert(message)
+          })
+      }else {
+        alert('약관동의 및 입력정보를 모두 입력해주세요.')
+      }
     }
   },
   watch: {
     'account.username': function (newVal, oldVal) {
       this.validateUsername()
+    },
+    'account.password' : function (newVal, oldVal) {
+      this.validatePassword()
+    },
+    'account.email' : function (newVal, oldVal) {
+      this.validateEmail()
+    },
+    repeatPassword: function (newVal, oldVal) {
+      this.validateRepeatPassword()
     }
   }
 }
@@ -125,13 +206,13 @@ export default {
 
 <style scoped>
 div.heading {
-  margin-top: 100px;
-  margin-bottom: 50px;
+  margin-top: 30px;
+  margin-bottom: 15px;
 }
 div.center-block {
   margin-left: auto;
-  width: 30%;
-  min-width: 480px;
+  width: 25%;
+  min-width: 430px;
 }
 div {
   text-align: center;
@@ -148,16 +229,17 @@ div.input-component {
 }
 div.guide-message {
   content: "";
-  height: 1em;
-  line-height: 1em;
+  height: 0.8em;
+  line-height: 0.8em;
   vertical-align: middle;
   text-align: left;
-  padding-top: 0.5em;
+  padding-top: 0.2em;
   padding-bottom: 0.5em;
-  color: #6f6f6f;
+  padding-left: 0.1em;
+  /*color: #6f6f6f;*/
 }
 .false-color {
-  color: red;
+  color: #edb338;
 }
 .true-color {
   color: #004e8c;
