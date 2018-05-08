@@ -55,16 +55,11 @@ const actions = {
     })
   },
   signUp({ commit }, payload) {
-    return axiosAppJson.get('/sign-up')
+    return axiosAppJson.put('/sign-up', payload)
       .then(res => { return res })
-      .catch(err=>{ console.log(err) })
-      .then(res => {
-        if(res.data.status === 'success') {
-          commit('setAccount', res.data.data)
-          return res.data.data
-        }else {
-          return reject(res.data.message)
-        }
+      .catch(err=>{
+        console.log(err)
+        throw err
       })
   }
 }

@@ -167,7 +167,7 @@ export default {
     signUpAndInAndGoToManage() {
       if(this.isFormValidate()) {
         this.signUp(this.account)
-          .then(data => {
+          .then(na => {
             this.signIn({
               username: this.account.username,
               password: this.account.password
@@ -179,8 +179,8 @@ export default {
                 alert(mesage)
               })
           })
-          .catch(message => {
-              alert(message)
+          .catch(err => {
+              console.log(err)
           })
       }else {
         alert('약관동의 및 입력정보를 모두 입력해주세요.')
