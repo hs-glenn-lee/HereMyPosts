@@ -1,26 +1,9 @@
 export class Category {
-  constructor() {
-    this.id = "";
-    this.parentId = '';
-    this.name = '';
-    this.seq = 0;
+  constructor(id, parentId, name, seq) {
+    this.id = id
+    this.parentId = parentId
+    this.name = name
+    this.seq = seq
   }
-
-  removeChild (node) {
-
-  }
-
-  addChild (node) {
-
-  }
-
-  getChild (i) {
-
-  }
-
-  hasChildren () {
-
-  }
-
 
 }
