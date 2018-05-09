@@ -1,5 +1,5 @@
 import Category from '@/model/Category'
-export class CategoryNode extends  Category{
+export default class CategoryNode extends  Category{
 
   constructor(id, parent, name, seq) {
     super(id, parent.id, name, seq)

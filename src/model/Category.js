@@ -1,4 +1,4 @@
-export class Category {
+export default class Category {
   constructor(id, parentId, name, seq) {
     this.id = id
     this.parentId = parentId

@@ -1,25 +1,27 @@
-import {CategoryNode} from "./CategoryNode";
+import CategoryNode from "./CategoryNode";
 
-export class CategoryTree {
+export default class CategoryTree {
   //structre
   //init with category list (Category{])
   //controll as category tree (CategoryNode Tree)
   //export as category list
 
   constructor() {
-    this.list = [];
+    this.categoryList = [];
     this.root = {};
     this.map = {};
   }
 
   //default root values id = cat$root name = cat$root seq = 0 parentId = null
   //reserved name and id = cat$root
-  setList (catList) {
-
+  setList (categoryList) {
+    this.categoryList = categoryList
+    this.convListToTree()
   }
 
-  convListToTree (catList) {
+  convListToTree () {
     //conv Category list to CategoryNode map,
+    var catList = this.categoryList
     var catNodeMap = {};
     catList.forEach(function(el) {
       catNodeMap[el.id] = new CategoryNode(el.id, null, el.name, el.seq)
@@ -35,11 +37,28 @@ export class CategoryTree {
     }
 
     //sorting children ny seq
-    sortAsSeq(treeRoot)
-    this.root = treeRoot
+    sortAsSeq(treeRoot);
+    this.root = treeRoot;
 
     return
   }
+
+  getCategoryList (startNode) {
+    var list = [];
+
+    var children = startNode.root.getChildren()
+    for(var child in children) {
+      list.concat(getCategoryList(children[child]))
+    }
+
+    if(startNode === this.root) {
+      return list.push(this.root)
+    }else {
+      return list
+    }
+
+  }
+
 
 /*  sortChildren (catRootNode) {
     var children = catRootNode.getChildren()
