@@ -37,8 +37,7 @@
 </template>
 
 <script>
-import { axiosAppJson } from '@/model/axios-instances'
-import { mapActions } from 'vuex';
+import api from '@/api/api';
 export default {
   name: 'SignIn',
   data() {
@@ -53,12 +52,8 @@ export default {
     document.querySelector('html').style.backgroundColor = '#f3f3f3'
   },
   methods: {
-    ...mapActions([
-      'getMyAccount',
-      'signIn'
-    ]),
     signInGoToManage() {
-      this.signIn({
+      api.signIn({
         username: this.username,
         password: this.password
       })

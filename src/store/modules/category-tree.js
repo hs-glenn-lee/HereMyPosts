@@ -6,17 +6,14 @@ const state = {
   computed: {
   },
   categoryTree: {},
-  created () {
-    //start -> (loading) -> loaded
-    this.categoryTree.state = 'start'
-  }
+  cTreeState: 'created' //created -> (loading) -> loaded
 };
 const getters = {
   getCategoryTree () {
-
+    return this.categoryTree
   },
-  categoryTreeStatus () {
-
+  getCategoryTreeState () {
+    return this.cTreeState
   }
 };
 const mutations = {
@@ -28,7 +25,7 @@ const actions = {
   }
 };
 
-const api = {}
+/*const api = {}
 api.getCategoryList = function() {
   return axiosAppJson.get('/category/all')
     .then(res => {
@@ -40,4 +37,4 @@ api.getCategoryList = function() {
         console.log(err)
       }
     })
-};
+};*/

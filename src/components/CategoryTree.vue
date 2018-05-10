@@ -1,5 +1,5 @@
 <template>
-  <div class="category-root">
+  <div class="category-tree-contatiner">
   </div>
 </template>
 

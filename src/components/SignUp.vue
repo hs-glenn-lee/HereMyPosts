@@ -63,7 +63,8 @@
 
 <script>
 import Account from '@/model/account';
-import { mapActions } from 'vuex';
+import api from '@/api/api';
+
 import _ from 'lodash'
 export default {
   name: 'SignUp',
@@ -86,11 +87,6 @@ export default {
     }
   },
   methods: {
-    ...mapActions([
-      'signUp',
-      'isUniqueNewUsername',
-      'signIn'
-    ]),
     validateUsername: _.debounce(
       function () {
         var username = this.account.username;
@@ -104,7 +100,7 @@ export default {
         }
 
 
-        this.isUniqueNewUsername(username)
+        api.isUniqueNewUsername(username)
           .then(ret => {
             console.log(ret)
             if(ret) {
@@ -166,9 +162,9 @@ export default {
     },
     signUpAndInAndGoToManage() {
       if(this.isFormValidate()) {
-        this.signUp(this.account)
+        api.signUp(this.account)
           .then(na => {
-            this.signIn({
+            api.signIn({
               username: this.account.username,
               password: this.account.password
             })
