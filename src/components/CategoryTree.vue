@@ -1,18 +1,25 @@
 <template>
   <div class="category-tree-contatiner">
+    <ul class="tree-root">
+      <category-node
+        class="category-node"
+        :model="mCategoryTree.root"
+      ></category-node>
+    </ul>
   </div>
 </template>
 
 <script>
-import {axiosAppJson} from "../model/axios-instances";
-import Category from '@/model/Category'
-
 export default {
-  name: 'Manage',
+  name: 'CategoryTree',
+  props: [
+    'mCategoryTree'
+  ],
+  created() {
+    console.log(this.mCategoryTree)
+  },
   data() {
     return {
-      list: {},
-      tree: {}
     }
   },
   methods: {

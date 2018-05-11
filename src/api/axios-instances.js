@@ -2,7 +2,7 @@ import axios from 'axios'
 const instance = axios.create({
   baseURL: 'http://localhost:8081'
 })
-instance.defaults.headers.post['Accepts'] = 'application/json'
+instance.defaults.headers.post['Accepts'] = 'application/json';
 
 /*axios.interceptors.request.use(config => {
   console.log(config)

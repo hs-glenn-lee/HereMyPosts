@@ -14,8 +14,6 @@
 </template>
 
 <script>
-import CategoryNode from '@/model/CategoryTree/CategoryNode'
-import CategoryTree from '@/model/CategoryTree/CategoryTree'
 
 export default {
   name: 'Manage'

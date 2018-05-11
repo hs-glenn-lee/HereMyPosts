@@ -19,6 +19,10 @@ export default class CategoryNode extends  Category{
     //this.parent.remove(this.seq)
   }
 
+  hasChild () {
+    return (this.children.length > 0)
+  }
+
   addChild (categoryNode) {
     categoryNode.parent = this;
     categoryNode.parentId = this.id;

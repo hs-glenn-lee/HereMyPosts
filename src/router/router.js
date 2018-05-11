@@ -5,6 +5,7 @@ import SignIn from '@/components/SignIn'
 import SignUp from '@/components/SignUp'
 import Manage from '@/components/manager/Manage'
 import Article from '@/components/Article'
+import Test from '@/components/Test'
 
 Vue.use(Router)
 
@@ -31,6 +32,10 @@ export default new Router({
     {
       path: '/:username/article/:articleId',
       component: Article
+    },
+    {
+      path: '/test',
+      component: Test
     }
   ]
 })

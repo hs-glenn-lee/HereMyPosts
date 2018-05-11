@@ -44,5 +44,14 @@ export default {
       })
       .catch(err => console.log(err) );
 
+  },
+
+  //---related to category
+  getAllMyCategory () {
+    return axiosAppJson.get('/api/category/all')
+      .then(res => { return res.data} )
+      .catch( err => console.log(err) ) //403 가능
   }
+
+
 }
