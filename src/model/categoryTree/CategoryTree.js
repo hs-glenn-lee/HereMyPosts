@@ -33,17 +33,33 @@ export default class CategoryTree {
     var catList = this.categoryList
     var catNodeMap = {};
 
+    console.log(catList)
     catList.forEach(function(el) {
+      console.log('!!!!!')
+      console.log(el)
       catNodeMap[el.id] = new CategoryNode(el.id, null, el.name, el.seq)
     });
+
+/*    for(var i = 0; i < catList.length; i++) {
+      var el = catList[i];
+      console.log(el.id)
+      catNodeMap[el.id] = new CategoryNode(el.id, null, el.name, el.seq)
+    }*/
 
     //assemblying tree from map
     var treeRoot = catNodeMap['default'];
     for(var catNode in catNodeMap) {
       var currCatNode = catNodeMap[catNode];
       var parentCatNode = catNodeMap[currCatNode.parentId]
-      currCatNode.parent = parentCatNode;
-      parentCatNode.children.push(currCatNode)
+
+      console.log(typeof new CategoryNode())
+      console.log(typeof parentCatNode)
+      console.log(typeof null);
+      if(typeof CategoryNode === parentCatNode) {
+        currCatNode.parent = parentCatNode;
+        parentCatNode.children.push(currCatNode)
+      }
+
     }
 
     console.log(treeRoot)

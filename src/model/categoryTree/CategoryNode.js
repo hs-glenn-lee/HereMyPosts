@@ -2,7 +2,12 @@ import Category from '@/model/Category'
 export default class CategoryNode extends  Category{
 
   constructor(id, parent, name, seq) {
-    super(id, parent.id, name, seq)
+    if(typeof CategoryNode == parent) {
+      super(id, parent.id, name, seq)
+    }else {
+      super(id, null , name, seq)
+    }
+
     this.parent = parent
     this.children = []
   }
@@ -50,7 +55,7 @@ export default class CategoryNode extends  Category{
   }
 
   sortChildrenAsSeq (order) {;
-    this.children.sort(e1, e2 => {
+    this.children.sort( (e1, e2) => {
       return Math.sign(e1.seq - e2.seq)
     })
   }
