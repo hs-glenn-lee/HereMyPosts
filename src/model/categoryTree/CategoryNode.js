@@ -1,15 +1,10 @@
 import Category from '@/model/Category'
 export default class CategoryNode extends  Category{
 
-  constructor(id, parent, name, seq) {
-    if(typeof CategoryNode == parent) {
-      super(id, parent.id, name, seq)
-    }else {
-      super(id, null , name, seq)
-    }
-
-    this.parent = parent
-    this.children = []
+  constructor(category, parent, children) {
+    super(category.id, category.parentId, category.name, category.seq)
+    this.parent = parent || null;
+    this.children = children || [];
   }
 
   getChildren() {

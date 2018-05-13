@@ -2,24 +2,25 @@
   <li>
     <div
       :class="{bold: categoryNode.hasChild()}"
-      @click="toggle">
+      v-on:click="toggle">
       {{categoryNode.name}}
       <span v-if="categoryNode.hasChild()">[{{open ? '-' : '+'}}]</span>
     </div>
     <ul v-show="open" v-if="categoryNode.hasChild()">
-      <item
+      <category-node-comp
         class="item"
         v-for="cnode in categoryNode.children"
+        :key="cnode.id"
         :categoryNode="cnode">
-      </item>
+      </category-node-comp>
     </ul>
   </li>
 </template>
 
 <script>
-import CategoryTree from './CategoryNode'
+
 export default {
-  name: 'CategoryNode',
+  name: 'category-node-comp',
   props: [
     'categoryNode'
   ],
@@ -28,7 +29,7 @@ export default {
       open: false
     }
   },
-  method: {
+  methods: {
     toggle () {
       this.open = !this.open
     }

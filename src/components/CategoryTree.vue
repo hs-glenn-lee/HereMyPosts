@@ -3,29 +3,41 @@
     <ul class="tree-root">
       <category-node
         class="category-node"
-        :model="mCategoryTree.root"
+        :categoryNode="categoryTree.root"
       ></category-node>
     </ul>
   </div>
 </template>
 
 <script>
-export default {
+  import api from '@/api/api'
+  import CategoryTree from '@/model/CategoryTree/CategoryTree'
+  import CategoryNode from './CategoryNode'
+  export default {
   name: 'CategoryTree',
-  props: [
-    'mCategoryTree'
-  ],
-  created() {
-    console.log(this.mCategoryTree)
+  mounted() {
+    this.getMyCategory()
+    console.log(this.categoryTree)
   },
   data() {
     return {
+      categoryTree: new CategoryTree()
     }
   },
   methods: {
-    getAll() {
+    getMyCategory() {
+      console.log('???');
 
+      api.getAllMyCategory()
+        .then(  data => {
+          this.categoryTree = new CategoryTree();
+          this.categoryTree.setCategoryList(data)
+          //this.components["category-tree"] = categoryTreeComp
+        })
     }
+  },
+  components: {
+    'category-node': CategoryNode
   }
 }
 </script>

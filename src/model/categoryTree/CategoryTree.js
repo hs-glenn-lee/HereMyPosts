@@ -8,7 +8,7 @@ export default class CategoryTree {
 
   constructor() {
     this.categoryList = [];
-    this.root = {};
+    this.root = new CategoryNode({id:'empty', parentId: null, name: 'empty', seq: 0})
     this.map = {};
   }
 
@@ -23,7 +23,7 @@ export default class CategoryTree {
   sortBySeq (startNode) {
     var children = startNode.getChildren()
     for(var child in children) {
-      sortAsSeq(children[child])
+      this.sortBySeq(children[child])
     }
     startNode.sortChildrenAsSeq()
   }
@@ -33,39 +33,33 @@ export default class CategoryTree {
     var catList = this.categoryList
     var catNodeMap = {};
 
-    console.log(catList)
     catList.forEach(function(el) {
-      console.log('!!!!!')
-      console.log(el)
-      catNodeMap[el.id] = new CategoryNode(el.id, null, el.name, el.seq)
+      catNodeMap[el.id] = new CategoryNode(el, null, null)
     });
-
-/*    for(var i = 0; i < catList.length; i++) {
-      var el = catList[i];
-      console.log(el.id)
-      catNodeMap[el.id] = new CategoryNode(el.id, null, el.name, el.seq)
-    }*/
 
     //assemblying tree from map
     var treeRoot = catNodeMap['default'];
     for(var catNode in catNodeMap) {
       var currCatNode = catNodeMap[catNode];
       var parentCatNode = catNodeMap[currCatNode.parentId]
+      console.log('!!!!!##!')
+      console.log(currCatNode)
+      console.log(currCatNode.parentId)
 
-      console.log(typeof new CategoryNode())
-      console.log(typeof parentCatNode)
-      console.log(typeof null);
-      if(typeof CategoryNode === parentCatNode) {
+      console.log(catNodeMap[currCatNode.parentId])
+
+      if(parentCatNode) {
         currCatNode.parent = parentCatNode;
         parentCatNode.children.push(currCatNode)
       }
 
     }
 
-    console.log(treeRoot)
     //sorting children ny seq
     this.sortBySeq(treeRoot);
     this.root = treeRoot;
+
+    console.log(treeRoot)
 
     return
   }
@@ -75,7 +69,7 @@ export default class CategoryTree {
 
     var children = startNode.root.getChildren()
     for(var child in children) {
-      list.concat(getCategoryList(children[child]))
+      list.concat(this.getCategoryList(children[child]))
     }
 
     if(startNode === this.root) {

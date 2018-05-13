@@ -1,37 +1,27 @@
 <template>
   <div>
     <h1>test</h1>
-    <category-tree :model = "mCategoryTree" v-if="mCategoryTree.root !== undefined"></category-tree>
+    <!--<button @click="getAllMyCategory" type="button" value="test">test</button>-->
+    <category-tree></category-tree>
   </div>
 </template>
 
 <script>
   import categoryTreeComp from './CategoryTree'
-  import CategoryTree from '@/model/categoryTree/CategoryTree'
-  import api from '@/api/api'
-export default {
-  name: 'Test',
-  created () {
-    this.getAllMyCategory()
-  },
-  data() {
-    return {
-      mCategoryTree: new CategoryTree(),
-    }
-  },
-  methods: {
-    getAllMyCategory() {
-      console.log('???')
-      api.getAllMyCategory()
-        .then(  data => {
-          this.mCategoryTree.setCategoryList(data)
-        })
-    }
-  },
-  components: {
-    'category-tree': categoryTreeComp
-  },
-}
+  export default {
+    name: 'Test',
+    data() {
+      return {
+
+      }
+    },
+    methods: {
+
+    },
+    components: {
+      'category-tree': categoryTreeComp
+    },
+  }
 </script>
 
 <style scoped>
