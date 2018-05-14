@@ -1,23 +1,20 @@
 <template>
   <div class="manager">
-    <nav class="left-pane">
-      <div class="global-logo"><img src="@/assets/images/logo_height_30px.png"/></div>
-      <div class="left-pane-item">NEW</div>
-      <div class="left-pane-item">CAT</div>
-      <div class="left-pane-item">PUB</div>
-      <div class="left-pane-item">SER</div>
-      <div class="left-pane-item">TAG</div>
-      <div class="left-pane-item">SAVE</div>
-      <div class="left-pane-item">SETTINGS</div>
-    </nav>
+    <left-pane></left-pane>
+    <editor></editor>
   </div>
+
 </template>
 
 <script>
-
+import editorComp from './Editor'
+import leftPaneComp from './LeftPane'
 export default {
-  name: 'Manage'
-
+  name: 'Manage',
+  components: {
+    'editor': editorComp,
+    'left-pane': leftPaneComp
+  }
 }
 </script>
 

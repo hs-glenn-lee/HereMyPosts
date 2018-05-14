@@ -1,12 +1,14 @@
 <template>
-  <div class="manager">
-    <nav class="side-bar">
-    </nav>
-    <div style="width: 100%; height: 100%;">
-      <button>test</button>
-    </div>
-
-  </div>
+  <nav class="left-pane">
+    <div class="global-logo"><img src="@/assets/images/logo_height_30px.png"/></div>
+    <div class="left-pane-item">NEW</div>
+    <div class="left-pane-item">CAT</div>
+    <div class="left-pane-item">PUB</div>
+    <div class="left-pane-item">SER</div>
+    <div class="left-pane-item">TAG</div>
+    <div class="left-pane-item">SAVE</div>
+    <div class="left-pane-item">SETTINGS</div>
+  </nav>
 </template>
 
 <script>
