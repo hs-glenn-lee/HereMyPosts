@@ -54,7 +54,7 @@
 
   import 'tinymce/skins/lightgray/skin.min.css'
 
-  import '@/assets/tinylangs/ko_KR.js'
+  import langpack from './ko_KR'
 
 
 export default {
@@ -69,11 +69,16 @@ export default {
   methods: {
     init () {
       var path = require('path')
-      console.log(path.resolve('/tinylangs/ko_KR'))
+/*
+      const contentCss =  require('./content.csstxt').toString()
+      console.log(contentCss)*/
+
+      langpack(tinymce)
 
       tinymce.init({
         selector: '#editor',
-        language_url : '/languages/ko_KR.js',
+        //language_url : 'tinylangpack/ko_KR.js',
+        laguage: 'ko_KR',
         height: 500,
         theme: 'modern',
         plugins: 'preview fullpage autolink visualblocks fullscreen image link media codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists textcolor wordcount imagetools  contextmenu colorpicker textpattern help',
@@ -83,7 +88,7 @@ export default {
         content_css: [
           //'//@/assets/css/fonts/nanumgothic/font-nanumgothic.css',
           //`static/css/fonts/nanumgothic/font-nanumgothic.css`
-          'font-nanumgothic.css'
+          //'font-nanumgothic.css'
         ],//iframe을 뚫기 때문에 content_css에 ifr안에 적용되는 css를 넣어야한다.
 
         images_upload_url: 'http://localhost:8080/article/resources/image',
@@ -129,6 +134,8 @@ export default {
           input.click();
         }
       });
+
+
     }
   }
 }
@@ -138,5 +145,9 @@ export default {
 /*.manager {
   position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px;
 }*/
+
+  #editor {
+    color: red;
+  }
 
 </style>

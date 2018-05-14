@@ -18,7 +18,11 @@ module.exports = {
         /*pathRewrite: {
           '^/api': ''
         }*/
-      }
+      }/*,
+      '/tinylangpack/ko_KR.js' : {
+        target: 'http://localhost:8080',
+        changeOrigin: true,
+      }*/
     },
 
     // Various Dev Server settings
