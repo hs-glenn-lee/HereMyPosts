@@ -10,6 +10,7 @@ import './assets/css/fonts/nanumgothic/font-nanumgothic.css'
 //import './assets/lang'
 Vue.config.productionTip = false
 
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

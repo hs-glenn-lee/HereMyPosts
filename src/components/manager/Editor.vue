@@ -56,7 +56,9 @@
 
   import langpack from './ko_KR'
 
+  //import nanumGothicFontURL from '@/assets/css/fonts/nanumgothic/font-nanumgothic.css'
 
+  import test from '@/assets/logo.png'
 export default {
   name: 'Manage',
   data () {
@@ -69,12 +71,17 @@ export default {
   methods: {
     init () {
       var path = require('path')
+      console.log(test)
 /*
       const contentCss =  require('./content.csstxt').toString()
       console.log(contentCss)*/
+      //var req = require.context("!!css-to-string-loader!css-loader!../somedir", false, /\.js$/);
+      const _contentCssText = require('!!css-to-string-loader!css-loader!@/assets/css/content.css')
 
+
+      //console.log(nanumGothicFontURL)
       langpack(tinymce)
-
+      console.log(_contentCssText)
       tinymce.init({
         selector: '#editor',
         //language_url : 'tinylangpack/ko_KR.js',
@@ -89,6 +96,7 @@ export default {
           //'//@/assets/css/fonts/nanumgothic/font-nanumgothic.css',
           //`static/css/fonts/nanumgothic/font-nanumgothic.css`
           //'font-nanumgothic.css'
+          //'.'+t
         ],//iframe을 뚫기 때문에 content_css에 ifr안에 적용되는 css를 넣어야한다.
 
         images_upload_url: 'http://localhost:8080/article/resources/image',
@@ -132,6 +140,10 @@ export default {
           };
 
           input.click();
+        },
+        init_instance_callback: function(editor) {
+          var contentCssText = _contentCssText;
+          editor.dom.addStyle(contentCssText);
         }
       });
 
@@ -142,12 +154,9 @@ export default {
 </script>
 
 <style scoped>
-/*.manager {
-  position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px;
-}*/
 
   #editor {
-    color: red;
+
   }
 
 </style>
