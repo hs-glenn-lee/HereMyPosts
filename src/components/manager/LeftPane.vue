@@ -24,7 +24,16 @@ export default {
 </script>
 
 <style scoped>
-.manager {
-  position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px;
+.left-pane {
+  left: 0;
+  width: 73px;
+
+  /**/
+  border-right: 1px solid #ececec;
+  height: 100%;
+  float: left;
+  z-index: 200;
+  position: absolute;
+
 }
 </style>

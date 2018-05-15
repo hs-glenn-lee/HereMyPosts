@@ -70,26 +70,19 @@ export default {
   },
   methods: {
     init () {
-      var path = require('path')
-      console.log(test)
-/*
-      const contentCss =  require('./content.csstxt').toString()
-      console.log(contentCss)*/
-      //var req = require.context("!!css-to-string-loader!css-loader!../somedir", false, /\.js$/);
-      const _contentCssText = require('!!css-to-string-loader!css-loader!@/assets/css/content.css')
 
-
-      //console.log(nanumGothicFontURL)
       langpack(tinymce)
-      console.log(_contentCssText)
+
       tinymce.init({
         selector: '#editor',
-        //language_url : 'tinylangpack/ko_KR.js',
         laguage: 'ko_KR',
-        height: 500,
+        height: 822,
+        width: 1366,
+        branding: false,
         theme: 'modern',
         plugins: 'preview fullpage autolink visualblocks fullscreen image link media codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists textcolor wordcount imagetools  contextmenu colorpicker textpattern help',
         toolbar1: 'formatselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | fontselect fontsizeselect | removeformat',
+        statusbar: false,
         image_advtab: true,
         font_formats: '나눔손글씨=NanumBrush;나눔고딕=NanumGothic;Andale Mono=andale mono,times;Arial=arial,helvetica,sans-serif;Arial Black=arial black,avant garde;Book Antiqua=book antiqua,palatino;Comic Sans MS=comic sans ms,sans-serif;Courier New=courier new,courier;Georgia=georgia,palatino;Helvetica=helvetica;Impact=impact,chicago;Symbol=symbol;Tahoma=tahoma,arial,helvetica,sans-serif;Terminal=terminal,monaco;Times New Roman=times new roman,times;Trebuchet MS=trebuchet ms,geneva;Verdana=verdana,geneva;Webdings=webdings;Wingdings=wingdings,zapf dingbats',
         content_css: [
@@ -142,8 +135,8 @@ export default {
           input.click();
         },
         init_instance_callback: function(editor) {
-          var contentCssText = _contentCssText;
-          editor.dom.addStyle(contentCssText);
+          const _contentCssText = require('!!css-to-string-loader!css-loader!./content.css')
+          editor.dom.addStyle(_contentCssText);
         }
       });
 
@@ -154,7 +147,9 @@ export default {
 </script>
 
 <style scoped>
-
+  .mce-tinymce.mce-container.mce-panel {
+    border: 2px dashed blue !important;
+  }
   #editor {
 
   }
