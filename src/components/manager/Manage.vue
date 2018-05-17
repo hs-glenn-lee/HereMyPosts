@@ -8,10 +8,10 @@
 
 <script>
 
-import leftPaneComp from './LeftPane'
+import leftPaneComp from './ManagerLeftPane'
 import rightPaneComp from './RightPane'
 export default {
-  name: 'Manage',
+  name: 'ManagerComp',
   components: {
     'left-pane': leftPaneComp,
     'right-pane': rightPaneComp

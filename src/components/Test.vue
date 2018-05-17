@@ -1,13 +1,12 @@
 <template>
   <div>
     <h1>test</h1>
-    <!--<button @click="getAllMyCategory" type="button" value="test">test</button>-->
-    <category-tree></category-tree>
+    <button @click="test" type="button" value="test">test</button>
   </div>
 </template>
 
 <script>
-  import categoryTreeComp from './CategoryTree'
+  import { mapActions } from 'vuex'
   export default {
     name: 'Test',
     data() {
@@ -16,10 +15,12 @@
       }
     },
     methods: {
-
+      ...mapActions([
+        'test'
+      ])
     },
     components: {
-      'category-tree': categoryTreeComp
+
     },
   }
 </script>
@@ -27,5 +28,8 @@
 <style scoped>
 .category-root {
   position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px;
+
+  z-index: 200;
+  height: 100%;
 }
 </style>

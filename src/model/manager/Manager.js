@@ -1,14 +1,8 @@
-export default function() {
-  var manager;
-  var I;
+export default class Manager{
 
-
-}
-
-class Manager {
+  constructor() {
+    this.state = 'constructed';
+  }
 
 }
 
-class I {
-
-}

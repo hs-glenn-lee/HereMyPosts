@@ -56,9 +56,8 @@
 
   import langpack from './ko_KR'
 
-  //import nanumGothicFontURL from '@/assets/css/fonts/nanumgothic/font-nanumgothic.css'
+  //import nanumGothicFontURL from '@/assets/css/fonts/nanumgothic/font-nanumbrush.css'
 
-  import test from '@/assets/logo.png'
 export default {
   name: 'Manage',
   data () {
@@ -86,9 +85,9 @@ export default {
         image_advtab: true,
         font_formats: '나눔손글씨=NanumBrush;나눔고딕=NanumGothic;Andale Mono=andale mono,times;Arial=arial,helvetica,sans-serif;Arial Black=arial black,avant garde;Book Antiqua=book antiqua,palatino;Comic Sans MS=comic sans ms,sans-serif;Courier New=courier new,courier;Georgia=georgia,palatino;Helvetica=helvetica;Impact=impact,chicago;Symbol=symbol;Tahoma=tahoma,arial,helvetica,sans-serif;Terminal=terminal,monaco;Times New Roman=times new roman,times;Trebuchet MS=trebuchet ms,geneva;Verdana=verdana,geneva;Webdings=webdings;Wingdings=wingdings,zapf dingbats',
         content_css: [
-          //'//@/assets/css/fonts/nanumgothic/font-nanumgothic.css',
-          //`static/css/fonts/nanumgothic/font-nanumgothic.css`
-          //'font-nanumgothic.css'
+          //'//@/assets/css/fonts/nanumgothic/font-nanumbrush.css',
+          //`static/css/fonts/nanumgothic/font-nanumbrush.css`
+          //'font-nanumbrush.css'
           //'.'+t
         ],//iframe을 뚫기 때문에 content_css에 ifr안에 적용되는 css를 넣어야한다.
 

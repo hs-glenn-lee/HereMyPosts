@@ -1,40 +1,39 @@
 <template>
-  <div class="category-tree-contatiner">
+  <div class="category-tree-container">
     <ul class="tree-root">
       <category-node
         class="category-node"
-        :categoryNode="categoryTree.root"
+        :categoryNode="getCategoryTreeRoot"
       ></category-node>
     </ul>
   </div>
 </template>
 
 <script>
-  import api from '@/api/api'
-  import CategoryTree from '@/model/CategoryTree/CategoryTree'
   import CategoryNode from './CategoryNode'
+  import {mapActions} from 'vuex';
+  import { mapGetters } from 'vuex'
   export default {
-  name: 'CategoryTree',
+  name: 'CategoryTreeComp',
   mounted() {
-    this.getMyCategory()
-    console.log(this.categoryTree)
+    this.initCategoryTree()
   },
   data() {
     return {
-      categoryTree: new CategoryTree()
+
     }
   },
   methods: {
-    getMyCategory() {
-      console.log('???');
+    ...mapActions([
+      'isCategoryTreeInitialized',
+      'initCategoryTree'
+    ])
 
-      api.getAllMyCategory()
-        .then(  data => {
-          this.categoryTree = new CategoryTree();
-          this.categoryTree.setCategoryList(data)
-          //this.components["category-tree"] = categoryTreeComp
-        })
-    }
+  },
+  computed: {
+    ...mapGetters([
+      'getCategoryTreeRoot'
+    ]),
   },
   components: {
     'category-node': CategoryNode
@@ -43,7 +42,5 @@
 </script>
 
 <style scoped>
-.category-root {
-  position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px;
-}
+
 </style>

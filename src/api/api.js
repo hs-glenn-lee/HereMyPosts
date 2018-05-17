@@ -53,13 +53,13 @@ export default {
   getAllMyCategory () {
     return axiosAppJson.get('/api/category/all')
       .then(res => { return res.data} )
-      .catch( err => console.log(err) ) //403 가능
+      .catch( err => { throw err } ) //403 가능
   },
 
   createCategory (category) {
     return axiosAppJson.put('/api/category/create', category)
       .then( res => { return res.data } )
-      .catch( err => console.log(err) )
+      .catch( err => { throw err } )
   }
 
 }

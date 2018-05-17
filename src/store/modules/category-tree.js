@@ -1,40 +1,39 @@
-import CategoryNode from '@/model/CategoryTree/CategoryNode'
 import CategoryTree from '@/model/CategoryTree/CategoryTree'
-import { axiosAppJson } from "../../model/axios-instances";
+import api from "@/api/api";
 
 const state = {
-  computed: {
-  },
-  categoryTree: {},
-  cTreeState: 'created' //created -> (loading) -> loaded
+  categoryTree: new CategoryTree()
 };
 const getters = {
-  getCategoryTree () {
-    return this.categoryTree
+  getCategoryTree: state => {
+    return state.categoryTree
   },
-  getCategoryTreeState () {
-    return this.cTreeState
+  getCategoryTreeRoot: state => {
+    return state.categoryTree.root;
   }
 };
 const mutations = {
-
-};
-const actions = {
-  load () {
-
+  setCategoryList: (state, payload) => {
+    state.categoryTree.setCategoryList(payload)
   }
 };
-
-/*const api = {}
-api.getCategoryList = function() {
-  return axiosAppJson.get('/category/all')
-    .then(res => {
-      let catList = res.data
-      return catList
-    })
-    .catch(err => {
-      if(err.status === 403) {
-        console.log(err)
-      }
-    })
-};*/
+const actions = {
+  initCategoryTree: context => {
+    console.log(context.state.categoryTree)
+    if(!context.state.categoryTree.isEmpty()){
+      return this.categoryTree
+    }
+    return api.getAllMyCategory()
+      .then( data => {
+        context.commit('setCategoryList',data );
+        return this.categoryTree
+      })
+      .catch(err => alert(err))
+  }
+};
+export default {
+  state,
+  mutations,
+  actions,
+  getters
+}

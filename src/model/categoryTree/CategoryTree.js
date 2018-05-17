@@ -12,6 +12,10 @@ export default class CategoryTree {
     this.map = {};
   }
 
+  isEmpty() {
+    return !this.categoryList.length > 0;
+  }
+
   //default root values id = cat$root name = default seq = 0 parentId = null. 왜냐면 cat&root라는 id로 못 만들기해야하기 때문에
   //reserved name and id = cat$root
   setCategoryList (categoryList) {
