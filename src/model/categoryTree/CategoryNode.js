@@ -2,7 +2,7 @@ import Category from '@/model/Category'
 export default class CategoryNode extends  Category{
 
   constructor(category, parent, children) {
-    super(category.id, category.parentId, category.name, category.seq)
+    super(category.id, category.parentId, category.name, category.seq, category.isDel, category.isPublic)
     this.parent = parent || null;
     this.children = children || [];
   }

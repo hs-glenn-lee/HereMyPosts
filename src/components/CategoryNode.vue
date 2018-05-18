@@ -1,8 +1,8 @@
 <template>
   <li class="category-node">
     <div
-      :class="{bold: categoryNode.hasChild()}"
-      v-on:click="toggle">
+      class="node-info"
+      v-on:click="onNodeClick">
 
       <span v-if="categoryNode.hasChild()">
         <img :class="{hidden: open}" class="category-node-flag" src="@/assets/images/category/plus-icon-30.png">
@@ -14,7 +14,10 @@
 
       <span class="node-name">{{categoryNode.name}}</span>
 
+      <span v-if="categoryNode.isPublic" class="node-is-pub">public</span>
+
     </div>
+
     <ul v-show="open" v-if="categoryNode.hasChild()">
       <category-node-comp
         class="item"
@@ -39,6 +42,10 @@ export default {
     }
   },
   methods: {
+    onNodeClick(e) {
+      e.currentTarget.parentElement.classList.add('selected');
+      this.toggle()
+    },
     toggle () {
       this.open = !this.open
     }
@@ -48,9 +55,9 @@ export default {
 
 <style scoped>
   li.category-node {
-    margin-left: 20px;
-    font-size: 20px;
-    height: 25px;
+    margin-left: 22px;
+
+    min-height: 30px;
 
 
     -moz-user-select: none;
@@ -59,15 +66,6 @@ export default {
     user-select:none;
     -o-user-select:none;
 
-
-  }
-
-  li.category-node > div {
-    height: 100%;
-  }
-
-  li.category-node > div{
-    height: 25px;
   }
 
   .hidden {
@@ -79,5 +77,24 @@ export default {
     height: 14px;
   }
 
+  li.selected > div.node-info {
+    color: #004e8c;
+    font-weight: bold;
+  }
 
+  div.node-info {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 20px;
+    line-height: 25px;
+    height: 28px;
+    padding-left: 5px;
+    padding-right: 5px;
+
+    color: #AAAAAA;
+  }
+
+  ul {
+    margin-top: 1px;
+  }
 </style>

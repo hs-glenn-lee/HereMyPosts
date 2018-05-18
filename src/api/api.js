@@ -52,7 +52,9 @@ export default {
   //---related to category
   getAllMyCategory () {
     return axiosAppJson.get('/api/category/all')
-      .then(res => { return res.data} )
+      .then(res => {
+        console.log(res)
+        return res.data} )
       .catch( err => { throw err } ) //403 가능
   },
 

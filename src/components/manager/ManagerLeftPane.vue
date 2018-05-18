@@ -6,7 +6,8 @@
            @mouseover="onMouserOver" @mouseleave="onMouserLeave">
         <img
           class="icon"
-          src="@/assets/images/left-pane-icons/50w_newdocument.png"/>
+          src="@/assets/images/left-pane-icons/50w_newdocument.png"
+        />
       </div>
       <div class="left-pane-item"
            @mouseover="onMouserOver" @mouseleave="onMouserLeave">
@@ -102,6 +103,7 @@ export default {
   }
 
   div.left-pane-item.up-here {
-    background-color: black;
+    background-color: #e6ffcc;
+    transition: 0.5s;
   }
 </style>
