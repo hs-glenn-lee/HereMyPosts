@@ -2,8 +2,8 @@
   <div class="right-pane">
     <div class="center-block">
       <div class="article-meta">
-        <span>span</span>
-        <button>button</button>
+        <span>카테고리</span>
+        <span class="selected-category-name">default</span>
       </div>
       <div class="editor-container">
         <editor></editor>
@@ -15,12 +15,12 @@
 
 <script>
   import editorComp from './editor/Editor'
-export default {
-  name: 'Manage',
-  components: {
-    'editor': editorComp
+  export default {
+    name: 'EditorComp',
+    components: {
+      'editor': editorComp
+    }
   }
-}
 </script>
 
 <style scoped>
@@ -37,6 +37,8 @@ export default {
   }
   div.article-meta {
     position: relative;
+    padding-top: 20px;
+    padding-bottom: 20px;
   }
 
   div.center-block {
@@ -44,9 +46,20 @@ export default {
     width: 1366px;
   }
 
+  span.selected-category-name {
+    display: inline-block;
+    min-width: 150px;
+    height: 2em;
+    line-height: 2em;
+
+    text-align: center;
+    background-color: #eaeaea;
+  }
+
+
 </style>
 <style>
   .mce-tinymce.mce-container.mce-panel {
-    border: 2px dashed blue !important;
+    border: 0px solid white;
   }
 </style>
