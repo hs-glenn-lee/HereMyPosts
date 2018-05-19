@@ -16,7 +16,7 @@
     'category-tree'
   ],
   created() {
-    console.log(this.categoryTree)
+
   },
   data() {
     return {

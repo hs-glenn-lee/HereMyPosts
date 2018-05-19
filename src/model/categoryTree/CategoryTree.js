@@ -20,7 +20,6 @@ export default class CategoryTree {
   //reserved name and id = cat$root
   setCategoryList (categoryList) {
     this.categoryList = categoryList
-    console.log(this.categoryList)
     this.convListToTree()
   }
 
@@ -35,7 +34,7 @@ export default class CategoryTree {
   convListToTree () {
     //conv Category list to CategoryNode map,
     var catList = this.categoryList
-    var catNodeMap = {};
+    let catNodeMap = this.map;
 
     catList.forEach(function(el) {
       catNodeMap[el.id] = new CategoryNode(el, null, null)
@@ -46,11 +45,6 @@ export default class CategoryTree {
     for(var catNode in catNodeMap) {
       var currCatNode = catNodeMap[catNode];
       var parentCatNode = catNodeMap[currCatNode.parentId]
-      console.log('!!!!!##!')
-      console.log(currCatNode)
-      console.log(currCatNode.parentId)
-
-      console.log(catNodeMap[currCatNode.parentId])
 
       if(parentCatNode) {
         currCatNode.parent = parentCatNode;
@@ -62,9 +56,6 @@ export default class CategoryTree {
     //sorting children ny seq
     this.sortBySeq(treeRoot);
     this.root = treeRoot;
-
-    console.log(treeRoot)
-
     return
   }
 
@@ -99,7 +90,7 @@ export default class CategoryTree {
   }
 
   find (id) {
-
+    return this.map[id];
   }
 
 

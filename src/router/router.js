@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import Home from '@/components/Home'
 import SignIn from '@/components/SignIn'
 import SignUp from '@/components/SignUp'
-import ManagerComp from '@/components/manager/Manage'
+import ManagerComp from '@/components/manager/Manager'
 import Article from '@/components/Article'
 import Test from '@/components/Test'
 

@@ -1,8 +1,9 @@
 <template>
-  <li class="category-node">
+  <li :id="categoryNode.id" class="category-node">
     <div
+      :class="{selected: isSelected}"
       class="node-info"
-      v-on:click="onNodeClick">
+      v-on:click="onNodeInfoClick">
 
       <span v-if="categoryNode.hasChild()">
         <img :class="{hidden: open}" class="category-node-flag" src="@/assets/images/category/plus-icon-30.png">
@@ -14,7 +15,9 @@
 
       <span class="node-name">{{categoryNode.name}}</span>
 
-      <span v-if="categoryNode.isPublic" class="node-is-pub">public</span>
+      <span v-if="!categoryNode.isPublic" class="node-pub">
+        <img class="node-pub-icon" src="@/assets/images/category/icons8-lock-30.png"/>
+      </span>
 
     </div>
 
@@ -30,6 +33,8 @@
 </template>
 
 <script>
+import {mapMutations} from 'vuex'
+import {mapGetters} from 'vuex'
 
 export default {
   name: 'category-node-comp',
@@ -38,16 +43,31 @@ export default {
   ],
   data() {
     return {
-      open: false,
+      open: false
     }
   },
   methods: {
-    onNodeClick(e) {
-      e.currentTarget.parentElement.classList.add('selected');
+    ...mapMutations([
+      'setSelectedNode'
+    ]),
+    onNodeInfoClick(e) {
+      var clickedNode = e.currentTarget
+      clickedNode.parentElement.classList.add('selected');
+
+      this.setSelectedNode(clickedNode.parentElement.id)
       this.toggle()
     },
     toggle () {
       this.open = !this.open
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'getSelectedNode'
+    ]),
+    isSelected () {
+      console.log(this.getSelectedNode)
+      return this.getSelectedNode === this.categoryNode
     }
   }
 }
@@ -96,5 +116,14 @@ export default {
 
   ul {
     margin-top: 1px;
+  }
+
+  span.node-pub {
+    vertical-align: middle;
+  }
+  img.node-pub-icon {
+    width: 15px;
+    height: 15px;
+    opacity: 0.6;
   }
 </style>

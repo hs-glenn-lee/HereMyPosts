@@ -15,7 +15,7 @@ export default {
   signIn (payload) {
     return axiosAppJson.post('/api/sign-in', payload)
       .then(res => {
-        console.log(res.data)
+
         return res.data
       })
       .catch(err => {

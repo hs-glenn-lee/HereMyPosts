@@ -2,7 +2,8 @@ import CategoryTree from '@/model/CategoryTree/CategoryTree'
 import api from "@/api/api";
 
 const state = {
-  categoryTree: new CategoryTree()
+  categoryTree: new CategoryTree(),
+  selectedNode: {}
 };
 const getters = {
   getCategoryTree: state => {
@@ -10,16 +11,24 @@ const getters = {
   },
   getCategoryTreeRoot: state => {
     return state.categoryTree.root;
+  },
+  getSelectedNode: state => {
+    return state.selectedNode;
   }
 };
 const mutations = {
   setCategoryList: (state, payload) => {
     state.categoryTree.setCategoryList(payload)
+  },
+  setSelectedNode: (state, payload) => {
+    console.log(state.categoryTree.find(payload));
+    console.log('wefwefef')
+    state.selectedNode = state.categoryTree.find(payload) //node id
   }
 };
 const actions = {
   initCategoryTree: context => {
-    console.log(context.state.categoryTree)
+
     if(!context.state.categoryTree.isEmpty()){
       return this.categoryTree
     }

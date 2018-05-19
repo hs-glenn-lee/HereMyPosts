@@ -1,6 +1,9 @@
 import Manager from '@/model/manager/Manager'
 const state = {
-  manager: new Manager(),
+  manager: {
+    selectedCategoryNode: {}
+  },
+
   categorySubLeftPaneIsShow: true
 };
 const getters = {
@@ -21,8 +24,10 @@ const actions = {
     var initializedManager = new Manager().init().then(()=>{
       context.commit('setManager', initializedManager)
     })
+  },
+  test: (context) => {
+    console.log(context.rootState.categoryTreeModule.selectedNode);
   }
-
 };
 export default {
   state,

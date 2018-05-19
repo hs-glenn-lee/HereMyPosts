@@ -27,7 +27,10 @@
     ...mapActions([
       'isCategoryTreeInitialized',
       'initCategoryTree'
-    ])
+    ]),
+    findNodeElement (id) {
+
+    }
 
   },
   computed: {

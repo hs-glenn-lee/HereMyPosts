@@ -26,10 +26,12 @@
       </div>
       <div class="left-pane-item">SAVE</div>
       <div class="left-pane-item">SETTINGS</div>
+      <button type="button" @click="test">test</button>
     </nav>
     <div>
       <category-sub-left-pane></category-sub-left-pane>
     </div>
+
   </div>
 
 
@@ -38,6 +40,7 @@
 <script>
 import { mapMutations } from 'vuex';
 import { mapGetters } from 'vuex';
+import { mapActions } from 'vuex';
 import categoryTreeComp from '@/components/CategoryTree.vue'
 import CategorySubLeftPane from '@/components/manager/CategorySubLeftPane.vue'
 export default {
@@ -50,6 +53,9 @@ export default {
   methods: {
     ...mapMutations([
       'setCategorySubLeftPaneIsShow'
+    ]),
+    ...mapActions([
+      'test'
     ]),
     toggleShowCSLP () {
       var cur = this.getCategorySubLeftPaneIsShow;

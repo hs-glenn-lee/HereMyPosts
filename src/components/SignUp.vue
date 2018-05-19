@@ -95,14 +95,14 @@ export default {
         if(!isValidateUsername.isValid) {
           this.isUserNameValidate = false;
           this.userNameDescription = isValidateUsername.message
-          console.log(isValidateUsername.message)
+
           return
         }
 
 
         api.isUniqueNewUsername(username)
           .then(ret => {
-            console.log(ret)
+
             if(ret) {
               this.isUserNameValidate = true;
               this.userNameDescription = 'good!'
@@ -176,7 +176,7 @@ export default {
               })
           })
           .catch(err => {
-              console.log(err)
+
           })
       }else {
         alert('약관동의 및 입력정보를 모두 입력해주세요.')
