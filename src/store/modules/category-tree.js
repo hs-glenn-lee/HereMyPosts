@@ -21,8 +21,6 @@ const mutations = {
     state.categoryTree.setCategoryList(payload)
   },
   setSelectedNode: (state, payload) => {
-    console.log(state.categoryTree.find(payload));
-    console.log('wefwefef')
     state.selectedNode = state.categoryTree.find(payload) //node id
   }
 };
@@ -38,7 +36,11 @@ const actions = {
         return this.categoryTree
       })
       .catch(err => alert(err))
+  },
+  setSelectedNode: (context, payload) => {
+    context.commit('setSelectedNode',payload)
   }
+
 };
 export default {
   state,

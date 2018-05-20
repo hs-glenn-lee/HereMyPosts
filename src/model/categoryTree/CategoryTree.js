@@ -34,7 +34,7 @@ export default class CategoryTree {
   convListToTree () {
     //conv Category list to CategoryNode map,
     var catList = this.categoryList
-    let catNodeMap = this.map;
+    var catNodeMap = this.map;
 
     catList.forEach(function(el) {
       catNodeMap[el.id] = new CategoryNode(el, null, null)
@@ -90,6 +90,9 @@ export default class CategoryTree {
   }
 
   find (id) {
+    console.log('---------------')
+    console.log(id);
+    console.log(this.map[id]);
     return this.map[id];
   }
 

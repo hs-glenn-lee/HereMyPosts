@@ -1,19 +1,22 @@
 <template>
-  <li :id="categoryNode.id" class="category-node">
+  <li @click.right="onNodeRightClick"
+      :id="categoryNode.id"
+      class="category-node"
+      :class="isSelected">
     <div
-      :class="{selected: isSelected}"
       class="node-info"
-      v-on:click="onNodeInfoClick">
+      >
 
-      <span v-if="categoryNode.hasChild()">
+      <span v-if="categoryNode.hasChild()" class="node-open-flag" @click="onNodeOpenFlagClick">
         <img :class="{hidden: open}" class="category-node-flag" src="@/assets/images/category/plus-icon-30.png">
         <img :class="{hidden: !open}" class="category-node-flag" src="@/assets/images/category/minus-icon-30.png">
       </span>
-      <span v-else class="category-node-blank-flag">
+      <span v-else class="category-node-blank-flag node-open-flag">
         <img class="category-node-flag" src="@/assets/images/category/blank-icon.png"/>
       </span>
 
-      <span class="node-name">{{categoryNode.name}}</span>
+      <span class="node-name"
+            v-on:click="onNodeNameClick">{{categoryNode.name}}</span>
 
       <span v-if="!categoryNode.isPublic" class="node-pub">
         <img class="node-pub-icon" src="@/assets/images/category/icons8-lock-30.png"/>
@@ -33,8 +36,10 @@
 </template>
 
 <script>
+
 import {mapMutations} from 'vuex'
 import {mapGetters} from 'vuex'
+
 
 export default {
   name: 'category-node-comp',
@@ -50,15 +55,22 @@ export default {
     ...mapMutations([
       'setSelectedNode'
     ]),
-    onNodeInfoClick(e) {
-      var clickedNode = e.currentTarget
-      clickedNode.parentElement.classList.add('selected');
-
-      this.setSelectedNode(clickedNode.parentElement.id)
-      this.toggle()
+    onNodeOpenFlagClick() {
+      this.toggleOpen()
     },
-    toggle () {
+    onNodeNameClick(e) {
+      var clickedNode = e.currentTarget
+
+      this.setSelectedNode(clickedNode.parentElement.parentElement.id)
+
+    },
+    toggleOpen () {
       this.open = !this.open
+    },
+    onNodeRightClick (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      alert(e.currentTarget.id)
     }
   },
   computed: {
@@ -66,9 +78,11 @@ export default {
       'getSelectedNode'
     ]),
     isSelected () {
-      console.log(this.getSelectedNode)
-      return this.getSelectedNode === this.categoryNode
-    }
+      return {
+        'selected': this.getSelectedNode === this.categoryNode
+      }
+    },
+
   }
 }
 </script>

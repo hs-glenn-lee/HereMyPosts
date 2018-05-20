@@ -7,6 +7,8 @@
       <div class="category-container">
         <category-tree-comp></category-tree-comp>
       </div>
+
+      <c-node-right-click-menu v-bind:is="emptyOrMenu"></c-node-right-click-menu>
   </div>
 </template>
 
@@ -14,10 +16,20 @@
 import { mapMutations } from 'vuex';
 import { mapGetters } from 'vuex';
 import categoryTreeComp from '@/components/CategoryTree.vue'
+import CNodeRightClickMenu from "./CNodeRightClickMenu";
+import emptyComp from '@/components/Empty.vue';
+
 export default {
   name: 'CategorySubLeftPaneComp',
+  data () {
+    return {
+      emptyOrMenu: 'c-node-right-click-menu'
+    }
+  },
   components: {
-    'category-tree-comp': categoryTreeComp
+    'c-node-right-click-menu': CNodeRightClickMenu,
+    'category-tree-comp': categoryTreeComp,
+    'empty-comp': emptyComp
   },
   methods: {
     ...mapMutations([

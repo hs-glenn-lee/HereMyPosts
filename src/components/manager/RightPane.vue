@@ -9,7 +9,6 @@
         <editor></editor>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -48,12 +47,15 @@
 
   span.selected-category-name {
     display: inline-block;
-    min-width: 150px;
+    min-width: 200px;
     height: 2em;
     line-height: 2em;
 
     text-align: center;
     background-color: #eaeaea;
+
+    border-bottom: 1px solid #cacaca;
+    border-right: 1px solid #cacaca;
   }
 
 
