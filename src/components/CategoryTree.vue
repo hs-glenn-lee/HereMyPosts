@@ -4,6 +4,8 @@
       <category-node
         class="category-node"
         :categoryNode="getCategoryTreeRoot"
+        :onNodeNameClick="onNodeNameClick"
+        :onNodeNameRightClick="onNodeNameRightClick"
       ></category-node>
     </ul>
   </div>
@@ -15,7 +17,14 @@
   import { mapGetters } from 'vuex'
   export default {
   name: 'CategoryTreeComp',
+  props: {  //CategoryTree Must set these function before
+    onNodeNameClick: Function,
+    onNodeNameRightClick: Function
+  },
   mounted() {
+    console.log('Tree')
+    console.log(this.onNodeNameRightClick)
+    console.log(this.onNodeNameClick)
     this.initCategoryTree()
   },
   data() {

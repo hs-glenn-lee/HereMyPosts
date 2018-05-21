@@ -1,5 +1,5 @@
 <template>
-  <li @click.right="onNodeRightClick"
+  <li
       :id="categoryNode.id"
       class="category-node"
       :class="isSelected">
@@ -16,7 +16,8 @@
       </span>
 
       <span class="node-name"
-            v-on:click="onNodeNameClick">{{categoryNode.name}}</span>
+            v-on:click="onNodeNameClick"
+          @click.right="onNodeNameRightClick">{{categoryNode.name}}</span>
 
       <span v-if="!categoryNode.isPublic" class="node-pub">
         <img class="node-pub-icon" src="@/assets/images/category/icons8-lock-30.png"/>
@@ -29,7 +30,9 @@
         class="item"
         v-for="cnode in categoryNode.children"
         :key="cnode.id"
-        :categoryNode="cnode">
+        :categoryNode="cnode"
+        :onNodeNameClick="onNodeNameClick"
+        :onNodeNameRightClick="onNodeNameRightClick">
       </category-node-comp>
     </ul>
   </li>
@@ -43,34 +46,27 @@ import {mapGetters} from 'vuex'
 
 export default {
   name: 'category-node-comp',
-  props: [
-    'categoryNode'
-  ],
+  props: {
+    'categoryNode': Object,
+    onNodeNameClick: Function,
+    onNodeNameRightClick: Function
+  },
+  mounted () {
+    console.log(this.categoryNode.name);
+    console.log(this.onNodeNameRightClick)
+    console.log(this.onNodeNameClick)
+  },
   data() {
     return {
       open: false
     }
   },
   methods: {
-    ...mapMutations([
-      'setSelectedNode'
-    ]),
     onNodeOpenFlagClick() {
       this.toggleOpen()
     },
-    onNodeNameClick(e) {
-      var clickedNode = e.currentTarget
-
-      this.setSelectedNode(clickedNode.parentElement.parentElement.id)
-
-    },
     toggleOpen () {
       this.open = !this.open
-    },
-    onNodeRightClick (e) {
-      e.preventDefault();
-      e.stopPropagation();
-      alert(e.currentTarget.id)
     }
   },
   computed: {

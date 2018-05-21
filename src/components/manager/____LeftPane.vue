@@ -15,8 +15,7 @@
 import { mapActions } from 'vuex';
 export default {
   name: 'Manage'/*,
-  methods: {
-    ...mapActions([
+  methods: {    ...mapActions([
       'getMyAccount'
     ])
   }*/

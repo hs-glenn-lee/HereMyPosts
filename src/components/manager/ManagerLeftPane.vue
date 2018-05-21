@@ -3,14 +3,14 @@
     <nav class="left-pane">
       <div class="global-logo" ><img src="@/assets/images/logo_height_30px.png" style="width:50px;"/></div>
       <div class="left-pane-item"
-           @mouseover="onMouserOver" @mouseleave="onMouserLeave">
+           @mouseover="onPaneItemMouserOver" @mouseleave="onPaneItemMouserLeave">
         <img
           class="icon"
           src="@/assets/images/left-pane-icons/50w_newdocument.png"
         />
       </div>
       <div class="left-pane-item"
-           @mouseover="onMouserOver" @mouseleave="onMouserLeave">
+           @mouseover="onPaneItemMouserOver" @mouseleave="onPaneItemMouserLeave">
         <img
           @click="toggleShowCSLP"
           class="icon"
@@ -19,7 +19,7 @@
       <div class="left-pane-item">PUB</div>
       <div class="left-pane-item">SER</div>
       <div class="left-pane-item"
-           @mouseover="onMouserOver" @mouseleave="onMouserLeave">
+           @mouseover="onPaneItemMouserOver" @mouseleave="onPaneItemMouserLeave">
         <img
           class="icon"
           src="@/assets/images/left-pane-icons/50w_saveicon.png"/>
@@ -61,10 +61,10 @@ export default {
       var cur = this.getCategorySubLeftPaneIsShow;
       this.setCategorySubLeftPaneIsShow(!cur);
     },
-    onMouserOver ( event ) {
+    onPaneItemMouserOver ( event ) {
       event.currentTarget.classList.add('up-here')
     },
-    onMouserLeave ( event ) {
+    onPaneItemMouserLeave ( event ) {
       event.currentTarget.classList.remove('up-here')
     }
   },

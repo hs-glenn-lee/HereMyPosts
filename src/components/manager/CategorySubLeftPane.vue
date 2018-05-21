@@ -1,14 +1,22 @@
 <template>
-  <div class="sub-left-pane" v-show="getCategorySubLeftPaneIsShow">
+  <div class="sub-left-pane"
+       v-show="getCategorySubLeftPaneIsShow"
+        @click.right="function(e){e.preventDefault()}"><!--prevent leftClick-->
       <div class="close-icon" @click="closeCSLP(false)">
         <img src="@/assets/images/x-icon-30.png" style="width:20px;"/>
       </div>
 
       <div class="category-container">
-        <category-tree-comp></category-tree-comp>
+        <category-tree-comp :onNodeNameRightClick="onNodeNameRightClick"
+                            :onNodeNameClick="onNodeNameClick"></category-tree-comp>
       </div>
 
-      <c-node-right-click-menu v-bind:is="emptyOrMenu"></c-node-right-click-menu>
+      <c-node-right-click-menu v-bind:is="rightClickMenu"
+                               :category-node="rightClickedCategoryNode"
+                                :top="rightClickedTop"
+                                :left="rightClickedLeft">
+      </c-node-right-click-menu>
+
   </div>
 </template>
 
@@ -23,7 +31,10 @@ export default {
   name: 'CategorySubLeftPaneComp',
   data () {
     return {
-      emptyOrMenu: 'c-node-right-click-menu'
+      rightClickMenu: '',
+      rightClickedCategoryNode: '',
+      rightClickedTop: '',
+      rightClickedLeft: ''
     }
   },
   components: {
@@ -33,15 +44,40 @@ export default {
   },
   methods: {
     ...mapMutations([
-      'setCategorySubLeftPaneIsShow'
+      'setCategorySubLeftPaneIsShow',
+      'setSelectedNode'
     ]),
     closeCSLP () {
       this.setCategorySubLeftPaneIsShow(false)
+    },
+
+    //categoryTree props
+    onNodeNameRightClick (clickEvent) {
+      clickEvent.preventDefault();
+      clickEvent.stopPropagation();
+      var clickedNodeNameSpan = clickEvent.currentTarget;
+
+
+      var nodeId = clickedNodeNameSpan.parentElement.parentElement.id;
+
+      var targetNode = this.getCategoryTree.find(nodeId);
+
+      this.rightClickedTop = clickEvent.pageY;
+      this.rightClickedLeft = clickEvent.pageX - 70; // i don't know why this need sub 70
+      this.rightClickedCategoryNode = targetNode;
+      this.rightClickMenu = 'c-node-right-click-menu';
+
+    },
+    onNodeNameClick(clickEvent) {
+      var clickedNodeNameSpan = clickEvent.currentTarget;
+      this.setSelectedNode(clickedNodeNameSpan.parentElement.parentElement.id)
     }
+
   },
   computed: {
     ...mapGetters([
-      'getCategorySubLeftPaneIsShow'
+      'getCategorySubLeftPaneIsShow',
+      'getCategoryTree'
     ])
   }
 }
