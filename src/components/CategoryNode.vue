@@ -52,9 +52,7 @@ export default {
     onNodeNameRightClick: Function
   },
   mounted () {
-    console.log(this.categoryNode.name);
-    console.log(this.onNodeNameRightClick)
-    console.log(this.onNodeNameClick)
+
   },
   data() {
     return {

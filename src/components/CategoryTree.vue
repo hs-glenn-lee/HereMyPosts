@@ -22,9 +22,6 @@
     onNodeNameRightClick: Function
   },
   mounted() {
-    console.log('Tree')
-    console.log(this.onNodeNameRightClick)
-    console.log(this.onNodeNameClick)
     this.initCategoryTree()
   },
   data() {

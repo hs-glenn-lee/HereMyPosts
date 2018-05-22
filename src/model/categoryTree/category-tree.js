@@ -1,4 +1,4 @@
-import CategoryNode from "./CategoryNode";
+import CategoryNode from "./category-node";
 
 export default class CategoryTree {
   //structre

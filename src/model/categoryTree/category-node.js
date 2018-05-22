@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-use-before-define
 import Category from '@/model/Category'
 export default class CategoryNode extends  Category{
 
@@ -62,5 +63,17 @@ export default class CategoryNode extends  Category{
   }
   getParent () {
     return this.parent;
+  }
+
+  validNewCategoryNameAsChild (newName) { // if there's the same name in children return false
+    var isValid = true;
+
+    for(var i in this.children) {
+      if(this.children[i].name === newName) {
+        isValid = false;
+      }
+
+    }
+    return isValid;
   }
 }
