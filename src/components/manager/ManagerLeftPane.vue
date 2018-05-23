@@ -19,7 +19,9 @@
       <div class="left-pane-item">PUB</div>
       <div class="left-pane-item">SER</div>
       <div class="left-pane-item"
-           @mouseover="onPaneItemMouserOver" @mouseleave="onPaneItemMouserLeave">
+           @click="saveArticle"
+           @mouseover="onPaneItemMouserOver"
+           @mouseleave="onPaneItemMouserLeave">
         <img
           class="icon"
           src="@/assets/images/left-pane-icons/50w_saveicon.png"/>
@@ -55,7 +57,8 @@ export default {
       'setCategorySubLeftPaneIsShow'
     ]),
     ...mapActions([
-      'test'
+      'test',
+      'saveArticle'
     ]),
     toggleShowCSLP () {
       var cur = this.getCategorySubLeftPaneIsShow;

@@ -38,6 +38,7 @@
 
 <script>
 import api from '@/api/api';
+import { mapMutations } from 'vuex';
 export default {
   name: 'SignIn',
   data() {
@@ -52,12 +53,20 @@ export default {
     document.querySelector('html').style.backgroundColor = '#f3f3f3'
   },
   methods: {
+    ...mapMutations([
+      'setSign'
+    ]),
     signInGoToManage() {
       api.signIn({
         username: this.username,
         password: this.password
       })
         .then(data => {
+          var sign =  {
+            account: data,
+            isSignedIn: true
+          };
+          this.setSign(sign);
           this.$router.push({ path: "/manage"})
         })
         .catch(message => {

@@ -4,7 +4,11 @@
       <div class="article-meta">
         <span>카테고리</span>
         <span class="selected-category-name">default</span>
+        <div class="title">
+          <input type="text" v-model="title"/>
+        </div>
       </div>
+
       <div class="editor-container">
         <editor :content="getContent"></editor>
       </div>
@@ -14,8 +18,8 @@
 
 <script>
   import editorComp from './editor/Editor'
-  import{mapMutations} from 'vuex'
-  import{mapGetters} from 'vuex'
+  import { mapMutations } from 'vuex'
+  import { mapGetters } from 'vuex'
   export default {
     name: 'EditorComp',
     data () {
@@ -31,12 +35,28 @@
       ])
     },
     created () {
-      this.newArticle({category:this.getCategoryTreeRoot, account: this.account})
+      this.newArticle()
     },
     computed: {
       ...mapGetters([
         'getContent'
-      ])
+      ]),
+/*      content : {
+        get() {
+          return this.$store.article.content
+        },
+        set(value) {
+          this.$store.commit('setContent', value);
+        }
+      },*/
+      title: {
+        get() {
+          return this.$store.state.article.title
+        },
+        set (value) {
+          this.$store.commit('setTitle', value)
+        }
+      }
     },
     components: {
       'editor': editorComp

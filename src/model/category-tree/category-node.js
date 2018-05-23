@@ -8,6 +8,10 @@ export default class CategoryNode extends  Category{
     this.children = children || [];
   }
 
+  cloneAsCategory () {
+    return new Category(this.id, this.parentId, this.name, this.seq, this.isDel, this.isPublic)
+  }
+
   getChildren() {
     return this.children
   }
@@ -76,4 +80,7 @@ export default class CategoryNode extends  Category{
     }
     return isValid;
   }
+
+
+
 }

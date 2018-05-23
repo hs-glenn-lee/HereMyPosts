@@ -10,12 +10,23 @@
 
 import leftPaneComp from './ManagerLeftPane'
 import rightPaneComp from './RightPane'
+import { mapActions } from 'vuex'
 export default {
   name: 'ManagerComp',
+  methods: {
+    ...mapActions([
+      'initSign'
+    ])
+  },
+  created () {
+    this.initSign()
+  },
   components: {
     'left-pane': leftPaneComp,
     'right-pane': rightPaneComp
   }
+
+
 }
 </script>
 

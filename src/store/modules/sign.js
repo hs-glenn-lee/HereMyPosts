@@ -7,7 +7,7 @@ const state = {
 };
 const getters = {
   getSign: state => {
-    return state.account;
+    return state.sign;
   },
   getAccount: state => {
     return state.account;
@@ -19,14 +19,18 @@ const mutations = {
   },
   setIsSignedIn: (state, payload) => {
     state.isSignedIn = payload;
+  },
+  setSign: (state, payload) => {
+    state.account = payload.account;
+    state.isSignedIn = payload.isSignedIn;
   }
 };
 const actions = {
   initSign: (context) => {
-    if(!this.sign.isSignedIn) {
+    if(!state.sign.isSignedIn) {
       return axiosAppJson.getMyAccount()
         .then( data => {
-          context.commit('setAccount',data)
+          context.commit('setAccount', data)
           context.commit('setIsSignedIn',true)
           return data;
         })

@@ -4,13 +4,6 @@ export default {
     return axiosAppJson.get('/api/getMyAccount')
       .then(res => { return res.data })
       .catch(err=>{ throw err.message })
-      .then(data => {
-        if(data.status === 'success') {
-          return data.data
-        }else {
-          return reject( data.message )
-        }
-      })
   },
   signIn (payload) {
     return axiosAppJson.post('/api/sign-in', payload)
@@ -62,6 +55,19 @@ export default {
     return axiosAppJson.put('/api/category/create', category)
       .then( res => { return res.data } )
       .catch( err => { throw err } )
+  },
+
+
+  //---article
+  saveArticle (compositeArticle) {
+
+    console.log( '!!???!')
+    var x = JSON.stringify(compositeArticle);
+    console.log(x + '!!!')
+
+    return axiosAppJson.post('/api/article/save', compositeArticle)
+      .then( res => { return res.data })
+      .catch( err => { throw err })
   }
 
 }
