@@ -60,18 +60,20 @@
 
 export default {
   name: 'Manage',
+  props: {
+    content: String
+  },
   data () {
     return {}
   },
   mounted() {
     this.init()
-
   },
   methods: {
     init () {
 
-      langpack(tinymce)
-
+      langpack(tinymce) //set Laguage
+      var vm = this;
       tinymce.init({
         selector: '#editor',
         laguage: 'ko_KR',
@@ -136,6 +138,8 @@ export default {
         init_instance_callback: function(editor) {
           const _contentCssText = require('!!css-to-string-loader!css-loader!./content.css')
           editor.dom.addStyle(_contentCssText);
+          console.log(vm.content)
+          editor.setContent(vm.content)
         }
       });
 

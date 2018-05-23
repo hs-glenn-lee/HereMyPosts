@@ -24,7 +24,7 @@
           class="icon"
           src="@/assets/images/left-pane-icons/50w_saveicon.png"/>
       </div>
-      <div class="left-pane-item">SAVE</div>
+
       <div class="left-pane-item">SETTINGS</div>
       <button type="button" @click="test">test</button>
     </nav>

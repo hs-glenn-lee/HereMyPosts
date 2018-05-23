@@ -13,7 +13,7 @@
 <script>
   import api from '@/api/api'
   import Category from '@/model/Category'
-  import CategoryNodeClass from '@/model/categoryTree/CategoryNode'
+  import CategoryNodeClass from '@/model/category-tree/category-node'
   export default {
     name: 'CNodeRightClickMenu',
     props: [

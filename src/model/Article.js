@@ -1,24 +1,25 @@
-export class Article {
-  id = "";
-  parentId = '';
-  name = '';
-  seq = 0;
+export default class Article {
 
-  constructor() {}
+  constructor(id, title, content, summary, readCount, isDel, isPublic, category, author, createTimestamp, updateTimestamp) {
+    this.id = id;
+    this.title = title;
 
-  get id() {
+    this.content = content // for convetion
 
-  }
+    this.summary = summary;
+    this.readCount = readCount || 0;
 
-  get parentId() {
-  }
+    this.isDel = false;
+    this.isDel = isDel;
 
-  get name() {
+    this.isPublic = false;
+    this.isDel = isDel
 
-  }
+    this.category = category;
+    this.author = author;
 
-  get seq() {
-
+    this.createTimestamp = createTimestamp;
+    this.updateTimestamp = updateTimestamp;
   }
 
 }

@@ -1,4 +1,4 @@
-import CategoryTree from '@/model/CategoryTree/category-tree'
+import CategoryTree from '@/model/category-tree/category-tree'
 import api from "@/api/api";
 
 const state = {

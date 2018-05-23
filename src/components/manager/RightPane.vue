@@ -6,7 +6,7 @@
         <span class="selected-category-name">default</span>
       </div>
       <div class="editor-container">
-        <editor></editor>
+        <editor :content="getContent"></editor>
       </div>
     </div>
   </div>
@@ -14,8 +14,30 @@
 
 <script>
   import editorComp from './editor/Editor'
+  import{mapMutations} from 'vuex'
+  import{mapGetters} from 'vuex'
   export default {
     name: 'EditorComp',
+    data () {
+      return {
+
+      }
+    },
+    methods: {
+      ...mapMutations([
+        'newArticle',
+        'getAccount',
+        'getCategoryTreeRoot'
+      ])
+    },
+    created () {
+      this.newArticle({category:this.getCategoryTreeRoot, account: this.account})
+    },
+    computed: {
+      ...mapGetters([
+        'getContent'
+      ])
+    },
     components: {
       'editor': editorComp
     }
