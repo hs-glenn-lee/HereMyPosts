@@ -10,7 +10,7 @@
       </div>
 
       <div class="editor-container">
-        <editor :content="getContent"></editor>
+        <editor></editor>
       </div>
     </div>
   </div>
@@ -19,7 +19,8 @@
 <script>
   import editorComp from './editor/Editor'
   import { mapMutations } from 'vuex'
-  import { mapGetters } from 'vuex'
+
+
   export default {
     name: 'EditorComp',
     data () {
@@ -30,7 +31,6 @@
     methods: {
       ...mapMutations([
         'newArticle',
-        'getAccount',
         'getCategoryTreeRoot'
       ])
     },
@@ -38,17 +38,6 @@
       this.newArticle()
     },
     computed: {
-      ...mapGetters([
-        'getContent'
-      ]),
-/*      content : {
-        get() {
-          return this.$store.article.content
-        },
-        set(value) {
-          this.$store.commit('setContent', value);
-        }
-      },*/
       title: {
         get() {
           return this.$store.state.article.title

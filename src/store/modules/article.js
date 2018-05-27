@@ -14,14 +14,14 @@ const getters = {
 const mutations = {
 
   newArticle: state => {
-    state.article = new Article(null, '', '', '', 0, false, 0, null, null);
-    console.log(state.article.content)
+    state.article = new Article(null, '', '<!DOCTYPE html><html><head></head><body></body></html>', '', 0, false, 0, null, null);
+
   },
   setTitle: (state, payload) => {
     state.article.title = payload;
   },
   setContent: (state, payload) => {
-    state.article.article = payload;
+    state.article.content = payload;
   }
 
 };
@@ -39,8 +39,7 @@ const actions = {
 
     }
 
-
-
+    console.log(state.article)
 
     api.saveArticle(state.article)
       .then( data => {

@@ -63,7 +63,7 @@ export default {
 
     console.log( '!!???!')
     var x = JSON.stringify(compositeArticle);
-    console.log(x + '!!!')
+    console.log(x)
 
     return axiosAppJson.post('/api/article/save', compositeArticle)
       .then( res => { return res.data })

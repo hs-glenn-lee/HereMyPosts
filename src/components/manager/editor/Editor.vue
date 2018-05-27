@@ -1,5 +1,5 @@
 <template>
-  <div id="editor"></div>
+  <textarea id="editor">{{getContent}}</textarea>
 </template>
 
 <script>
@@ -57,23 +57,30 @@
   import langpack from './ko_KR'
 
   //import nanumGothicFontURL from '@/assets/css/fonts/nanumgothic/font-nanumbrush.css'
+  import { mapGetters } from 'vuex'
 
 export default {
   name: 'Manage',
-  props: {
-    content: String
-  },
   data () {
     return {}
   },
   mounted() {
     this.init()
   },
+  computed : {
+    ...mapGetters([
+      'getContent'
+    ])
+  },
   methods: {
+
     init () {
+      /*console.log(this)*/
 
       langpack(tinymce) //set Laguage
+
       var vm = this;
+
       tinymce.init({
         selector: '#editor',
         laguage: 'ko_KR',
@@ -138,9 +145,23 @@ export default {
         init_instance_callback: function(editor) {
           const _contentCssText = require('!!css-to-string-loader!css-loader!./content.css')
           editor.dom.addStyle(_contentCssText);
-          console.log(vm.content)
-          editor.setContent(vm.content)
+        },
+        setup: function(editor) {
+          // init tinymce
+          editor.on('init', function () {
+            //console.log(vm.getContent);
+            //tinymce.get('editor').setContent(vm.$store.getters.getArticle);
+            /*console.log(vm.$store.getters.getArticle)*/
+          });
+
+          // when typing keyup event
+          editor.on('keyup', function () {
+            vm.$store.commit('setContent',editor.getContent({ format: 'text' }));
+            /*console.log(editor.getContent({ format: 'raw' }))*/
+          });
+
         }
+
       });
 
 
