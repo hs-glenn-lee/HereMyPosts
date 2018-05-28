@@ -59,6 +59,7 @@
     margin-left: 73px;
     width: 100%;
     height: 100%;
+    background-color: white;
   }
   div.editor-container {
     height: 100%;
