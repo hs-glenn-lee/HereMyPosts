@@ -45,6 +45,7 @@ import { mapGetters } from 'vuex';
 import { mapActions } from 'vuex';
 import categoryTreeComp from '@/components/CategoryTree.vue'
 import CategorySubLeftPane from '@/components/manager/CategorySubLeftPane.vue'
+
 export default {
   name: 'Manage',
   data () {

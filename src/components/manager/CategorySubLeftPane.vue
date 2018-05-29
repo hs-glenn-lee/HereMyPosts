@@ -17,15 +17,21 @@
                                 :left="rightClickedLeft">
       </c-node-right-click-menu>
 
+      <div>
+        <article-list-pane :onArticleTitleClick="onArticleTitleClick"
+                           :onArticleTitleDoubleClick="onArticleTitleDoubleClick"></article-list-pane>
+      </div>
   </div>
 </template>
 
 <script>
 import { mapMutations } from 'vuex';
+import { mapActions } from 'vuex';
 import { mapGetters } from 'vuex';
 import categoryTreeComp from '@/components/CategoryTree.vue'
 import CNodeRightClickMenu from "./CNodeRightClickMenu";
 import emptyComp from '@/components/Empty.vue';
+import ArticleListPane from '@/components/manager/ArticleListPane';
 
 export default {
   name: 'CategorySubLeftPaneComp',
@@ -40,12 +46,16 @@ export default {
   components: {
     'c-node-right-click-menu': CNodeRightClickMenu,
     'category-tree-comp': categoryTreeComp,
-    'empty-comp': emptyComp
+    'empty-comp': emptyComp,
+    'article-list-pane': ArticleListPane
   },
   methods: {
     ...mapMutations([
       'setCategorySubLeftPaneIsShow',
       'setSelectedNode'
+    ]),
+    ...mapActions([
+      'getArticlesOfCategory'
     ]),
     closeCSLP () {
       this.setCategorySubLeftPaneIsShow(false)
@@ -71,6 +81,14 @@ export default {
     onNodeNameClick(clickEvent) {
       var clickedNodeNameSpan = clickEvent.currentTarget;
       this.setSelectedNode(clickedNodeNameSpan.parentElement.parentElement.id)
+      this.getArticlesOfCategory(clickedNodeNameSpan.parentElement.parentElement.id)
+    },
+
+    onArticleTitleClick(event) {
+
+    },
+    onArticleTitleDoubleClick(event) {
+
     }
 
   },

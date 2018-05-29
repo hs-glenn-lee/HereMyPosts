@@ -68,6 +68,12 @@ export default {
     return axiosAppJson.post('/api/article/save', compositeArticle)
       .then( res => { return res.data })
       .catch( err => { throw err })
+  },
+
+  getArticlesOfCategory (categoryId) {
+    return axiosAppJson.get('api/article/'+categoryId)
+      .then(res => { return res.data })
+      .catch( err => {throw err})
   }
 
 }

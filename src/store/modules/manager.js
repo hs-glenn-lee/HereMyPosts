@@ -4,11 +4,15 @@ const state = {
     selectedCategoryNode: {}
   },
 
-  categorySubLeftPaneIsShow: true
+  categorySubLeftPaneIsShow: true,
+  showingArticleListPane: true
 };
 const getters = {
   getCategorySubLeftPaneIsShow: state => {
     return state.categorySubLeftPaneIsShow;
+  },
+  showingArticleListPane: state => {
+    return state.showingArticleListPane;
   }
 };
 const mutations = {

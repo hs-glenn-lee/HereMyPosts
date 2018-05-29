@@ -1,7 +1,8 @@
 import api from '@/api/api'
 import Article from '@/model/Article'
 const state = {
-  article: null
+  article: null,
+  articleList: []
 };
 const getters = {
   getArticle: state => {
@@ -9,6 +10,12 @@ const getters = {
   },
   getContent: state => {
     return state.article.content
+  },
+  getArticleList: state => {
+    return state.articleList
+  },
+  isArticleListEmpty: state => {
+    return state.articleList.length < 1
   }
 };
 const mutations = {
@@ -45,7 +52,14 @@ const actions = {
       .then( data => {
         console.log('!!!saveArticle')
       })
-
+  },
+  getArticlesOfCategory : (context, payload) => {
+    api.getArticlesOfCategory(payload)
+      .then(data => {
+        //todo getArticlesOfCategory data ordering
+        console.log(data)
+        state.articleList = data;
+      })
   }
 };
 export default {
