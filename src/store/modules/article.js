@@ -1,5 +1,6 @@
 import api from '@/api/api'
 import Article from '@/model/Article'
+import validator from '@/model/validator/validator.js'
 const state = {
   article: null,
   articleList: []
@@ -19,10 +20,8 @@ const getters = {
   }
 };
 const mutations = {
-
   newArticle: state => {
     state.article = new Article(null, '', '<!DOCTYPE html><html><head></head><body></body></html>', '', 0, false, 0, null, null);
-
   },
   setTitle: (state, payload) => {
     state.article.title = payload;
@@ -30,7 +29,6 @@ const mutations = {
   setContent: (state, payload) => {
     state.article.content = payload;
   }
-
 };
 const actions = {
   saveArticle: context => {
@@ -38,6 +36,7 @@ const actions = {
     state.article.author = context.getters.getAccount;
 
     //validate
+    validator.validate('saveArticle',state.article);
     if(state.article.title === '') {
 
     }

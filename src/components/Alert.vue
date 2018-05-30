@@ -2,15 +2,11 @@
   <div class="alert"
         :style="alertStyle"
         v-if="getIsAlertShowing">
-
     <div class="alert-message">{{getAlertMessage}}</div>
-
     <div>
       <button type="button"
-              class="whattheheck"
         @click="setAlertIsShowing(false)">확인</button>
     </div>
-
   </div>
 </template>
 

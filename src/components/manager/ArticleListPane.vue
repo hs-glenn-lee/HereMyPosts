@@ -19,7 +19,6 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
 import { mapGetters } from 'vuex';
 
 export default {

@@ -6,6 +6,14 @@ export default {
           reject('value must not undefined');
         }
       }
+    },
+    'saveArticle': {
+      check (val, reject) {
+        var article = val;
+        if(article.title.length === 0) {
+          reject('제목을 입력해 주세요.')
+        }
+      }
     }
   },
   validate(constraintKey, value, rejectCallback) {
