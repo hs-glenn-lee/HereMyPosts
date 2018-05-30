@@ -1,6 +1,6 @@
 <template>
   <div class="article-list-pane"
-       v-show="showingArticleListPane">
+       v-show="isArticleListPaneShowing">
     <ul class="article-list">
       <li v-if="isArticleListEmpty">
         <span>empty</span>
@@ -37,7 +37,7 @@ export default {
     ...mapGetters([
       'getArticleList',
       'isArticleListEmpty',
-      'showingArticleListPane'
+      'isArticleListPaneShowing'
     ])
   },
   methods: {

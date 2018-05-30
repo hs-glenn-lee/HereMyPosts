@@ -1,13 +1,13 @@
 <template>
-  <nav class="left-pane">
+  <nav class="left-pane-menu">
     <div class="global-logo"><img src="@/assets/images/logo_height_30px.png"/></div>
-    <div class="left-pane-item">NEW</div>
-    <div class="left-pane-item">CAT</div>
-    <div class="left-pane-item">PUB</div>
-    <div class="left-pane-item">SER</div>
-    <div class="left-pane-item">TAG</div>
-    <div class="left-pane-item">SAVE</div>
-    <div class="left-pane-item">SETTINGS</div>
+    <div class="left-pane-menu-item">NEW</div>
+    <div class="left-pane-menu-item">CAT</div>
+    <div class="left-pane-menu-item">PUB</div>
+    <div class="left-pane-menu-item">SER</div>
+    <div class="left-pane-menu-item">TAG</div>
+    <div class="left-pane-menu-item">SAVE</div>
+    <div class="left-pane-menu-item">SETTINGS</div>
   </nav>
 </template>
 
@@ -23,7 +23,7 @@ export default {
 </script>
 
 <style scoped>
-.left-pane {
+.left-pane-menu {
   left: 0;
   width: 73px;
 

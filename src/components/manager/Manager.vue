@@ -2,14 +2,15 @@
   <div class="manager">
     <left-pane></left-pane>
     <right-pane></right-pane>
+    <alert-comp></alert-comp>
   </div>
-
 </template>
 
 <script>
 
 import leftPaneComp from './ManagerLeftPane'
-import rightPaneComp from './RightPane'
+import rightPaneComp from './ManagerRightPane'
+import alertComp from '@/components/Alert'
 import { mapActions } from 'vuex'
 export default {
   name: 'ManagerComp',
@@ -19,11 +20,12 @@ export default {
     ])
   },
   created () {
-    this.initSign()
+    this.initSign()//todo if error occcur redirect to sign-in
   },
   components: {
     'left-pane': leftPaneComp,
-    'right-pane': rightPaneComp
+    'right-pane': rightPaneComp,
+    'alert-comp': alertComp
   }
 
 

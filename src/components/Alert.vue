@@ -1,19 +1,67 @@
 <template>
-  <div class="alert">
-    <span>{{message}}</span>
+  <div class="alert"
+        :style="alertStyle"
+        v-if="getIsAlertShowing">
+
+    <div class="alert-message">{{getAlertMessage}}</div>
+
+    <div>
+      <button type="button"
+              class="whattheheck"
+        @click="setAlertIsShowing(false)">확인</button>
+    </div>
+
   </div>
 </template>
 
 <script>
-  // alternative for window.alert
-export default {
-  name: 'Alert',
-  props: ['message']
-}
+  import {mapMutations} from 'vuex';
+  import {mapGetters} from 'vuex';
+
+  export default {
+    name: 'Alert',
+    data () {
+      return {
+        alertX: '',
+        alertY: ''
+      }
+    },
+    methods: {
+      ...mapMutations([
+        'setAlertIsShowing',
+        'setAlert',
+        'setAlertMessage'
+      ]),
+      positionAlertCenter () {
+        this.alertX = window.pageXOffset;
+        this.alertY = window.pageYOffset;
+      }
+    },
+    computed: {
+      ...mapGetters([
+        'getAlertMessage',
+        'getIsAlertShowing',
+        'getAlert'
+      ]),
+      alertStyle () {
+        return {
+          left: this.alertX,
+          top: this.alertY
+        }
+      }
+    },
+    created () {
+      this.positionAlertCenter()
+    }
+  }
 </script>
 
 <style scoped>
-.alert {
-
+div.alert {
+  position: absolute;
+  width: 500px;
+  z-index: 999;
+  background-color: white;
+  border: 1px solid black;
 }
 </style>

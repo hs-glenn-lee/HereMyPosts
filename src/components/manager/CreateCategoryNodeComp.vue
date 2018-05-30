@@ -1,5 +1,5 @@
 <template>
-  <div class="block-container" :style="coordinate" style="width:360px;">
+  <div class="block-container" :style="menuPositionStyle" style="width:360px;">
       <input v-model="newCategoryName"
 
              type="text"
@@ -54,7 +54,7 @@
       }
     },
     computed: {
-      coordinate() {
+      menuPositionStyle() {
         return 'top:'+(this.top)+'px;'+'left:'+(this.left)+'px;';
       }
     }

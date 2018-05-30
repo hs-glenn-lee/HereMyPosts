@@ -1,18 +1,20 @@
 import Manager from '@/model/manager/Manager'
+import validator from '@/model/validator/validator'
+
 const state = {
   manager: {
     selectedCategoryNode: {}
   },
 
-  categorySubLeftPaneIsShow: true,
-  showingArticleListPane: true
+  isCategoryPaneShowing: true,
+  isArticleListPaneShowing: true
 };
 const getters = {
-  getCategorySubLeftPaneIsShow: state => {
-    return state.categorySubLeftPaneIsShow;
+  isCategoryPaneShowing: state => {
+    return state.isCategoryPaneShowing;
   },
-  showingArticleListPane: state => {
-    return state.showingArticleListPane;
+  isArticleListPaneShowing: state => {
+    return state.isArticleListPaneShowing;
   }
 };
 const mutations = {
@@ -20,7 +22,7 @@ const mutations = {
     state.manager = payload;
   },
   setCategorySubLeftPaneIsShow: (state, payload) => {
-    state.categorySubLeftPaneIsShow = payload;
+    state.isCategoryPaneShowing = payload;
   }
 };
 const actions = {
@@ -30,7 +32,14 @@ const actions = {
     })
   },
   test: (context) => {
-    console.log(context.rootState.categoryTreeModule.selectedNode);
+    console.log('test')
+    validator.validate('test',undefined, function() {
+      console.log('reject callback')
+      console.log(context.rootState.alert);
+
+      context.commit('setAlertMessage', 'test alert message');
+      context.commit('setAlertIsShowing', true);
+    });
   }
 };
 export default {

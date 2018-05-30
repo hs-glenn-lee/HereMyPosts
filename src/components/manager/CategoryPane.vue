@@ -1,6 +1,6 @@
 <template>
   <div class="sub-left-pane"
-       v-show="getCategorySubLeftPaneIsShow"
+       v-show="isCategoryPaneShowing"
         @click.right="function(e){e.preventDefault()}"><!--prevent leftClick-->
       <div class="close-icon" @click="closeCSLP(false)">
         <img src="@/assets/images/x-icon-30.png" style="width:20px;"/>
@@ -29,7 +29,7 @@ import { mapMutations } from 'vuex';
 import { mapActions } from 'vuex';
 import { mapGetters } from 'vuex';
 import categoryTreeComp from '@/components/CategoryTree.vue'
-import CNodeRightClickMenu from "./CNodeRightClickMenu";
+import CNodeRightClickMenu from "./CategoryNodeRightClickMenu";
 import emptyComp from '@/components/Empty.vue';
 import ArticleListPane from '@/components/manager/ArticleListPane';
 
@@ -94,7 +94,7 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'getCategorySubLeftPaneIsShow',
+      'isCategoryPaneShowing',
       'getCategoryTree'
     ])
   }

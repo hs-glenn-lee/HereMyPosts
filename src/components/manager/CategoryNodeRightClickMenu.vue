@@ -1,24 +1,24 @@
 <template>
-  <div :style="coordinate" class="rc-click-menu">
+  <div :style="menuPositionStyle" class="rc-click-menu">
     <div class="rc-clicked-node-name"><span >{{categoryNode.name}}</span></div>
     <ul class="menu-list" v-if="operation === ''">
       <li class="menu-list-item"
-          @click="showAddCnodeComp">아래에 새 카테고리 생성</li>
+          @click="showCreateCategoryNodeComp">아래에 새 카테고리 생성</li>
       <li class="menu-list-item">이 카테고리 삭제</li>
 
       <li v-if="categoryNode.isPublic" class="menu-list-item">비공개하기</li>
       <li v-else class="menu-list-item">공개하기</li>
     </ul>
 
-    <add-cnode-comp
-      v-if="operation ==='addCNode'"
-      :category-node="categoryNode"></add-cnode-comp>
+    <create-category-node-comp
+      v-if="operation ==='createCategoryNode'"
+      :category-node="categoryNode"></create-category-node-comp>
   </div>
 
 </template>
 
 <script>
-import AddCNodeComp from './AddCNodeComp'
+import CreateCategoryNodeComp from './CreateCategoryNodeComp'
   export default {
     name: 'CNodeRightClickMenu',
     props: [
@@ -32,17 +32,17 @@ import AddCNodeComp from './AddCNodeComp'
       }
     },
     methods: {
-      showAddCnodeComp() {
-        this.operation = 'addCNode'
+      showCreateCategoryNodeComp() {
+        this.operation = 'createCategoryNode'
       }
     },
     computed: {
-      coordinate() {
+      menuPositionStyle() {
         return 'top:'+(this.top)+'px;'+'left:'+(this.left)+'px;';
       }
     },
     components: {
-      'add-cnode-comp': AddCNodeComp
+      'create-category-node-comp': CreateCategoryNodeComp
     }
 
   }
@@ -52,6 +52,8 @@ import AddCNodeComp from './AddCNodeComp'
   div.rc-click-menu {
     background-color: #f8f8f8;
     border: 1px solid #ececec;
+
+    z-index: 201;
     position: absolute;
 
   }
