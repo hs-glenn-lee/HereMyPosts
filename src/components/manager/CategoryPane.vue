@@ -1,7 +1,8 @@
 <template>
   <div class="sub-left-pane"
        v-show="isCategoryPaneShowing"
-        @click.right="function(e){e.preventDefault()}"><!--prevent leftClick-->
+        @click.right="function(e){e.preventDefault()}"
+        @click="markPass('CategoryPane')"><!--prevent leftClick-->
       <div class="close-icon" @click="closeCSLP(false)">
         <img src="@/assets/images/x-icon-30.png" style="width:20px;"/>
       </div>
@@ -34,7 +35,7 @@ import emptyComp from '@/components/Empty.vue';
 import ArticleListPane from '@/components/manager/ArticleListPane';
 
 export default {
-  name: 'CategorySubLeftPaneComp',
+  name: 'CategoryPane',
   data () {
     return {
       rightClickMenu: '',
@@ -51,14 +52,15 @@ export default {
   },
   methods: {
     ...mapMutations([
-      'setCategorySubLeftPaneIsShow',
+      'setCategoryPaneIsShowing',
       'setSelectedNode'
     ]),
     ...mapActions([
-      'getArticlesOfCategory'
+      'getArticlesOfCategory',
+      'markPass'
     ]),
     closeCSLP () {
-      this.setCategorySubLeftPaneIsShow(false)
+      this.setCategoryPaneIsShowing(false)
     },
 
     //categoryTree props

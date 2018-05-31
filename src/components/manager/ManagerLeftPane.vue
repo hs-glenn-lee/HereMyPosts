@@ -55,15 +55,17 @@ export default {
   },
   methods: {
     ...mapMutations([
-      'setCategorySubLeftPaneIsShow'
+      'setCategoryPaneIsShowing'
     ]),
     ...mapActions([
       'test',
       'saveArticle'
     ]),
-    toggleCategoryPane () {
+    toggleCategoryPane (event) {
+      event.stopPropagation();// because of check/mark pass
+
       var cur = this.isCategoryPaneShowing;
-      this.setCategorySubLeftPaneIsShow(!cur);
+      this.setCategoryPaneIsShowing(!cur);
     },
     onMenuItemMouserOver (event ) {
       event.currentTarget.classList.add('up-here')

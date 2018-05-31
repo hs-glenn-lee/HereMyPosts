@@ -10,14 +10,19 @@ import './assets/css/global.css'
 import './assets/css/fonts/nanumbrush/font-nanumbrush.css'
 //import './assets/lang'
 Vue.config.productionTip = false
-
+/*
 Vue.mixin({
   mounted() {//$el is undefined until mounted
-    if(this.$el.setAttribute){
-      this.$el.setAttribute('component-name',this.$options.name);
+
+
+    var rootEl = this.$el;
+    if(rootEl.setAttribute){
+      rootEl.setAttribute('component-name',this.$options.name);
     }
+
+    console.log(this);
   }
-});
+});*/
 
 /* eslint-disable no-new */
 window.vm = new Vue({

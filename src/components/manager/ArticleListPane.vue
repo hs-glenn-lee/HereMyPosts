@@ -1,7 +1,6 @@
 <template>
   <div class="article-list-pane"
-       v-show="isArticleListPaneShowing"
-        @click="this.setFocusedVueCompName">
+       v-show="isArticleListPaneShowing">
     <ul class="article-list">
       <li v-if="isArticleListEmpty">
         <span>empty</span>

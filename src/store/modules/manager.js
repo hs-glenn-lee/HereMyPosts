@@ -6,7 +6,13 @@ const state = {
     selectedCategoryNode: {}
   },
 
-  focusedVueCompName: '',
+  passes: {
+    'CategoryPane': {
+      fail: function(context) {
+        context.commit('setCategoryPaneIsShowing', false);
+      }
+    }
+  },
 
   isCategoryPaneShowing: true,
   isArticleListPaneShowing: true
@@ -17,30 +23,14 @@ const getters = {
   },
   isArticleListPaneShowing: state => {
     return state.isArticleListPaneShowing;
-  },
-  getFocusedVueCompName: state => {
-    return state.focusedVueCompName;
   }
 };
 const mutations = {
   setManager: (state, payload) => {
     state.manager = payload;
   },
-  setCategorySubLeftPaneIsShow: (state, payload) => {
+  setCategoryPaneIsShowing: (state, payload) => {
     state.isCategoryPaneShowing = payload;
-  },
-  setFocusedVueCompName: (state, payload)  => {
-    var DOMevent = payload;
-
-    console.log(payload)
-    /*var event = payload.event;
-
-    event.preventDefault();
-    event.stopPropagation();
-
-    var comp = payload.vueComp;
-
-    state.focusedVueCompName = comp;*/
   }
 };
 const actions = {
@@ -58,6 +48,41 @@ const actions = {
       context.commit('setAlertMessage', exception.message);
       context.commit('setAlertIsShowing', true);
     });
+  },
+  checkPass: (context, payload) => {//to not showing if click other components
+    var event = payload;
+
+    var passes = context.state.passes;
+    var markedPasses = event.passes;
+
+    if(markedPasses) {
+      console.log('markedPasses exits')
+      var markedPassMap = {};
+      for(var k in markedPasses) {
+        var markedPassKey = markedPasses[k];
+        markedPassMap[markedPassKey] = {};
+      }
+
+      for(var passKey in passes) {
+        if(markedPassMap[passKey] === undefined){
+          passes[passKey].fail(context);
+        }
+      }
+    }else {
+      for(var passKey in passes) {//fail all
+        var pass = passes[passKey];
+        pass.fail(context);
+      }
+    }
+
+  },
+  markPass: (context, payload) => {
+    if(event.passes) {
+      event.passes.push(payload);
+    }else {
+      event.passes = [payload]
+    }
+
   }
 };
 export default {

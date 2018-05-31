@@ -1,5 +1,6 @@
 <template>
-  <div class="manager">
+  <div class="manager"
+    @click="checkPass">
     <left-pane></left-pane>
     <right-pane></right-pane>
     <alert-comp v-if="getIsAlertShowing" key="getAlertCount"></alert-comp>
@@ -17,7 +18,8 @@ export default {
   name: 'ManagerComp',
   methods: {
     ...mapActions([
-      'initSign'
+      'initSign',
+      'checkPass'
     ])
   },
   computed: {
