@@ -2,7 +2,7 @@
   <div class="manager">
     <left-pane></left-pane>
     <right-pane></right-pane>
-    <alert-comp></alert-comp>
+    <alert-comp v-if="getIsAlertShowing" key="getAlertCount"></alert-comp>
   </div>
 </template>
 
@@ -12,11 +12,20 @@ import leftPaneComp from './ManagerLeftPane'
 import rightPaneComp from './ManagerRightPane'
 import alertComp from '@/components/Alert'
 import { mapActions } from 'vuex'
+import { mapGetters } from 'vuex'
 export default {
   name: 'ManagerComp',
   methods: {
     ...mapActions([
       'initSign'
+    ])
+  },
+  computed: {
+    ...mapGetters([
+      'getAlertCount',
+      'getAlertMessage',
+      'getIsAlertShowing',
+      'getAlert'
     ])
   },
   created () {
@@ -38,3 +47,4 @@ export default {
   overflow: hidden;
 }
 </style>
+

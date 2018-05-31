@@ -6,6 +6,8 @@ const state = {
     selectedCategoryNode: {}
   },
 
+  focusedVueCompName: '',
+
   isCategoryPaneShowing: true,
   isArticleListPaneShowing: true
 };
@@ -15,6 +17,9 @@ const getters = {
   },
   isArticleListPaneShowing: state => {
     return state.isArticleListPaneShowing;
+  },
+  getFocusedVueCompName: state => {
+    return state.focusedVueCompName;
   }
 };
 const mutations = {
@@ -23,6 +28,19 @@ const mutations = {
   },
   setCategorySubLeftPaneIsShow: (state, payload) => {
     state.isCategoryPaneShowing = payload;
+  },
+  setFocusedVueCompName: (state, payload)  => {
+    var DOMevent = payload;
+
+    console.log(payload)
+    /*var event = payload.event;
+
+    event.preventDefault();
+    event.stopPropagation();
+
+    var comp = payload.vueComp;
+
+    state.focusedVueCompName = comp;*/
   }
 };
 const actions = {
@@ -33,11 +51,11 @@ const actions = {
   },
   test: (context) => {
     console.log('test')
-    validator.validate('test',undefined, function() {
+    validator.validate('test',undefined, function(exception) {
       console.log('reject callback')
       console.log(context.rootState.alert);
 
-      context.commit('setAlertMessage', 'test alert message');
+      context.commit('setAlertMessage', exception.message);
       context.commit('setAlertIsShowing', true);
     });
   }

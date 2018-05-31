@@ -1,7 +1,6 @@
 <template>
   <div class="alert"
-        :style="alertStyle"
-        v-if="getIsAlertShowing">
+        :style="alertStyle">
     <div class="alert-message">{{getAlertMessage}}</div>
     <div>
       <button type="button"
@@ -29,20 +28,21 @@
         'setAlertMessage'
       ]),
       positionAlertCenter () {
-        this.alertX = window.pageXOffset;
-        this.alertY = window.pageYOffset;
+        this.alertX = window.innerWidth/2;
+        this.alertY = window.innerHeight/2;
       }
     },
     computed: {
       ...mapGetters([
+        'getAlertCount',
         'getAlertMessage',
         'getIsAlertShowing',
         'getAlert'
       ]),
       alertStyle () {
         return {
-          left: this.alertX,
-          top: this.alertY
+          left: (this.alertX - 250 /*div.alert.width*/)+'px',
+          top: (this.alertY-100 /*div.alert.height/2*/)+'px'
         }
       }
     },

@@ -1,6 +1,7 @@
 <template>
   <div class="article-list-pane"
-       v-show="isArticleListPaneShowing">
+       v-show="isArticleListPaneShowing"
+        @click="this.setFocusedVueCompName">
     <ul class="article-list">
       <li v-if="isArticleListEmpty">
         <span>empty</span>
@@ -20,6 +21,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import { mapMutations } from 'vuex';
 
 export default {
   name: 'CategorySubLeftPaneComp',
@@ -40,7 +42,9 @@ export default {
     ])
   },
   methods: {
-
+    ...mapMutations([
+      'setFocusedVueCompName'
+    ])
 
   }
 }

@@ -4,7 +4,8 @@ const state = {
   alert: {
     message: '',
     isShowing: false
-  }
+  },
+  alertCount: 0 // for identify alert emerged
 };
 const getters = {
   getAlertMessage: state => {
@@ -15,16 +16,22 @@ const getters = {
   },
   getAlert: state => {
     return state.alert;
+  },
+  getAlertCount: state => {
+    return state.alertCount;
   }
 };
 const mutations = {
   setAlert: (state, payload) => {
+    state.alertCount++;
     state.alert = payload;
   },
   setAlertMessage: (state, payload) => {
+    state.alertCount++;
     state.alert.message = payload;
   },
   setAlertIsShowing: (state, payload) => {
+    state.alertCount++;
     state.alert.isShowing = payload;
   }
 
