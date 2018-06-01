@@ -16,8 +16,8 @@
           class="icon"
           src="@/assets/images/left-pane-icons/50w_category_icon.png"/>
       </div>
-      <div class="left-pane-menu-item">PUB</div>
-      <div class="left-pane-menu-item">SER</div>
+      <!--<div class="left-pane-menu-item">PUB</div>-->
+      <!--<div class="left-pane-menu-item">SER</div>-->
       <div class="left-pane-menu-item"
            @click="saveArticle"
            @mouseover="onMenuItemMouserOver"
@@ -27,7 +27,7 @@
           src="@/assets/images/left-pane-icons/50w_saveicon.png"/>
       </div>
 
-      <div class="left-pane-menu-item">SETTINGS</div>
+      <!--<div class="left-pane-menu-item">SETTINGS</div>-->
       <button type="button" @click="test">test</button>
     </nav>
     <div>

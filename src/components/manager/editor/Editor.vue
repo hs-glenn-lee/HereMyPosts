@@ -156,7 +156,7 @@ export default {
 
           // when typing keyup event
           editor.on('keyup', function () {
-            vm.$store.commit('setContent',editor.getContent({ format: 'text' }));
+            vm.$store.commit('setContent',editor.getContent({ format: 'raw' }));
             /*console.log(editor.getContent({ format: 'raw' }))*/
           });
 

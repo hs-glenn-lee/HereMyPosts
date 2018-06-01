@@ -5,13 +5,6 @@
       <div class="left-pane-menu-item"
            @mouseover="onMenuItemMouserOver" @mouseleave="onMenuItemMouserLeave">
         <img
-          class="icon"
-          src="@/assets/images/left-pane-icons/50w_newdocument.png"
-        />
-      </div>
-      <div class="left-pane-menu-item"
-           @mouseover="onMenuItemMouserOver" @mouseleave="onMenuItemMouserLeave">
-        <img
           @click="toggleCategoryPane"
           class="icon"
           src="@/assets/images/left-pane-icons/50w_category_icon.png"/>

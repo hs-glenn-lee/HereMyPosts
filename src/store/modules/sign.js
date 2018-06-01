@@ -11,6 +11,9 @@ const getters = {
   },
   getAccount: state => {
     return state.account;
+  },
+  getIsSignedIn: state => {
+    return state.isSignedIn;
   }
 };
 const mutations = {

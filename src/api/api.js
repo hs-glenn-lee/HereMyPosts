@@ -63,7 +63,6 @@ export default {
 
     console.log( '!!???!')
     var x = JSON.stringify(compositeArticle);
-    console.log(x)
 
     return axiosAppJson.post('/api/article/save', compositeArticle)
       .then( res => { return res.data })
@@ -78,8 +77,19 @@ export default {
 
   getArticle(articleId) {
     return axiosAppJson.get('api/article/'+articleId)
-      .then(res => { return res.data })
+      .then(res => {
+        console.log(res)
+        return res.data })
+      .catch( err => {throw err})
+  },
+
+
+  //---comment
+  writeComment (comment) {
+    return axiosAppJson.put('api/comment/write', comment)
+      .then(res => {
+        console.log(res)
+        return res.data })
       .catch( err => {throw err})
   }
-
 }
