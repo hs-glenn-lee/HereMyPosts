@@ -12,6 +12,12 @@ const getters = {
   getContent: state => {
     return state.article.content
   },
+  getTitle: state => {
+    return state.article.title
+  },
+  getAuthor: state => {
+    return state.article.author
+  },
   getArticleList: state => {
     return state.articleList
   },
@@ -28,6 +34,9 @@ const mutations = {
   },
   setContent: (state, payload) => {
     state.article.content = payload;
+  },
+  setArticle: (state, payload) => {
+    state.article = payload;
   }
 };
 const actions = {
@@ -58,6 +67,12 @@ const actions = {
         //todo getArticlesOfCategory data ordering
         console.log(data)
         state.articleList = data;
+      })
+  },
+  getArticleFromServer: (context, payload) => {
+    api.getArticle(payload)
+      .then(data => {
+        context.commit('setArticle',data);
       })
   }
 };

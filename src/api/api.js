@@ -71,7 +71,13 @@ export default {
   },
 
   getArticlesOfCategory (categoryId) {
-    return axiosAppJson.get('api/article/'+categoryId)
+    return axiosAppJson.get('api/category/'+categoryId+'/articles')
+      .then(res => { return res.data })
+      .catch( err => {throw err})
+  },
+
+  getArticle(articleId) {
+    return axiosAppJson.get('api/article/'+articleId)
       .then(res => { return res.data })
       .catch( err => {throw err})
   }

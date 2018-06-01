@@ -47,7 +47,7 @@ import categoryTreeComp from '@/components/CategoryTree.vue'
 import CategoryPane from '@/components/manager/CategoryPane.vue'
 
 export default {
-  name: 'Manage',
+  name: 'ManageLeftPane',
   data () {
     return {
       upHere: false

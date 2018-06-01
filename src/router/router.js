@@ -4,7 +4,7 @@ import Home from '@/components/Home'
 import SignIn from '@/components/SignIn'
 import SignUp from '@/components/SignUp'
 import ManagerComp from '@/components/manager/Manager'
-import Article from '@/components/Article'
+import Viewer from '@/components/viewer/Viewer'
 import Test from '@/components/Test'
 
 Vue.use(Router)
@@ -30,8 +30,8 @@ export default new Router({
       component: ManagerComp
     },
     {
-      path: '/:username/article/:articleId',
-      component: Article
+      path: '/users/:username/article/:articleId',
+      component: Viewer
     },
     {
       path: '/test',
