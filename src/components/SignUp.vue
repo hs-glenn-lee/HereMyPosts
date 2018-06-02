@@ -55,7 +55,7 @@
       </form>
       <div class="context-switch">
         <div class="tip-text">계정이 이미 있으세요?</div>
-        <a href="/sign-in">로그인</a>
+        <a href="/sign/sign-in">로그인</a>
       </div>
     </main>
   </div>

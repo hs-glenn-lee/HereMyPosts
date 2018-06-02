@@ -29,7 +29,7 @@
       </form>
       <div class="context-switch">
         <div class="tip-text">계정이 없으세요?</div>
-        <a href="/sign-up">계정 만들기</a>
+        <a href="/sign/sign-up">계정 만들기</a>
       </div>
       <!--<button @click="isUniqueNewUsername">test</button>-->
     </main>
@@ -67,7 +67,7 @@ export default {
             isSignedIn: true
           };
           this.setSign(sign);
-          this.$router.push({ path: "/manage"})
+          this.$router.push({ path: "/"+this.username+"/manage"})
         })
         .catch(message => {
           this.alertMessage = '! ' + message

@@ -6,7 +6,7 @@
       </div>
       <div class="float-right">
         <div class="link">
-          <a href="/sign-in">로그인</a>
+          <a href="/sign/sign-in">로그인</a>
         </div>
       </div>
     </header>
