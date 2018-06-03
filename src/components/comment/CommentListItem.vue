@@ -1,25 +1,17 @@
 <template>
-  <div class="comment-list-container">
-    <ul class="comment-list">
-      <comment-list-item
-        v-for="comment in comments"
-        :key="comment.id"></comment-list-item>
-    </ul>
-  </div>
+  <li class="comment-list-item">
+    <div class="authorName">{{comment.authorName}}</div>
+    <div class="content">{{comment.content}}</div>
+  </li>
 </template>
 
 <script>
-  import CommentListItem from './CommentListItem'
-
   import { mapActions } from 'vuex'
   import { mapGetters } from 'vuex'
   export default {
-    name: "CommentList",
+    name: "CommentListItem",
     props: {
-      comments: Array
-    },
-    data () {
-      return {}
+      comment: Object
     },
     methods: {
       ...mapActions([
@@ -32,7 +24,7 @@
       ])
     },
     components: {
-        'comment-list-item': CommentListItem
+
     },
     created() {
 

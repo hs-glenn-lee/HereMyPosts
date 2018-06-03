@@ -1,19 +1,24 @@
 <template>
   <div class="right-pane">
     <div class="center-block">
-      <div class="article-meta">
-        <span>카테고리</span>
-        <!--<span class="selected-category-name">{{getAritcle.getCategory().name}}</span>-->
-        <div class="title">
-          <span>{{getTitle}}</span>
+
+      <article v-if="getArticle">
+        <h1 class="hidden">{{getTitle}}</h1>
+        <div class="article-meta">
+          <span>카테고리</span>
+          <!--<span class="selected-category-name">{{getAritcle.getCategory().name}}</span>-->
+          <div class="title">
+            <span>{{getTitle}}</span>
+          </div>
         </div>
-      </div>
 
-      <div v-html="getContent" class="content-container">
-        <!--{{getContent}}-->
-      </div>
+        <div v-html="getContent" class="content-container">
+          <!--{{getContent}}-->
+        </div>
+      </article>
 
-      <viewer-comment></viewer-comment>
+      <viewer-comments
+        :article="getArticle"></viewer-comments>
     </div>
   </div>
 </template>
@@ -21,7 +26,8 @@
 <script>
   import {mapGetters} from 'vuex';
   import {mapActions} from 'vuex';
-  import ViewerComment from './ViewerComment';
+
+  import ViewerComments from './ViewerComments';
   export default {
     name: "ViewerRightPane",
     methods: {
@@ -29,14 +35,16 @@
     },
     computed: {
       ...mapGetters([
-        'getContent'
+        'getContent',
+        'getTitle',
+        'getArticle'
       ])
     },
     created() {
 
     },
     components: {
-      'viewer-comment': ViewerComment
+      'viewer-comments': ViewerComments
     }
   }
 </script>

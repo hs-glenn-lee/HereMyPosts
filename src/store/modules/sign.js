@@ -10,35 +10,41 @@ const getters = {
     return state.sign;
   },
   getAccount: state => {
-    return state.account;
+    return state.sign.account;
   },
   getIsSignedIn: state => {
-    return state.isSignedIn;
+    return state.sign.isSignedIn;
   }
 };
 const mutations = {
   setAccount: (state, payload) => {
-    state.account = payload;
+    console.log('setAccount!')
+    console.log(payload);
+    state.sign.account = payload;
   },
   setIsSignedIn: (state, payload) => {
-    state.isSignedIn = payload;
+    state.sign.isSignedIn = payload;
   },
   setSign: (state, payload) => {
-    state.account = payload.account;
-    state.isSignedIn = payload.isSignedIn;
+    state.sign.account = payload.account;
+    state.sign.isSignedIn = payload.isSignedIn;
   }
 };
 const actions = {
-  initSign: (context) => {
+  syncSign: (context) => {
+    console.log('syncSign!')
+    console.log(state.sign)
     if(!state.sign.isSignedIn) {
       return axiosAppJson.getMyAccount()
         .then( data => {
+          console.log('getMyAccount!')
+          console.log(data);
           context.commit('setAccount', data)
           context.commit('setIsSignedIn',true)
           return data;
         })
         .catch( errMsg => {
-          alert(errMsg)
+          console.log(errMsg)
         });
     }else {
       return Promise.resolve(this.account)

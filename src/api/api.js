@@ -78,6 +78,7 @@ export default {
   getArticle(articleId) {
     return axiosAppJson.get('api/article/'+articleId)
       .then(res => {
+        console.log('getArticle!')
         console.log(res)
         return res.data })
       .catch( err => {throw err})
@@ -94,10 +95,23 @@ export default {
 
   //---comment
   writeComment (comment) {
+    console.log('writeComment!')
+    console.log(comment)
     return axiosAppJson.put('api/comment/write', comment)
       .then(res => {
         console.log(res)
         return res.data })
       .catch( err => {throw err})
+  },
+  getCommentsOfArticle (articleId) {
+    return axiosAppJson.get('api/article/' + articleId + '/comments')
+      .then(res=> {
+        console.log('getCommentsOfArticle')
+        console.log(res.data)
+        return res.data;
+      })
+      .catch( err => {throw err});
+
+
   }
 }

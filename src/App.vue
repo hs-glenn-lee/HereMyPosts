@@ -3,9 +3,19 @@
 </template>
 
 <script>
-export default {
-  name: 'App'
-}
+  import {mapActions} from 'vuex'
+  export default {
+    name: 'App',
+    methods: {
+      ...mapActions([
+        'syncSign'
+      ])
+    },
+    created () {
+      this.syncSign()
+    }
+
+  }
 </script>
 
 <style>

@@ -16,7 +16,6 @@
     name: "Viewer",
     methods: {
       ...mapActions([
-        'initSign',
         'getArticleFromServer'
       ])
     },
@@ -34,7 +33,6 @@
         'alert-comp': alertComp
     },
     created() {
-      this.initSign();
       console.log(this.$route.params.articleId)
       this.getArticleFromServer(this.$route.params.articleId);
     }

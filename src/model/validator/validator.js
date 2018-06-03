@@ -14,6 +14,32 @@ export default {
           reject('제목을 입력해 주세요.')
         }
       }
+    },
+    'writeComment': {
+      check (val, reject) {
+        var comment = val;
+        if(comment === undefined || comment === null)
+          reject('작성된 댓글이 없습니다.')
+
+        if(comment.isAnonymous) {
+          if(comment.authorName === undefined || comment.authorName == null || comment.authorName === '') {
+            reject('댓글작성자 이름을 입력해주세요.')
+          }
+          if(comment.anonymousPassword === undefined || comment.anonymousPassword === '' || comment.anonymousPassword === null) {
+            reject('댓글 비밀번호를 입력해주세요.')
+          }
+        }else {
+
+        }
+
+        if(comment.content) {
+          if(comment.content === '')
+            reject('댓글 내용을 입력해주세요.')
+        }else {
+          reject('댓글 내용을 입력해주세요.')
+        }
+
+      }
     }
   },
   validate(constraintKey, value, rejectCallback) {

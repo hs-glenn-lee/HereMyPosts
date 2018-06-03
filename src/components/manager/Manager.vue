@@ -18,7 +18,7 @@ export default {
   name: 'ManagerComp',
   methods: {
     ...mapActions([
-      'initSign',
+      /*'syncSign',*/
       'checkPass'
     ])
   },
@@ -31,7 +31,7 @@ export default {
     ])
   },
   created () {
-    this.initSign()//todo if error occcur redirect to sign-in
+    /*this.syncSign()*///todo if error occcur redirect to sign-in
   },
   components: {
     'left-pane': leftPaneComp,
