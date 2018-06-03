@@ -83,6 +83,14 @@ export default {
       .catch( err => {throw err})
   },
 
+  getRecentArticles(username) {
+    return axiosAppJson.get('api/'+username+'/recent-articles')
+      .then(res => {
+        console.log(res)
+        return res.data })
+      .catch( err => {throw err})
+  },
+
 
   //---comment
   writeComment (comment) {
