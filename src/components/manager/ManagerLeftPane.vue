@@ -1,7 +1,9 @@
 <template>
   <div>
     <nav class="left-pane-menu">
-      <div class="global-logo" ><img src="@/assets/images/logo_height_30px.png" style="width:50px;"/></div>
+      <div class="global-logo-picto" style="margin-top:10px; margin-bottom: 30px; margin-top: 20px;">
+        <img src="@/assets/images/icon-picto-86w87h.png"/>
+      </div>
       <div class="left-pane-menu-item"
            @mouseover="onMenuItemMouserOver" @mouseleave="onMenuItemMouserLeave">
         <img
@@ -17,7 +19,13 @@
           src="@/assets/images/left-pane-icons/50w_category_icon.png"/>
       </div>
       <!--<div class="left-pane-menu-item">PUB</div>-->
-      <!--<div class="left-pane-menu-item">SER</div>-->
+      <div class="left-pane-menu-item"
+           @mouseover="onMenuItemMouserOver"
+           @mouseleave="onMenuItemMouserLeave">
+        <img
+          class="icon"
+          src="@/assets/images/left-pane-icons/50w50h-series-icon.png"/>
+      </div>
       <div class="left-pane-menu-item"
            @click="saveArticle"
            @mouseover="onMenuItemMouserOver"
@@ -28,7 +36,7 @@
       </div>
 
       <!--<div class="left-pane-menu-item">SETTINGS</div>-->
-      <button type="button" @click="test">test</button>
+      <!--<button type="button" @click="test">test</button>-->
     </nav>
     <div>
       <category-pane></category-pane>
@@ -108,14 +116,16 @@ export default {
   }
   img.icon {
     height:auto;
-    width: 40px;
+    width: 35px;
   }
   img.icon:hover{
     cursor: pointer;
   }
 
-  div.left-pane-menu-item.up-here {
+  div.left-pane-menu-item.up-here img.icon{
     background-color: #e6ffcc;
     transition: 0.5s;
+
+    border-radius: 17px;
   }
 </style>

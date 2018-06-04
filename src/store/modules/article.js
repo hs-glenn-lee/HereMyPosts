@@ -2,7 +2,7 @@ import api from '@/api/api'
 import Article from '@/model/Article'
 import validator from '@/model/validator/validator.js'
 const state = {
-  article: new Article(null, '', '<!DOCTYPE html><html><head></head><body></body></html>', '', 0, false, 0, null, null),
+  article: null/*new Article(null, '', '<!DOCTYPE html><html><head></head><body></body></html>', '', 0, false, 0, null, null)*/,
   articleList: []
 };
 const getters = {

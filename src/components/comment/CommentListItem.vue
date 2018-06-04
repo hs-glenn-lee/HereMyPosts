@@ -27,7 +27,7 @@
 
     },
     created() {
-
+      console.log(this.comment)
     }
   }
 </script>

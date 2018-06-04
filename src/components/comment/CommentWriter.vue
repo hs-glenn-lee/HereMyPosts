@@ -56,7 +56,7 @@
         commentToWrite: new Comment(),
         content: '',
         authorName: '',
-        isAnonymous: false,
+
         anonymousPassword: '',
       };
     },
@@ -69,11 +69,11 @@
         console.log('writeComment')
         var comment = this.commentToWrite;
         comment.content = this.content;
-        comment.isAnonymous = this.isAnonymous;
+        comment.isAnonymous = !this.getIsSignedIn;
         comment.article = this.article;
 
-        console.log(this.article)
-        if(this.isAnonymous) {
+        console.log(comment.isAnonymous)
+        if(comment.isAnonymous) {
           comment.anonymousPassword = this.anonymousPassword;
           comment.authorName = this.authorName;
           comment.authorId = null;
@@ -105,9 +105,6 @@
     },
     components: {
 
-    },
-    created() {
-      this.isAnonymous = !this.getIsSignedIn
     }
   }
 </script>

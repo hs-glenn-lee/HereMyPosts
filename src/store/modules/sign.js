@@ -34,6 +34,7 @@ const actions = {
   syncSign: (context) => {
     console.log('syncSign!')
     console.log(state.sign)
+    console.log(state.sign.isSignedIn)
     if(!state.sign.isSignedIn) {
       return axiosAppJson.getMyAccount()
         .then( data => {

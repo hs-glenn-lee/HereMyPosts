@@ -3,6 +3,7 @@
     <comment-writer
       :article="article"></comment-writer>
     <comment-list
+      v-if="comments.length > 0"
     :comments="comments"></comment-list>
   </div>
 </template>

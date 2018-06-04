@@ -1,7 +1,7 @@
 <template>
   <div>
-    <nav class="left-pane-menu">
-      <div class="global-logo" ><img src="@/assets/images/logo_height_30px.png" style="width:50px;"/></div>
+    <nav class="left-pane-menu" style="margin-top:10px; margin-bottom: 30px;">
+      <div class="global-logo-picto" ><img src="@/assets/images/icon-picto-86w87h.png" style="width:50px;"/></div>
       <div class="left-pane-menu-item"
            @mouseover="onMenuItemMouserOver" @mouseleave="onMenuItemMouserLeave">
         <img
@@ -10,7 +10,7 @@
           src="@/assets/images/left-pane-icons/50w_category_icon.png"/>
       </div>
 
-      <button type="button" @click="test">test</button>
+      <!--<button type="button" @click="test">test</button>-->
     </nav>
     <div>
       <category-pane></category-pane>

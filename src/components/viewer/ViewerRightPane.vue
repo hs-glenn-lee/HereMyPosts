@@ -18,6 +18,7 @@
       </article>
 
       <viewer-comments
+        v-if="getArticle"
         :article="getArticle"></viewer-comments>
     </div>
   </div>

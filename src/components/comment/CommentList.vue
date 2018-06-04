@@ -3,6 +3,7 @@
     <ul class="comment-list">
       <comment-list-item
         v-for="comment in comments"
+        :comment="comment"
         :key="comment.id"></comment-list-item>
     </ul>
   </div>
