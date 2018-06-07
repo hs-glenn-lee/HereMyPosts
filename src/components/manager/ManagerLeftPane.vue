@@ -24,7 +24,10 @@
            @mouseleave="onMenuItemMouserLeave">
         <img
           class="icon"
-          src="@/assets/images/left-pane-icons/50w50h-series-icon.png"/>
+          src="@/assets/images/left-pane-icons/50w50h-series-icon.png"
+          @click="toggleSeriesPane"
+          @mouseover="onMenuItemMouserOver"
+          @mouseleave="onMenuItemMouserLeave"/>
       </div>
       <div class="left-pane-menu-item"
            @click="saveArticle"
@@ -40,6 +43,7 @@
     </nav>
     <div>
       <category-pane></category-pane>
+      <series-pane></series-pane>
     </div>
 
   </div>
@@ -52,7 +56,9 @@ import { mapMutations } from 'vuex';
 import { mapGetters } from 'vuex';
 import { mapActions } from 'vuex';
 import categoryTreeComp from '@/components/CategoryTree.vue'
+
 import CategoryPane from '@/components/manager/CategoryPane.vue'
+import SeriesPane from '@/components/manager/SeriesPane.vue'
 
 export default {
   name: 'ManageLeftPane',
@@ -63,7 +69,8 @@ export default {
   },
   methods: {
     ...mapMutations([
-      'setCategoryPaneIsShowing'
+      'setCategoryPaneIsShowing',
+      'setIsSeriesPaneShowing'
     ]),
     ...mapActions([
       'test',
@@ -75,6 +82,12 @@ export default {
       var cur = this.isCategoryPaneShowing;
       this.setCategoryPaneIsShowing(!cur);
     },
+    toggleSeriesPane (event) {
+      event.stopPropagation();// because of check/mark pass
+
+      var cur = this.isSeriesPaneShowing;
+      this.setIsSeriesPaneShowing(!cur);
+    },
     onMenuItemMouserOver (event ) {
       event.currentTarget.classList.add('up-here')
     },
@@ -84,12 +97,14 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'isCategoryPaneShowing'
+      'isCategoryPaneShowing',
+      'isSeriesPaneShowing'
     ])
   },
   components: {
     'category-tree-comp': categoryTreeComp,
-    'category-pane': CategoryPane
+    'category-pane': CategoryPane,
+    'series-pane': SeriesPane
   }
 }
 </script>

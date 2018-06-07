@@ -1,5 +1,5 @@
 <template>
-  <div class="sub-left-pane"
+  <div class="category-pane"
        v-show="isCategoryPaneShowing"
         @click.right="function(e){e.preventDefault()}"
         @click="markPass('CategoryPane')"><!--prevent leftClick-->
@@ -104,7 +104,7 @@ export default {
 </script>
 
 <style scoped>
-  div.sub-left-pane {
+  div.category-pane {
     position: absolute; left: 73px; top: 0px; right: 0px; bottom: 0px;
     width: 400px;
     border-right: 2px solid #eaeaea;
