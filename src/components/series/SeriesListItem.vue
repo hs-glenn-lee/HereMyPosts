@@ -1,6 +1,11 @@
 <template>
   <li class="series-list-item">
-    <div class="series-name">{{series.name}}</div>
+    <div class="series-name"
+        :id="series.id"
+        @click="onSeriesNameClick"
+        @click.right="onSeriesNameRightClick">
+      {{series.name}}
+    </div>
   </li>
 </template>
 
@@ -11,7 +16,9 @@
   export default {
     name: "SeriesListItem",
     props: {
-      series: Object
+      series: Object,
+      onSeriesNameRightClick: Function,
+      onSeriesNameClick: Function
     },
     data () {
       return {}

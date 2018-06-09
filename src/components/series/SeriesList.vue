@@ -2,9 +2,11 @@
   <div class="series-list-container">
     <ul class="series-list">
       <series-list-item
-        v-for="series in seriesArray"
+        v-for="series in seriesList"
         :series="series"
-        :key="series.id">
+        :key="series.id"
+        :onSeriesNameRightClick="onSeriesNameRightClick"
+        :onSeriesNameClick="onSeriesNameClick">
       </series-list-item>
     </ul>
   </div>
@@ -18,7 +20,9 @@
   export default {
     name: "SeriesItem",
     props: {
-      seriesArray: Array
+      seriesList: Array,
+      onSeriesNameRightClick: Function,
+      onSeriesNameClick: Function
     },
     data () {
       return {}

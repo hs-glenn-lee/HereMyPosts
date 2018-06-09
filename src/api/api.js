@@ -113,5 +113,25 @@ export default {
       .catch( err => {throw err});
 
 
+  },
+
+
+  //---series
+  createNewSeries (series) {
+    return axiosAppJson.put('api/series/create',series)
+      .then(res => {
+        console.log('createNewSeries')
+        console.log(res.data)
+        return res.data;
+      })
+      .catch(err => {throw err});
+  },
+  getMySeriesByPage (pageParameter) {
+    return axiosAppJson.post('api/series/all-series-by-page', pageParameter)
+      .then(res => {
+        return res.data;
+      })
+      .catch( err => {throw err})
   }
+
 }
