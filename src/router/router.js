@@ -7,6 +7,7 @@ import ManagerComp from '@/components/manager/Manager'
 import Viewer from '@/components/viewer/Viewer'
 import Test from '@/components/Test'
 import UserHome from '@/components/user/home/UserHome.vue'
+import Settings from '@/components/user/settings/Settings.vue'
 
 Vue.use(Router)
 
@@ -41,6 +42,10 @@ export default new Router({
     {
       path: '/test',
       component: Test
+    },
+    {
+      path: '/me/settings',
+      component: Settings
     }
   ]
 })

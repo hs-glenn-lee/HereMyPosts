@@ -1,5 +1,5 @@
 <template>
-  <div class="series-pane"
+  <div class="tag-pane"
        v-show="isTagPaneShowing"
        @click.right="function(e){e.preventDefault()}"
        @click="markPass('TagPane')">
@@ -43,7 +43,7 @@
     name: "TagPane",
     data () {
       return {
-        tagToCreate: new Series()
+        tagToCreate: null
       }
     },
     methods: {
@@ -86,7 +86,7 @@
 </script>
 
 <style scoped>
-  div.series-pane {
+  div.tag-pane {
     position: absolute; left: 73px; top: 0px; right: 0px; bottom: 0px;
     width: 400px;
     border-right: 2px solid #eaeaea;

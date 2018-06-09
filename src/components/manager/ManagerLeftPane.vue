@@ -19,16 +19,16 @@
           src="@/assets/images/left-pane-icons/50w_category_icon.png"/>
       </div>
       <!--<div class="left-pane-menu-item">PUB</div>-->
-      <!--<div class="left-pane-menu-item"
+      <div class="left-pane-menu-item"
            @mouseover="onMenuItemMouserOver"
            @mouseleave="onMenuItemMouserLeave">
         <img
           class="icon"
-          src="@/assets/images/left-pane-icons/50w50h-series-icon.png"
+          src="@/assets/images/left-pane-icons/tag-icon-50w50h.png"
           @click="toggleTagPane"
           @mouseover="onMenuItemMouserOver"
           @mouseleave="onMenuItemMouserLeave"/>
-      </div>-->
+      </div>
       <div class="left-pane-menu-item"
            @click="saveArticle"
            @mouseover="onMenuItemMouserOver"
@@ -38,12 +38,23 @@
           src="@/assets/images/left-pane-icons/50w_saveicon.png"/>
       </div>
 
+
+      <div class="intended-blank-space"></div>
+
+      <div class="left-pane-menu-item user-menu-item"
+           @mouseover="onMenuItemMouserOver"
+           @mouseleave="onMenuItemMouserLeave">
+        <img
+          class="icon"
+          src="@/assets/images/left-pane-icons/user-icon-50w50h.png"/>
+      </div>
+
       <!--<div class="left-pane-menu-item">SETTINGS</div>-->
       <!--<button type="button" @click="test">test</button>-->
     </nav>
-    <div>
+    <div class="">
       <category-pane></category-pane>
-
+      <tag-pane></tag-pane>
     </div>
 
   </div>
@@ -142,5 +153,11 @@ export default {
     transition: 0.5s;
 
     border-radius: 17px;
+  }
+
+  div.intended-blank-space:after{
+    content:"";
+    display: block;
+    height: 200px;
   }
 </style>

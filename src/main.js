@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueComponent from 'vue'
+
 import App from './App'
 import router from './router/router'
 import { store } from './store/store';
@@ -8,6 +9,11 @@ import './assets/css/reset.css'
 import './assets/css/global.css'
 
 import './assets/css/fonts/nanumbrush/font-nanumbrush.css'
+
+//textarea-plugin
+import VueTextareaAutosize from 'vue-textarea-autosize'
+Vue.use(VueTextareaAutosize);
+
 //import './assets/lang'
 Vue.config.productionTip = false
 /*
