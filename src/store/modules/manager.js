@@ -12,16 +12,16 @@ const state = {
         context.commit('setCategoryPaneIsShowing', false);
       }
     },
-    'SeriesPane': {
+    'TagPane': {
       fail: function(context) {
-        context.commit('setIsSeriesPaneShowing', false);
+        context.commit('setIsTagPaneShowing', false);
       }
     }
   },
 
   isCategoryPaneShowing: true,
   isArticleListPaneShowing: true,
-  isSeriesPaneShowing: true
+  isTagPaneShowing: true
 };
 const getters = {
   isCategoryPaneShowing: state => {
@@ -30,8 +30,8 @@ const getters = {
   isArticleListPaneShowing: state => {
     return state.isArticleListPaneShowing;
   },
-  isSeriesPaneShowing: state => {
-    return state.isSeriesPaneShowing;
+  isTagPaneShowing: state => {
+    return state.isTagPaneShowing;
   }
 };
 const mutations = {
@@ -41,8 +41,8 @@ const mutations = {
   setCategoryPaneIsShowing: (state, payload) => {
     state.isCategoryPaneShowing = payload;
   },
-  setIsSeriesPaneShowing: (state, payload) => {
-    state.isSeriesPaneShowing = payload;
+  setIsTagPaneShowing: (state, payload) => {
+    state.isTagPaneShowing = payload;
   }
 };
 const actions = {

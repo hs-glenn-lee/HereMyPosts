@@ -1,35 +1,13 @@
 <template>
   <div class="series-pane"
-       v-show="isSeriesPaneShowing"
+       v-show="isTagPaneShowing"
        @click.right="function(e){e.preventDefault()}"
-       @click="markPass('SeriesPane')">
-    <div class="close-icon" @click="closeSeriesPane(false)">
+       @click="markPass('TagPane')">
+    <div class="close-icon" @click="closeTagPane(false)">
       <img src="@/assets/images/x-icon-30.png" style="width:20px;"/>
     </div>
 
-    <div class="series-finder">
-      <input class="series-name-input" type="text">
-      <button type="button">찾기</button>
-    </div>
-
-    <div class="series-creator-container"
-        v-if="getIsSignedIn">
-      <div class="active-series-creator"
-          v-if="isSeriesCreatorActive">
-        <input class="series-name-input"
-               type="text"
-               v-model="seriesToCreate.name">
-        <button type="button"
-                @click="createSeries">생성</button>
-      </div>
-
-      <div v-else
-          class="inactive-series-creator">
-        <span
-          @click="setIsActiveSeriesCreator(true)">새 시리즈 만들기 (+)</span>
-      </div>
-    </div>
-
+<!--
     <div class="series-list-container">
       <series-list
         v-if="seriesList.length > 0"
@@ -37,6 +15,7 @@
         :onSeriesNameRightClick="onSeriesNameRightClick"
         :onSeriesNameClick="onSeriesNameClick"></series-list>
     </div>
+-->
 
    <!-- <c-node-right-click-menu v-bind:is="rightClickMenu"
                              :category-node="rightClickedCategoryNode"
@@ -44,17 +23,15 @@
                              :left="rightClickedLeft">
     </c-node-right-click-menu>-->
 
-    <div>
+<!--    <div>
       <article-list-pane :onArticleTitleClick="onArticleTitleClick"
                          :onArticleTitleDoubleClick="onArticleTitleDoubleClick"></article-list-pane>
-    </div>
+    </div>-->
   </div>
 </template>
 
 <script>
-  import SeriesList from '@/components/series/SeriesList.vue';
-  import ArticleListPane from '@/components/manager/ArticleListPane.vue'
-  import Series from '@/model/Series';
+
   import api from '@/api/api'
   import PageParameter from '@/model/PageParameter'
 
@@ -63,12 +40,10 @@
   import { mapActions } from 'vuex';
 
   export default {
-    name: "SeriesPane",
+    name: "TagPane",
     data () {
       return {
-        seriesToCreate: new Series(),
-        seriesList: [],
-        isSeriesCreatorActive: false
+        tagToCreate: new Series()
       }
     },
     methods: {
@@ -76,15 +51,13 @@
         'markPass'
       ]),
       ...mapMutations([
-        'setIsSeriesPaneShowing'
+        'setIsTagPaneShowing'
       ]),
-      setIsActiveSeriesCreator( bool ) {
-        this.isSeriesCreatorActive = bool;
-      },
-      onSeriesNameRightClick (event) {
+
+      onTagNameRightClick (event) {
 
       },
-      onSeriesNameClick (event) {
+      onTagNameClick (event) {
 
       },
       onArticleTitleClick(event) {
@@ -93,36 +66,21 @@
       onArticleTitleDoubleClick(event) {
 
       },
-      closeSeriesPane(event) {
-        this.setIsSeriesPaneShowing(false)
-      },
-      createSeries () {
-        api.createNewSeries(this.seriesToCreate)
-          .then( data => {
-            this.seriesList.push(data);
-            this.setIsActiveSeriesCreator(false);
-          })
-          .catch( err => {throw err})
-      },
-      getMySeriesByPage (pageParameter) {
-        api.getMySeriesByPage(pageParameter)
-          .then(data => {
-            this.seriesList = data;
-          })
+      closeTagPane(event) {
+        this.setIsTagPaneShowing(false)
       }
     },
     created () {
-      this.getMySeriesByPage(new PageParameter(0,10));
+
     },
     computed: {
       ...mapGetters([
-        'isSeriesPaneShowing',
+        'isTagPaneShowing',
         'getIsSignedIn'
       ])
     },
     components: {
-      'series-list': SeriesList,
-      'article-list-pane': ArticleListPane
+
     }
   }
 </script>
@@ -146,7 +104,7 @@
   div.close-icon:hover {
     cursor: pointer;
   }
-  div.series-list-container {
+/*  div.series-list-container {
     margin-top: 70px;
   }
 
@@ -164,5 +122,5 @@
 
   div.series-finder button {
     font-size: 1em;
-  }
+  }*/
 </style>
