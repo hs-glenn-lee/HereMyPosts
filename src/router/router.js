@@ -37,6 +37,7 @@ export default new Router({
     },
     {
       path: '/:username',
+      name: 'UserHome',
       component: UserHome
     },
     {

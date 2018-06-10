@@ -23,6 +23,8 @@ export default {
       })
   },
   signUp (account) {
+    console.log('sign-up');
+    console.log(account)
     return axiosAppJson.put('/api/sign-up', account)
       .then(res => { return res })
       .catch(err=>{

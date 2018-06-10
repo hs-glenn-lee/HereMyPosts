@@ -169,10 +169,10 @@ export default {
               password: this.account.password
             })
               .then(data => {
-                this.$router.push({ path: "/manage"})
+                this.$router.push({ name: "UserHome", params: { username: this.account.username }})
               })
               .catch(message => {
-                alert(mesage)
+                alert(message)
               })
           })
           .catch(err => {
