@@ -47,7 +47,10 @@
         <label class="checkbox-container">
           <input type="checkbox"
                  v-model="isCheckedOnAgreement">
-          <span class="underline-link">사용 약관</span>과 <span class="underline-link">개인정보 취급방침</span>에 동의합니다.
+          <span class="underline-link"
+                @click="openNewTabTermsOfService">사용 약관</span>과
+          <span class="underline-link"
+                @click="openNewTabPrivacyPolicy">개인정보 취급방침</span>에 동의합니다.
         </label>
         <div class="button-wrapper">
           <button type="button" v-on:click="signUpAndInAndGoToManage">계정 생성</button>
@@ -64,7 +67,7 @@
 <script>
 import Account from '@/model/account';
 import api from '@/api/api';
-
+import validator from '@/model/validator/validator'
 import _ from 'lodash'
 export default {
   name: 'SignUp',
@@ -90,58 +93,45 @@ export default {
     validateUsername: _.debounce(
       function () {
         var username = this.account.username;
-
-        var isValidateUsername = this.account.isValidUsername(username)
-        if(!isValidateUsername.isValid) {
-          this.isUserNameValidate = false;
-          this.userNameDescription = isValidateUsername.message
-
-          return
-        }
-
-
-        api.isUniqueNewUsername(username)
-          .then(ret => {
-
-            if(ret) {
-              this.isUserNameValidate = true;
-              this.userNameDescription = 'good!'
-            }else {
-              this.isUserNameValidate = false;
-              this.userNameDescription = '이미 사용중인 사용자명입니다.'
-            }
+        validator.promisedValidate('validateUsername', username)
+          .then( resolveMsg => {
+            this.isUserNameValidate = true;
+            this.userNameDescription = resolveMsg;
           })
-
+          .catch( rejectMsg => {
+            this.isUserNameValidate = false;
+            this.userNameDescription = rejectMsg;
+          })
       },
       1000
     ),
     validateEmail: _.debounce(
       function () {
         var email = this.account.email;
-        var ret = this.account.isValidEmil(email)
-        if(ret.isValid) {
-          this.isEmailValidate = true;
-          this.emailDescription = 'good!'
-        }else {
-          this.isEmailValidate = false;
-          this.emailDescription = ret.message;
-        }
+        validator.promisedValidate('validateEmail', email)
+          .then(msg => {
+            this.isEmailValidate = true;
+            this.emailDescription = msg;
+          })
+          .catch(msg => {
+            this.isEmailValidate = false;
+            this.emailDescription = msg;
+          })
       },
       1000
     ),
     validatePassword: _.debounce(
       function () {
         var password = this.account.password
-        var ret = this.account.isValidPassword(password)
-        if(ret.isValid) {
-          this.isPasswordValidate = true;
-          this.passwordDescription = 'good!'
-          return
-        }else {
-          this.isPasswordValidate = false;
-          this.passwordDescription = ret.message
-          return
-        }
+        validator.promisedValidate('validatePassword', password)
+          .then(msg => {
+            this.isPasswordValidate = true;
+            this.passwordDescription = msg;
+          })
+          .catch(msg => {
+            this.isPasswordValidate = false;
+            this.passwordDescription = msg;
+          })
       },
       1000
     ),
@@ -181,6 +171,14 @@ export default {
       }else {
         alert('약관동의 및 입력정보를 모두 입력해주세요.')
       }
+    },
+    openNewTabTermsOfService () {
+      let routeData = this.$router.resolve({name: 'TermsOfService'});
+      window.open(routeData.href, '_blank');
+    },
+    openNewTabPrivacyPolicy () {
+      let routeData = this.$router.resolve({name: 'PrivacyPolicy'});
+      window.open(routeData.href, '_blank');
     }
   },
   watch: {

@@ -67,7 +67,7 @@ export default {
             isSignedIn: true
           };
           this.setSign(sign);
-          this.$router.push({ path: "/"+this.username+"/manage"})
+          this.$router.push({ name: "Manager", params: { username: this.username }})
         })
         .catch(message => {
           this.alertMessage = '! ' + message

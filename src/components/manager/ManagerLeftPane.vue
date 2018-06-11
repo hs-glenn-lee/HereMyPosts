@@ -42,6 +42,7 @@
       <div class="intended-blank-space"></div>
 
       <div class="left-pane-menu-item user-menu-item"
+           @click="goSettings"
            @mouseover="onMenuItemMouserOver"
            @mouseleave="onMenuItemMouserLeave">
         <img
@@ -104,6 +105,9 @@ export default {
     },
     onMenuItemMouserLeave (event ) {
       event.currentTarget.classList.remove('up-here')
+    },
+    goSettings () {
+      this.$router.push({ name: "MySetting" })
     }
   },
   computed: {

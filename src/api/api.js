@@ -43,6 +43,17 @@ export default {
       .catch(err => console.log(err) );
 
   },
+  isUniqueNewEmail ( email ) {
+    return axiosAppJson.post('/api/isUniqueNewEmail',{
+      'email':email
+    })
+      .then(res => {
+        console.log(res)
+        return res.data.isUniqueNewEmail
+      })
+      .catch(err => console.log(err) );
+  },
+
 
   //---related to category
   getAllMyCategory () {

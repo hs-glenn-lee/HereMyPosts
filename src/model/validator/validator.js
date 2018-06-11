@@ -1,3 +1,4 @@
+import api from '@/api/api'
 export default {
   constraints: {
     'test': {
@@ -40,6 +41,61 @@ export default {
         }
 
       }
+    },
+    'validateUsername': {
+      promisedCheck (val) {
+        if(val === '' || val === undefined || val === null) {
+          return Promise.reject('사용자명을 입력해주세요.');
+        }
+
+        if(val.length < 3) {
+          return Promise.reject('사용자명은 세글자 이상되어야합니다.');
+        }
+
+        //policy white list : alphanumeric . - _
+        //following regex return true if there is at leaset one invalid character
+        var regex = /[^0-9A-Za-z_\-.]/;
+
+        if(regex.test(val)) {
+          return Promise.reject('허용되는 특수문자 : -_.')
+        }
+
+        return api.isUniqueNewUsername(val)
+          .then(ret => {
+            if(ret) {
+              return Promise.resolve('good!')
+            }else {
+              return Promise.reject('이미 사용중인 사용자명입니다.');
+            }
+          })
+      }
+    },
+    'validateEmail':  {
+      promisedCheck (email) {
+        var eRegex = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+        var valid = eRegex.test(String(email).toLowerCase())
+        if(!valid) {
+          return Promise.reject('적합한 이메일 형식이 아닙니다.')
+        }
+
+        return api.isUniqueNewEmail(email)
+          .then(ret => {
+            if(ret) {
+              return Promise.resolve('good!')
+            }else {
+              return Promise.reject('이미 사용중인 이메일입니다.');
+            }
+          })
+      }
+    },
+    'validatePassword': {
+      promisedCheck (password) {
+        if(password.length < 5 ) {
+          return Promise.reject('비멀번호는 5글자 이상이어야합니다.');
+        }else {
+          return Promise.resolve('good');
+        }
+      }
     }
   },
   validate(constraintKey, value, rejectCallback) {
@@ -58,6 +114,13 @@ export default {
 
     }
 
+  },
+  promisedValidate(constraintKey, value) {
+    var constraint = this.findConstraint(constraintKey);
+    if(constraint === undefined) {
+      throw new Error('[validator]' + 'constraint doesn\'t have promisedCheck Function.')
+    }
+    return constraint.promisedCheck(value);
   },
   findConstraint (constraintKey) {
     var constraint = this.constraints[constraintKey];
