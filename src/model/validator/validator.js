@@ -96,6 +96,27 @@ export default {
           return Promise.resolve('good');
         }
       }
+    },
+    'savePenName': {
+      check (val, reject) {
+        var penName = val;
+
+        if( penName === '' || penName === undefined || penName === null ) {
+          reject('필명을 입력해주세요.')
+        }
+
+        if( penName.length > 40 ) {
+          reject('필명이 너무 깁니다.')
+        }
+      }
+    },
+    'saveIntroduction': {
+      check (val, reject) {
+        var introduction = val;
+        if( introduction === '' || introduction === undefined || introduction === null ) {
+          reject('자기소개를 입력해 주세요.')
+        }
+      }
     }
   },
   validate(constraintKey, value, rejectCallback) {

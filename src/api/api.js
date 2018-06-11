@@ -145,6 +145,28 @@ export default {
         return res.data;
       })
       .catch( err => {throw err})
-  }
+  },
 
+  //---settings
+  getMySettings () {
+    return axiosAppJson.get('api/account/my-settings')
+      .then(res => {
+        return res.data;
+      })
+      .catch( err => {throw err})
+  },
+  saveIntroduction (introduction) {
+    return axiosAppJson.put('api/account/setting/save-introduction', {introduction})
+      .then(res => {
+        return res.data;
+      })
+      .catch( err => {throw err})
+  },
+  savePenName (penName) {
+    return axiosAppJson.put('api/account/setting/save-pen-name', {penName})
+      .then(res => {
+        return res.data;
+      })
+      .catch( err => {throw err})
+  }
 }

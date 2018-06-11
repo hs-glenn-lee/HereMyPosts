@@ -25,17 +25,17 @@
       <div class="pen-name setting-item">
         <div class="setting-item-name">
           <span>필명</span>
-          <button type="button">저장</button>
+          <button @click="savePenName" type="button">저장</button>
         </div>
         <div class="input-wrapper">
-          <input type="text" placeholder="필명을 입력해 주세요.">
+          <input v-model="penName" type="text" placeholder="필명을 입력해 주세요.">
         </div>
       </div>
 
       <div class="introduction setting-item">
         <div class="setting-item-name">
           <span>자기소개</span>
-          <button type="button">저장</button>
+          <button @click="saveIntroduction" type="button">저장</button>
         </div>
 
         <div class="input-wrapper">
@@ -59,7 +59,9 @@
   import { mapActions } from 'vuex'
   import { mapMutations } from 'vuex'
   import { mapGetters } from 'vuex'
+  import api from '@/api/api'
 
+  import validator from '@/model/validator/validator.js'
   export default {
     name: 'Template',
     props: {
@@ -67,7 +69,8 @@
     },
     data() {
       return {
-        introduction: '호랑나비한마리가 꽃밭에 앉았는데 \n 도대체 모르겠네'
+        penName: '',
+        introduction: ''
       }
     },
     methods: {
@@ -80,6 +83,25 @@
       goManager () {
         let routeData = this.$router.resolve({ name: "Manager", params: { username: this.getAccount.username }})
         window.open(routeData.href, '_self');
+      },
+      saveIntroduction () {
+        validator.validate('saveIntroduction', this.introduction, rejectMessage => {
+          alert(rejectMessage);
+        })
+        api.saveIntroduction(this.introduction)
+          .then( data => {
+            this.introduction = data.introduction;
+          })
+      },
+      savePenName () {
+        validator.validate('savePenName', this.penName, rejectMessage => {
+          alert(rejectMessage);
+          return;
+        })
+        api.savePenName(this.penName)
+          .then( data => {
+            this.penName = data.penName;
+          })
       }
     },
     computed: {
