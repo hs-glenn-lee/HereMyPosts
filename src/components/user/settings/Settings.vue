@@ -2,11 +2,11 @@
   <div class="me-settings" v-if="getIsSignedIn">
     <header class="top-header">
       <div class="left-block">
-        <div class="global-logo-inline"><img src="@/assets/images/logo_height_52px.png"/></div>
-        <span class="username">{{getAccount.username}}</span>
+        <div class="global-logo-inline"><img src="@/assets/images/logo_height_52px_white.png"/></div>
       </div>
 
       <div class="right-block">
+        <span class="username">{{getAccount.username}}</span>
         <span class="manager-anchor" @click="goManager">글 관리로 이동</span>
       </div>
     </header>
@@ -102,6 +102,13 @@
           .then( data => {
             this.penName = data.penName;
           })
+      },
+      getMySettings () {
+        api.getMySettings()
+          .then(data => {
+              this.penName = data.penName;
+              this.introduction = data.introduction;
+          })
       }
     },
     computed: {
@@ -111,6 +118,9 @@
     },
     components: {
 
+    },
+    created () {
+      this.getMySettings();
     }
   }
 </script>
@@ -121,23 +131,24 @@
     color: #4f4f4f;
   }
 
-  h1 {
-    /*font-size: 1.2em;*/
+  h2 {
+    font-size: 1.7em;
     margin-top: 20px;
     margin-bottom: 1em;
   }
 
   header.top-header {
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid rgb(235,168,0);
     margin-bottom: 15px;
     height: 38px;
+    background-color : rgb(250,185,5);
   }
 
   div.left-block {
     float:left;
   }
   div.right-block {
-    float:right
+    float:right;
   }
   div.right-block:after {
     clear: both;
@@ -153,47 +164,68 @@
     padding: 10px 7px 7px 10px;
   }
   header.top-header span.username {
-    border-radius: 6px;
-    border: 1px solid black;
-    background-color: #ececec;
-    padding: 2px 3px 2px 3px;
+    display: inline-block;
     vertical-align: middle;
-    box-shadow: 0 0 1px 0px #ececec inset, 0 0 1px 0px white;
+    color: white;
+
+    margin-right: 8px;
+    margin-top: 7px;
   }
 
   span.manager-anchor {
-    line-height: 37px;
     display: inline-block;
     vertical-align: middle;
-    margin-right: 7px;
+    font-size: 0.8em;
+    color: white;
+
+    margin-right: 8px;
+    margin-top: 8px;
+
+    border-radius: 6px;
+    padding: 5px 5px 5px 5px;
+    background-color: rgb(235,168,0); /*rgb(255,228,51);*/
   }
 
+  span.manager-anchor:hover {
+    cursor: pointer;
+  }
   div.center-block {
     margin: auto;
     width: 1366px;
   }
+
+  div.setting-item.photo {
+    padding-bottom: 1.4em;
+  }
+
   div.setting-item {
     width: 800px;
     margin-left: auto;
     margin-right: auto;
     background-color: white;
-    margin-bottom: 1em;
+    margin-bottom: 2em;
+
+    padding-bottom: 5px;
+    border-bottom: 1px solid #dfdfdf;
   }
 
   div.setting-item-name {
-    font-size: 1em;
+    font-size: 1.3em;
     height: 27px;
     color: #4f4f4f;
     display: block;
-    margin-bottom: 4px;
+    margin-bottom: 1em;
+
 
     vertical-align: middle;
   }
 
   div.setting-item-name button {
-    font-size: 0.8em;
+    font-size: 13px;
     display: block;
     float:right;
+    background-color: rgb(235,168,0);
+    border: none;
   }
   div.setting-item-name span{
     display:block;
@@ -211,7 +243,7 @@
   }
 
   input {
-    font-size: 1em;
+    font-size: 1.3em;
     border: none;
     outline: none;
   }
@@ -219,7 +251,7 @@
   textarea {
     border: none;
     outline: none;
-    font-size: 1em;
+    font-size: 1.3em;
     resize: none;
     font-family: none; /*should fix autosize textare plugin*/
 
@@ -227,14 +259,15 @@
   }
 
   div.input-wrapper {
-    border-bottom: 1px solid #dfdfdf;
+
     margin: 5px 0px 5px 0px;
-    padding-bottom: 5px;
+
   }
 
   div.input-wrapper input {
-    width: 100%;
-    margin-right: 30px;
+    width: 792px;
+    padding-left: 2px;
+
   }
 
 
