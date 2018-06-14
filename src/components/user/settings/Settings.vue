@@ -20,6 +20,9 @@
         <div>
           <img style="width:100px; height: 100px; display: block; margin: auto; border-radius: 60px; border: 1px solid grey; box-shadow: none;">
         </div>
+        <input type="file" id="file"
+               ref="file"
+              v-on:change="uploadProfilePictureFile">
       </div>
 
       <div class="pen-name setting-item">
@@ -60,6 +63,7 @@
   import { mapMutations } from 'vuex'
   import { mapGetters } from 'vuex'
   import api from '@/api/api'
+  import axios from 'axios'
 
   import validator from '@/model/validator/validator.js'
   export default {
@@ -70,7 +74,8 @@
     data() {
       return {
         penName: '',
-        introduction: ''
+        introduction: '',
+        profilePictureFile: ''
       }
     },
     methods: {
@@ -109,6 +114,24 @@
               this.penName = data.penName;
               this.introduction = data.introduction;
           })
+      },
+      uploadProfilePictureFile () {
+        this.profilePictureFile = this.$refs.file.files[0];
+        let formData = new FormData();
+        formData.append('file', this.profilePictureFile);
+        axios.post( '/api/account/setting/upload-profile-picture',
+          formData,
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          }
+        ).then(function(){
+          console.log('SUCCESS!!');
+        })
+          .catch(function(){
+            console.log('FAILURE!!');
+          });
       }
     },
     computed: {
