@@ -2,7 +2,7 @@
   <div class="me-settings" v-if="getIsSignedIn">
     <header class="top-header">
       <div class="left-block">
-        <div class="global-logo-inline"><img src="@/assets/images/logo_height_52px_white.png"/></div>
+        <div class="global-logo-inline"><img src="@/assets/images/logo_height_52px_white.png" /></div>
       </div>
 
       <div class="right-block">
@@ -18,7 +18,8 @@
 
       <div class="photo setting-item">
         <div>
-          <img style="width:100px; height: 100px; display: block; margin: auto; border-radius: 60px; border: 1px solid grey; box-shadow: none;">
+          <img style="width:100px; height: 100px; display: block; margin: auto; border-radius: 60px; border: 1px solid grey; box-shadow: none;"
+          :src="'/uploaded-image/' + profilePictureFileId">
         </div>
         <input type="file" id="file"
                ref="file"
@@ -75,6 +76,7 @@
       return {
         penName: '',
         introduction: '',
+        profilePictureFileId: '',
         profilePictureFile: ''
       }
     },
@@ -113,6 +115,7 @@
           .then(data => {
               this.penName = data.penName;
               this.introduction = data.introduction;
+              this.profilePictureFileId = data.profilePictureFileId;
           })
       },
       uploadProfilePictureFile () {

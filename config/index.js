@@ -14,15 +14,12 @@ module.exports = {
     proxyTable: {
       '/api': {
         target: 'http://localhost:8080',
-        changeOrigin: true,
-        /*pathRewrite: {
-          '^/api': ''
-        }*/
-      }/*,
-      '/tinylangpack/ko_KR.js' : {
+        changeOrigin: true
+      },
+      '/uploaded-image' : {
         target: 'http://localhost:8080',
-        changeOrigin: true,
-      }*/
+        changeOrigin: true
+      }
     },
 
     // Various Dev Server settings
