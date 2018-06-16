@@ -19,24 +19,34 @@
       <div class="photo setting-item">
         <div>
           <img style="width:100px; height: 100px; display: block; margin: auto; border-radius: 60px; border: 1px solid grey; box-shadow: none;"
-          :src="'/uploaded-image/' + profilePictureFileId">
+          :src="profilePictureUrl">
         </div>
         <input type="file" id="file"
                ref="file"
               v-on:change="uploadProfilePictureFile">
       </div>
 
-      <div class="pen-name setting-item">
+     <!-- <div class="pen-name setting-item">
         <div class="setting-item-name">
           <span>필명</span>
           <button @click="savePenName" type="button">저장</button>
         </div>
         <div class="input-wrapper">
-          <input v-model="penName" type="text" placeholder="필명을 입력해 주세요.">
+          <input v-model="accountSetting.penName" type="text" placeholder="필명을 입력해 주세요.">
         </div>
+      </div>-->
+
+      <div class="pen-name setting-item">
+        <table>
+          <tr>
+            <td><span>필명</span></td>
+            <td><input v-model="accountSetting.penName" type="text" placeholder="필명을 입력해 주세요."></td>
+            <td><button @click="savePenName" type="button">저장</button></td>
+          </tr>
+        </table>
       </div>
 
-      <div class="introduction setting-item">
+<!--      <div class="introduction setting-item">
         <div class="setting-item-name">
           <span>자기소개</span>
           <button @click="saveIntroduction" type="button">저장</button>
@@ -46,9 +56,27 @@
           <textarea-autosize
             placeholder="자기소개를 입력해주세요."
             :min-height="10"
-            v-model="introduction"
+            v-model="accountSetting.introduction"
           ></textarea-autosize>
         </div>
+      </div>-->
+
+      <div class="introduction setting-item">
+        <table>
+          <tr>
+            <td><span>자기소개</span></td>
+            <td>
+              <div class="input-wrapper">
+                <textarea-autosize
+                  placeholder="자기소개를 입력해주세요."
+                  :min-height="10"
+                  v-model="accountSetting.introduction"
+                ></textarea-autosize>
+              </div>
+            </td>
+            <td><button @click="saveIntroduction" type="button">저장</button></td>
+          </tr>
+        </table>
       </div>
 
       <div class="resign">
@@ -74,10 +102,12 @@
     },
     data() {
       return {
-        penName: '',
-        introduction: '',
-        profilePictureFileId: '',
-        profilePictureFile: ''
+        profilePictureFile: '',
+        accountSetting: {
+          penName: '',
+          introduction: '',
+          profilePictureFileId: ''
+        }
       }
     },
     methods: {
@@ -92,30 +122,31 @@
         window.open(routeData.href, '_self');
       },
       saveIntroduction () {
-        validator.validate('saveIntroduction', this.introduction, rejectMessage => {
+        validator.validate('saveIntroduction', this.accountSetting.introduction, rejectMessage => {
           alert(rejectMessage);
         })
         api.saveIntroduction(this.introduction)
           .then( data => {
-            this.introduction = data.introduction;
+            this.accountSetting.introduction = data.introduction;
           })
       },
       savePenName () {
-        validator.validate('savePenName', this.penName, rejectMessage => {
+        validator.validate('savePenName', this.accountSetting.penName, rejectMessage => {
           alert(rejectMessage);
           return;
         })
         api.savePenName(this.penName)
           .then( data => {
-            this.penName = data.penName;
+            this.accountSetting.penName = data.penName;
           })
       },
       getMySettings () {
         api.getMySettings()
           .then(data => {
-              this.penName = data.penName;
+              /*this.penName = data.penName;
               this.introduction = data.introduction;
-              this.profilePictureFileId = data.profilePictureFileId;
+              this.profilePictureFileId = data.profilePictureFileId;*/
+              this.accountSetting = data;
           })
       },
       uploadProfilePictureFile () {
@@ -128,9 +159,8 @@
             headers: {
               'Content-Type': 'multipart/form-data'
             }
-          }
-        ).then(function(){
-          console.log('SUCCESS!!');
+          }).then(res => {
+          this.accountSetting = res.data;
         })
           .catch(function(){
             console.log('FAILURE!!');
@@ -140,7 +170,10 @@
     computed: {
       ...mapGetters([
         'getAccount'
-      ])
+      ]),
+      profilePictureUrl () {
+        return '/uploaded-image/' + this.accountSetting.profilePictureFileId
+      }
     },
     components: {
 
@@ -246,7 +279,7 @@
     vertical-align: middle;
   }
 
-  div.setting-item-name button {
+  div.setting-item button {
     font-size: 13px;
     display: block;
     float:right;
