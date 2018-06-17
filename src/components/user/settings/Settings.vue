@@ -12,18 +12,26 @@
     </header>
 
     <div class="center-block">
-      <h2 style="text-align:center;">
-        개인설정
-      </h2>
+      <div class="center-800">
+        <h2>
+          개인설정
+        </h2>
+      </div>
 
-      <div class="photo setting-item">
-        <div>
-          <img style="width:100px; height: 100px; display: block; margin: auto; border-radius: 60px; border: 1px solid grey; box-shadow: none;"
+
+      <div class="profile-picture setting-item center-800">
+        <div class="profile-picture-display">
+          <img style="width:100px; height: 100px; box-shadow: none; border-radius: 3px;"
           :src="profilePictureUrl">
+
+          <input type="file" id="profile-picture-input"
+                 ref="file"
+                 v-on:change="uploadProfilePictureFile"
+                  style="display:none;">
+          <button type="button"
+                  @click="changeProfilePicture">변경</button>
         </div>
-        <input type="file" id="file"
-               ref="file"
-              v-on:change="uploadProfilePictureFile">
+
       </div>
 
      <!-- <div class="pen-name setting-item">
@@ -36,12 +44,17 @@
         </div>
       </div>-->
 
-      <div class="pen-name setting-item">
+      <div class="pen-name setting-item center-800">
         <table>
+          <colgroup>
+            <col width="15%"/>
+            <col width="70%"/>
+            <col width="15%"/>
+          </colgroup>
           <tr>
-            <td><span>필명</span></td>
-            <td><input v-model="accountSetting.penName" type="text" placeholder="필명을 입력해 주세요."></td>
-            <td><button @click="savePenName" type="button">저장</button></td>
+            <td class="setting-item-name"><span>필명</span></td>
+            <td class="setting-item-input"><input v-model="accountSetting.penName" type="text" placeholder="필명을 입력해 주세요."></td>
+            <td class="setting-item-button"><button @click="savePenName" type="button">저장</button></td>
           </tr>
         </table>
       </div>
@@ -61,11 +74,16 @@
         </div>
       </div>-->
 
-      <div class="introduction setting-item">
+      <div class="introduction setting-item center-800">
         <table>
+          <colgroup>
+            <col width="15%"/>
+            <col width="70%"/>
+            <col width="15%"/>
+          </colgroup>
           <tr>
-            <td><span>자기소개</span></td>
-            <td>
+            <td class="setting-item-name"><span>자기소개</span></td>
+            <td class="setting-item-input">
               <div class="input-wrapper">
                 <textarea-autosize
                   placeholder="자기소개를 입력해주세요."
@@ -74,7 +92,7 @@
                 ></textarea-autosize>
               </div>
             </td>
-            <td><button @click="saveIntroduction" type="button">저장</button></td>
+            <td class="setting-item-button"><button @click="saveIntroduction" type="button">저장</button></td>
           </tr>
         </table>
       </div>
@@ -165,6 +183,10 @@
           .catch(function(){
             console.log('FAILURE!!');
           });
+      },
+      changeProfilePicture () {
+        var element = document.querySelector('#profile-picture-input')
+        element.click();
       }
     },
     computed: {
@@ -192,8 +214,9 @@
 
   h2 {
     font-size: 1.7em;
-    margin-top: 20px;
-    margin-bottom: 1em;
+    text-align: center;
+    font-family: NanumGothic;
+    margin-bottom: 15px;
   }
 
   header.top-header {
@@ -253,80 +276,88 @@
     width: 1366px;
   }
 
-  div.setting-item.photo {
-    padding-bottom: 1.4em;
+  div.setting-item.profile-picture {
+    padding-bottom: 15px;
+    padding-top: 25px;
+    height: 140px;
+    border-bottom: none;
   }
 
   div.setting-item {
-    width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-    background-color: white;
-    margin-bottom: 2em;
-
     padding-bottom: 5px;
+    padding-top: 10px;
     border-bottom: 1px solid #dfdfdf;
   }
 
-  div.setting-item-name {
+  div.center-800 {
+    width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  div.setting-item table{
+    width: 100%;
+  }
+
+  td.setting-item-name {
     font-size: 1.3em;
     height: 27px;
     color: #4f4f4f;
-    display: block;
-    margin-bottom: 1em;
-
-
-    vertical-align: middle;
+    vertical-align: top;
+    padding-top: 14px;
+  }
+  td.setting-item-name span{
+    font-family: NanumGothic;
+  }
+  td.setting-item-button {
+    vertical-align: top;
+    padding-top: 14px;
   }
 
   div.setting-item button {
-    font-size: 13px;
+    font-size: 16px;
     display: block;
     float:right;
     background-color: rgb(235,168,0);
     border: none;
   }
-  div.setting-item-name span{
-    display:block;
-    float:left;
-    padding-top: 4px;
-    vertical-align: middle;
-  }
-  div.setting-item-name button:after {
-    clear: both;
-    content: "";
-  }
 
-  div.photo.setting-item {
-
-  }
-
-  input {
+  div.setting-item input {
     font-size: 1.3em;
     border: none;
     outline: none;
+    width: 100%;
+    padding-top: 12px;
+    font-family: NanumGothic;
   }
 
-  textarea {
+  div.setting-item textarea {
     border: none;
     outline: none;
     font-size: 1.3em;
     resize: none;
-    font-family: none; /*should fix autosize textare plugin*/
-
-    width: 794px;
+    font-family: inherit; /*should fix autosize textare plugin*/
+    padding-top: 12px;
+    width: 100%;
+    font-family: NanumGothic;
   }
 
-  div.input-wrapper {
-
-    margin: 5px 0px 5px 0px;
-
+  div.profile-picture-display {
+    width:100%;
   }
 
-  div.input-wrapper input {
-    width: 792px;
-    padding-left: 2px;
+  div.profile-picture-display img{
+    display: block;
+    margin-left:auto;
+    margin-right: auto;
+  }
 
+  div.profile-picture-display button {
+    position: relative;
+    float:none;
+    display: inline-block;
+    left:420px;
+    bottom: 18px;
   }
 
 

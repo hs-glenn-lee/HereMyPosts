@@ -1,0 +1,15 @@
+@font-face {
+  font-family: 'NanumGothic';
+  src: url('NanumGothicOTF00.woff2') format('woff2'),
+  url('NanumGothicOTF00.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'NanumGothic';
+  src: url('NanumGothicOTFBold00.woff2') format('woff2'),
+  url('NanumGothicOTFBold00.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+}
