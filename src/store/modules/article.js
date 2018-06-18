@@ -46,13 +46,6 @@ const actions = {
 
     //validate
     validator.validate('saveArticle',state.article);
-    if(state.article.title === '') {
-
-    }
-
-    if(state.article.content === '') {
-
-    }
 
     console.log(state.article)
 

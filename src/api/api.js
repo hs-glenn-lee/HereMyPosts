@@ -129,22 +129,50 @@ export default {
   },
 
 
-  //---series
-  createNewSeries (series) {
-    return axiosAppJson.put('api/series/create',series)
+  //---tag
+  getMyTags () {
+    return axiosAppJson.get('api/tag/myTags')
       .then(res => {
-        console.log('createNewSeries')
+        console.log('getMyTags')
         console.log(res.data)
         return res.data;
       })
       .catch(err => {throw err});
   },
-  getMySeriesByPage (pageParameter) {
-    return axiosAppJson.post('api/series/all-series-by-page', pageParameter)
+  getArticleTags (articleId) {
+    return axiosAppJson.get('api/article/' + articleId +'/tags')
       .then(res => {
+        console.log('getArticleTags')
+        console.log(res.data)
         return res.data;
       })
       .catch( err => {throw err})
+  },
+  addTagToArticle (tagArticle) {
+    console.log(tagArticle);
+    return axiosAppJson.put('api/tag/addToArticle', tagArticle)
+      .then(res => {
+        console.log('addTagToArticle')
+        console.log(res.data) // data is supposed to be tagArticle
+        return res.data;
+      })
+      .catch( err => {throw err})
+  },
+  removeTagFromArticle (tagArticle) {
+    return axiosAppJson.post('api/tag/removeFromArticle', tagArticle)
+      .then(res => {
+        console.log('addTagToArticle')
+        console.log(res.data) // data is supposed to be tagArticle
+        return res.data;
+      })
+      .catch( err => {throw err})
+      .then(data => {
+        if(data.status === 'success') {
+          return data.data;//empty object
+        }else {
+          return Promise.reject(data.message);
+        }
+      })
   },
 
   //---settings

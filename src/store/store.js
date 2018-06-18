@@ -6,6 +6,7 @@ import sign from '@/store/modules/sign.js'
 import categoryTree from '@/store/modules/category-tree.js'
 import article from '@/store/modules/article.js'
 import alert from '@/store/modules/alert.js';
+import tag from '@/store/modules/tag.js'
 Vue.use(Vuex)
 
 export const store = new Vuex.Store({
@@ -17,6 +18,7 @@ export const store = new Vuex.Store({
     sign,
     categoryTree,
     article,
-    alert
+    alert,
+    tag
   }
 })

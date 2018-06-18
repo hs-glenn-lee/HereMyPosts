@@ -7,21 +7,28 @@
       <img src="@/assets/images/x-icon-30.png" style="width:20px;"/>
     </div>
 
-<!--
-    <div class="series-list-container">
-      <series-list
-        v-if="seriesList.length > 0"
-        :seriesList="seriesList"
-        :onSeriesNameRightClick="onSeriesNameRightClick"
-        :onSeriesNameClick="onSeriesNameClick"></series-list>
+    <div
+      v-if="getIsSignedIn && (getArticle) "
+      class="tagged-tag-list">
+      <div class="tag-list-label">이 글의 태그</div>
+        <span v-for="tag in getArticleTags" class="tag" :key="tag.id">{{tag.name}}</span>
     </div>
--->
 
-   <!-- <c-node-right-click-menu v-bind:is="rightClickMenu"
-                             :category-node="rightClickedCategoryNode"
-                             :top="rightClickedTop"
-                             :left="rightClickedLeft">
-    </c-node-right-click-menu>-->
+    <div class="tagger">
+      <div class="tagger-label">
+        <span>태그 등록하기</span>
+      </div>
+      <div class="find-tag-input-wrapper">
+        <input v-model="tagNameInput"
+               class="tag-name-input" type="text"
+               id="tag-name-input">
+        <button @click="addNewTagToArticle" type="button">등록</button>
+      </div>
+      <div class="my-tag-list">
+        <!--<span class="tag"></span>-->
+      </div>
+    </div>
+
 
 <!--    <div>
       <article-list-pane :onArticleTitleClick="onArticleTitleClick"
@@ -34,7 +41,8 @@
 
   import api from '@/api/api'
   import PageParameter from '@/model/PageParameter'
-
+  import Tag from '@/model/tag/Tag.js'
+  import TagArticle from '@/model/tag/TagArticle.js'
   import { mapMutations } from 'vuex';
   import { mapGetters } from 'vuex';
   import { mapActions } from 'vuex';
@@ -43,23 +51,19 @@
     name: "TagPane",
     data () {
       return {
-        tagToCreate: null
+        tagNameInput: ''
       }
     },
     methods: {
       ...mapActions([
-        'markPass'
+        'markPass',
+        'addTagToArticle'
       ]),
       ...mapMutations([
-        'setIsTagPaneShowing'
+        'setIsTagPaneShowing',
+        'addTagToArticleTags'
       ]),
 
-      onTagNameRightClick (event) {
-
-      },
-      onTagNameClick (event) {
-
-      },
       onArticleTitleClick(event) {
 
       },
@@ -68,15 +72,30 @@
       },
       closeTagPane(event) {
         this.setIsTagPaneShowing(false)
+      },
+
+      addNewTagToArticle () {
+        var tag = new Tag(undefined, this.tagNameInput, undefined, this.account);
+        if(this.getArticle.id) {
+          let tagArticle = new TagArticle(undefined, this.getArticle, tag);
+          this.addTagToArticle(tagArticle)
+        }else {
+          this.addTagToArticleTags(tag);
+        }
       }
     },
     created () {
+      if(this.getArticle && this.getIsSignedIn ) {
 
+      }
     },
     computed: {
       ...mapGetters([
         'isTagPaneShowing',
-        'getIsSignedIn'
+        'getIsSignedIn',
+        'getAccount',
+        'getArticleTags',
+        'getArticle'
       ])
     },
     components: {

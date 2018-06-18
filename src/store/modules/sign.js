@@ -1,4 +1,4 @@
-import axiosAppJson from '@/api/api'
+import api from '@/api/api'
 const state = {
   sign: {
     account: {},
@@ -36,7 +36,7 @@ const actions = {
     console.log(state.sign)
     console.log(state.sign.isSignedIn)
     if(!state.sign.isSignedIn) {
-      return axiosAppJson.getMyAccount()
+      return api.getMyAccount()
         .then( data => {
           console.log('getMyAccount!')
           console.log(data);
