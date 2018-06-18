@@ -12,7 +12,7 @@ const state = {
         context.commit('setCategoryPaneIsShowing', false);
       }
     },
-    '': {
+    'TagPane': {
       fail: function(context) {
         context.commit('setIsTagPaneShowing', false);
       }

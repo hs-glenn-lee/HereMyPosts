@@ -2,15 +2,16 @@ import TagArticle from "./TagArticle";
 
 export default class TagCollection {
 
-  constructor(owner, article) {
-    this.owner = owner;
+  constructor(article) {
     this.article = article;
     this.tagMap = {};
   }
 
   addTags(tagArray) {
+
     if(tagArray) {
-      tagArray.forEach( (el,idx) => {
+      console.log(tagArray)
+      tagArray.forEach( (el) => {
         this.tagMap[el.name] = el;
       })
     }
@@ -19,7 +20,7 @@ export default class TagCollection {
   addTag(tag) {
     if(this.findTag(tag.name)) {}
     else {
-      this.tagMap[tag.name] = el;
+      this.tagMap[tag.name] = tag;
     }
   }
 
@@ -38,11 +39,25 @@ export default class TagCollection {
 
   getTagArticleList() {
     var tagArticles = [];
-    for(var tagName in tagMap) {
+    for(var tagName in this.tagMap) {
       var tag = this.tagMap[tagName];
       tagArticles.push(new TagArticle(undefined, this.article, tag))
     }
     return tagArticles;
+  }
+
+  toArray () {
+    var tagArray = [];
+    for(var tagName in this.tagMap) {
+      var tag = this.tagMap[tagName];
+      tagArray.push(tag);
+    }
+    tagArray.sort();
+    return tagArray;
+  }
+
+  isEmpty () {
+    return Object.keys(this.tagMap).length > 0;
   }
 
 }

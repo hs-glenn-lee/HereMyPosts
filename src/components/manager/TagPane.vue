@@ -7,25 +7,32 @@
       <img src="@/assets/images/x-icon-30.png" style="width:20px;"/>
     </div>
 
-    <div
-      v-if="getIsSignedIn && (getArticle) "
-      class="tagged-tag-list">
+    <div class="tagged-tag-list">
       <div class="tag-list-label">이 글의 태그</div>
-        <span v-for="tag in getArticleTags" class="tag" :key="tag.id">{{tag.name}}</span>
+      <div
+        v-if="getArticleTags"
+        class="tag-list">
+        <span v-for="tag in getArticleTags.toArray()"
+              class="tag"
+              :key="tag.id">{{tag.name}}
+        </span>
+      </div>
     </div>
 
-    <div class="tagger">
+    <div class="tagger" v-if="getIsSignedIn">
       <div class="tagger-label">
         <span>태그 등록하기</span>
       </div>
-      <div class="find-tag-input-wrapper">
-        <input v-model="tagNameInput"
-               class="tag-name-input" type="text"
-               id="tag-name-input">
-        <button @click="addNewTagToArticle" type="button">등록</button>
-      </div>
-      <div class="my-tag-list">
-        <!--<span class="tag"></span>-->
+      <div v-if="getMyTags">
+        <div class="find-tag-input-wrapper">
+          <input v-model="tagNameInput"
+                 class="tag-name-input" type="text"
+                 id="tag-name-input">
+          <button @click="addTag" type="button">등록</button>
+        </div>
+        <div class="my-tag-list">
+          <!--<span class="tag"></span>-->
+        </div>
       </div>
     </div>
 
@@ -57,7 +64,9 @@
     methods: {
       ...mapActions([
         'markPass',
-        'addTagToArticle'
+        'addTagToSavedArticle',
+        'initMyTags',
+        'initArticleTags'
       ]),
       ...mapMutations([
         'setIsTagPaneShowing',
@@ -74,20 +83,25 @@
         this.setIsTagPaneShowing(false)
       },
 
-      addNewTagToArticle () {
+      addTag () {
+        console.log('??????');
         var tag = new Tag(undefined, this.tagNameInput, undefined, this.account);
         if(this.getArticle.id) {
           let tagArticle = new TagArticle(undefined, this.getArticle, tag);
-          this.addTagToArticle(tagArticle)
+          this.addTagToSavedArticle(tagArticle)
         }else {
+          console.log('??????!!!!!!!!');
           this.addTagToArticleTags(tag);
         }
       }
     },
     created () {
-      if(this.getArticle && this.getIsSignedIn ) {
-
+      /*if(this.getIsSignedIn) {
+        this.initMyTags();
       }
+      if(this.getArticle) {
+        this.initArticleTags(this.getArticle);
+      }*/
     },
     computed: {
       ...mapGetters([
@@ -95,11 +109,22 @@
         'getIsSignedIn',
         'getAccount',
         'getArticleTags',
-        'getArticle'
+        'getArticle',
+        'getMyTags'
       ])
     },
     components: {
 
+    },
+    watch: {
+      getArticle (val, oldVal) {
+        if(val)
+          this.initArticleTags()
+      },
+      getIsSignedIn (val, oldVal) {
+        if(val)
+          this.initMyTags();
+      }
     }
   }
 </script>
@@ -118,28 +143,9 @@
     margin-right: 10px;
     margin-top: 10px;
     opacity: 0.7;
-
   }
   div.close-icon:hover {
     cursor: pointer;
   }
-/*  div.series-list-container {
-    margin-top: 70px;
-  }
 
-  div.series-finder {
-    margin: 10px 0px 10px 10px;
-  }
-
-  div.series-finder input.series-name-input {
-    font-size: 1em;
-    width: 200px;
-
-    border-color: #eaeaea;
-
-  }
-
-  div.series-finder button {
-    font-size: 1em;
-  }*/
 </style>
