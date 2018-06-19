@@ -28,11 +28,11 @@ const actions = {
   initCategoryTree: context => {
 
     if(!context.state.categoryTree.isEmpty()){
-      return this.categoryTree
+      return Promise.resolve(this.categoryTree);
     }
     return api.getAllMyCategory()
       .then( data => {
-        context.commit('setCategoryList',data );
+        context.commit('setCategoryList',data);
         return this.categoryTree
       })
       .catch(err => alert(err))

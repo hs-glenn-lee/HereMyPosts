@@ -35,6 +35,11 @@ export default new Router({
       component: ManagerComp
     },
     {
+      name: 'ManagerSavedArticle',
+      path: '/:username/manager/:articleId',
+      component: ManagerComp
+    },
+    {
       path: '/:username/article/:articleId',
       component: Viewer
     },

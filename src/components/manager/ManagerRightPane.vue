@@ -45,7 +45,7 @@
       ])
     },
     created () {
-      this.newArticle()
+
     },
     computed: {
       title: {

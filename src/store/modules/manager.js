@@ -2,10 +2,7 @@ import Manager from '@/model/manager/Manager'
 import validator from '@/model/validator/validator'
 
 const state = {
-  manager: {
-    selectedCategoryNode: {}
-  },
-
+  managerState: 'start',
   passes: {
     'CategoryPane': {
       fail: function(context) {
@@ -18,7 +15,6 @@ const state = {
       }
     }
   },
-
   isCategoryPaneShowing: true,
   isArticleListPaneShowing: true,
   isTagPaneShowing: true
@@ -35,9 +31,6 @@ const getters = {
   }
 };
 const mutations = {
-  setManager: (state, payload) => {
-    state.manager = payload;
-  },
   setCategoryPaneIsShowing: (state, payload) => {
     state.isCategoryPaneShowing = payload;
   },
@@ -46,12 +39,37 @@ const mutations = {
   }
 };
 const actions = {
-  init: context => {
-    var initializedManager = new Manager().init().then(()=>{
-      context.commit('setManager', initializedManager)
-    })
+  initManager: (context, payload) => {
+    console.log('initManager');
+    context.state.managerState = 'load';
+    const articleId = payload;
+    const isSavedArticle = (articleId !== undefined);
+
+    //summary sign => article => category, tag
+    context.dispatch('syncSign', undefined, {root:true})
+      .catch(err => {
+        throw err;//user is not signed, so go to sing-in page
+      })
+      .then( () => {
+        console.log('after syncSign');
+        context.dispatch('initMyTags', undefined, {root:true});
+        if(isSavedArticle) {
+          context.dispatch('initArticle', articleId, {root:true});
+          context.dispatch('initArticleTags', undefined, {root:true});
+        }else {
+          console.log('!isSavedArticle');
+          context.dispatch('initArticle', undefined)
+            .catch( err => {
+              throw err; //todo error on getting article. this mean wrong articleId(not mine, or no matched article)
+            })
+            .then( () => {
+              context.dispatch('initCategoryTree', undefined, {root:true});
+              context.dispatch('initArticleTags', undefined, {root:true});
+            })
+        }
+      })
   },
-  test: (context) => {
+ /* test: (context) => {
     console.log('test')
     validator.validate('test',undefined, function(exception) {
       console.log('reject callback')
@@ -60,12 +78,12 @@ const actions = {
       context.commit('setAlertMessage', exception.message);
       context.commit('setAlertIsShowing', true);
     });
-  },
+  },*/
   checkPass: (context, payload) => {//to not showing if click other components
-    var event = payload;
+    const event = payload;
 
-    var passes = context.state.passes;
-    var markedPasses = event.passes;
+    const passes = context.state.passes;
+    const markedPasses = event.passes;
 
     if(markedPasses) {
       console.log('markedPasses exits')

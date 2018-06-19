@@ -34,10 +34,10 @@ export default class TagCollection {
 
   getTagArticle(tagName) {
     var tag = this.findTag(tagName);
-    var tagArticle = new TagArticle(undefined, this.article, tag);
+    return new TagArticle(undefined, this.article, tag);
   }
 
-  getTagArticleList() {
+  getTagArticles() {
     var tagArticles = [];
     for(var tagName in this.tagMap) {
       var tag = this.tagMap[tagName];

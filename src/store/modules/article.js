@@ -40,10 +40,21 @@ const mutations = {
   }
 };
 const actions = {
+  initArticle:  (context, payload) => {
+    console.log('initArticle')
+    var articleId = payload;
+    if(articleId) {
+      return context.dispatch('setArticleAs', articleId, {root: true})
+    }else {
+      console.log('else articleId')
+      context.commit('newArticle');
+      return Promise.resolve('success');
+    }
+  },
   saveArticle: context => {
     state.article.category = context.getters.getSelectedNode.cloneAsCategory();
     state.article.author = context.getters.getAccount;
-
+    state.article.tagArticles = context.getters.getArticleTags.getTagArticles();
     //validate
     validator.validate('saveArticle',state.article);
 
@@ -52,6 +63,9 @@ const actions = {
     api.saveArticle(state.article)
       .then( data => {
         console.log('!!!saveArticle')
+      })
+      .catch( err => {
+        console.error(err)
       })
   },
   getArticlesOfCategory : (context, payload) => {
@@ -62,8 +76,8 @@ const actions = {
         state.articleList = data;
       })
   },
-  getArticleFromServer: (context, payload) => {
-    api.getArticle(payload)
+  setArticleAs: (context, payload) => {
+    return api.getArticle(payload)
       .then(data => {
         context.commit('setArticle',data);
       })

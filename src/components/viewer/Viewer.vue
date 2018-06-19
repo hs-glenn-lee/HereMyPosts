@@ -16,7 +16,7 @@
     name: "Viewer",
     methods: {
       ...mapActions([
-        'getArticleFromServer'
+        'setArticleAs'
       ])
     },
     computed: {
@@ -34,7 +34,7 @@
     },
     created() {
       console.log(this.$route.params.articleId)
-      this.getArticleFromServer(this.$route.params.articleId);
+      this.setArticleAs(this.$route.params.articleId);
     }
   }
 </script>

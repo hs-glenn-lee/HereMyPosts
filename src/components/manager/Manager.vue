@@ -2,7 +2,7 @@
   <div class="manager"
     @click="checkPass">
     <left-pane></left-pane>
-    <right-pane></right-pane>
+    <right-pane v-if="getArticle"></right-pane>
     <alert-comp v-if="getIsAlertShowing" key="getAlertCount"></alert-comp>
   </div>
 </template>
@@ -18,7 +18,7 @@ export default {
   name: 'ManagerComp',
   methods: {
     ...mapActions([
-      /*'syncSign',*/
+      'initManager',
       'checkPass'
     ])
   },
@@ -27,11 +27,18 @@ export default {
       'getAlertCount',
       'getAlertMessage',
       'getIsAlertShowing',
-      'getAlert'
+      'getAlert',
+      'getArticle'
     ])
   },
   created () {
+    console.log('Manager Component Created.')
     /*this.syncSign()*///todo if error occcur redirect to sign-in
+    var currentPath = this.$route.path
+    var paths = currentPath.split("/");
+    this.initManager(paths[3]);//
+
+
   },
   components: {
     'left-pane': leftPaneComp,

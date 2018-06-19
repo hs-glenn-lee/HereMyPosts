@@ -21,6 +21,9 @@ const mutations = {
   setArticleTags: (state, payload) => {
     state.articleTags = payload;
   },
+  setEmptyArticleTags : (state) => {
+    var tagCol = new TagCollection();
+  },
   addTagToArticleTags: (state, payload) => {
     var tag = payload;
     var tagCol = state.articleTags
@@ -42,9 +45,7 @@ const actions = {
       })
   },
   initArticleTags: (context) => {
-    console.log(context);
     var article = context.rootGetters.getArticle;
-
     var tagCol = new TagCollection();
     if(article.id) {
       api.getArticleTags(article.id)
@@ -53,7 +54,7 @@ const actions = {
           context.commit('setArticleTags', tagCol)
         })
     }else {
-      context.commit('setArticleTags', tagCol)
+      context.commit('setArticleTags', tagCol)//set empty collection
     }
 
   },

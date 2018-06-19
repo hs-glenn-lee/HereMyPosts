@@ -22,7 +22,7 @@
     onNodeNameRightClick: Function
   },
   mounted() {
-    this.initCategoryTree()
+   // this.initCategoryTree()
   },
   data() {
     return {
