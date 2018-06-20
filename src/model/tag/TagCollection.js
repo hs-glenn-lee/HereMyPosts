@@ -5,6 +5,7 @@ export default class TagCollection {
   constructor(article) {
     this.article = article;
     this.tagMap = {};
+    this.DEL = '\u001F';
   }
 
   addTags(tagArray) {
@@ -60,4 +61,14 @@ export default class TagCollection {
     return Object.keys(this.tagMap).length > 0;
   }
 
+
+  test () {
+    console.log('testsetste');
+    let del = '\u001F';
+    let testStr = 'a' + del + 'b' + del + 'c';
+    let arr = testStr.split(del);
+    arr.forEach(el => {
+      console.log(el);
+    })
+  }
 }

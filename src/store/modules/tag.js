@@ -27,6 +27,10 @@ const mutations = {
   addTagToArticleTags: (state, payload) => {
     var tag = payload;
     var tagCol = state.articleTags
+
+    console.log('----------------------------')
+    tagCol.test();
+
     if(tagCol.findTag(tag.name) === undefined) {
       Vue.set(tagCol.tagMap, tag.name, tag)
     }

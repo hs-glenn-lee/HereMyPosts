@@ -96,12 +96,9 @@
       }
     },
     created () {
-      /*if(this.getIsSignedIn) {
-        this.initMyTags();
-      }
-      if(this.getArticle) {
-        this.initArticleTags(this.getArticle);
-      }*/
+
+
+
     },
     computed: {
       ...mapGetters([

@@ -35,7 +35,10 @@ const actions = {
         context.commit('setCategoryList',data);
         return this.categoryTree
       })
-      .catch(err => alert(err))
+      .catch(err => {
+        console.error(err)
+        alert(err)
+      })
   },
   setSelectedNode: (context, payload) => {
     context.commit('setSelectedNode',payload)
