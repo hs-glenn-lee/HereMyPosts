@@ -54,8 +54,11 @@ const actions = {
         console.log('after syncSign');
         context.dispatch('initMyTags', undefined, {root:true});
         if(isSavedArticle) {
-          context.dispatch('initArticle', articleId, {root:true});
-          context.dispatch('initArticleTags', undefined, {root:true});
+          context.dispatch('initArticle', articleId, {root:true})
+            .then( () => {
+              context.dispatch('initCategoryTree', undefined, {root:true});//todo need pass selected Category
+              context.dispatch('initArticleTags', undefined, {root:true});
+            })
         }else {
           console.log('!isSavedArticle');
           context.dispatch('initArticle', undefined)

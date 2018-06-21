@@ -26,7 +26,7 @@ const mutations = {
 };
 const actions = {
   initCategoryTree: context => {
-
+    console.log('initCategoryTree')
     if(!context.state.categoryTree.isEmpty()){
       return Promise.resolve(this.categoryTree);
     }

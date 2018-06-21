@@ -30,8 +30,8 @@
                  id="tag-name-input">
           <button @click="addTag" type="button">등록</button>
         </div>
-        <div class="my-tag-list">
-          <!--<span class="tag"></span>-->
+        <div v-if="searchTagAmongMyTags().length > 0" class="my-tag-list">
+          <span v-for="tagname in searchTagAmongMyTags()" class="tag">{{tagname}}</span>
         </div>
       </div>
     </div>
@@ -84,20 +84,26 @@
       },
 
       addTag () {
-        console.log('??????');
         var tag = new Tag(undefined, this.tagNameInput, undefined, this.account);
         if(this.getArticle.id) {
           let tagArticle = new TagArticle(undefined, this.getArticle, tag);
           this.addTagToSavedArticle(tagArticle)
         }else {
-          console.log('??????!!!!!!!!');
           this.addTagToArticleTags(tag);
         }
+      },
+      searchTagAmongMyTags () {
+        let myTagsArr = this.getMyTags;
+        let ret = [];
+        for(let i = 0; i < myTagsArr.length; i++) {
+          if( myTagsArr[i].indexOf(this.tagNameInput) >=0  ) {
+            ret.push(myTagsArr[i]);
+          }
+        }
+        return ret;
       }
     },
     created () {
-
-
 
     },
     computed: {

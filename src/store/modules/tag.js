@@ -2,8 +2,9 @@ import api from '@/api/api'
 import TagCollection from "../../model/tag/TagCollection";
 import Vue from 'vue'
 const state = {
-  myTags: null,
-  articleTags: null
+  myTags: [],
+  articleTags: null,
+  initialArticleTags: null
 };
 const getters = {
   getMyTags: state => {
@@ -28,9 +29,6 @@ const mutations = {
     var tag = payload;
     var tagCol = state.articleTags
 
-    console.log('----------------------------')
-    tagCol.test();
-
     if(tagCol.findTag(tag.name) === undefined) {
       Vue.set(tagCol.tagMap, tag.name, tag)
     }
@@ -43,9 +41,7 @@ const actions = {
   initMyTags: (context) => {
     api.getMyTags()
       .then(data => {
-        var tagCol = new TagCollection();
-        tagCol.addTags(data);
-        context.commit('setMyTags', tagCol)
+        context.commit('setMyTags', data)
       })
   },
   initArticleTags: (context) => {

@@ -3,6 +3,7 @@ import Article from '@/model/Article'
 import validator from '@/model/validator/validator.js'
 const state = {
   article: null/*new Article(null, '', '<!DOCTYPE html><html><head></head><body></body></html>', '', 0, false, 0, null, null)*/,
+  initialArticle: null, //to compare after modifiy article
   articleList: []
 };
 const getters = {
@@ -37,6 +38,9 @@ const mutations = {
   },
   setArticle: (state, payload) => {
     state.article = payload;
+  },
+  setInitialArticle: (state, payload) => {
+    state.initialArticle = payload;
   }
 };
 const actions = {
@@ -44,9 +48,8 @@ const actions = {
     console.log('initArticle')
     var articleId = payload;
     if(articleId) {
-      return context.dispatch('setArticleAs', articleId, {root: true})
+      return context.dispatch('setSavedArticle', articleId, {root: true})
     }else {
-      console.log('else articleId')
       context.commit('newArticle');
       return Promise.resolve('success');
     }
@@ -55,10 +58,9 @@ const actions = {
     state.article.category = context.getters.getSelectedNode.cloneAsCategory();
     state.article.author = context.getters.getAccount;
     state.article.tagArticles = context.getters.getArticleTags.getTagArticles();
+
     //validate
     validator.validate('saveArticle',state.article);
-
-    console.log(state.article)
 
     api.saveArticle(state.article)
       .then( data => {
@@ -76,10 +78,11 @@ const actions = {
         state.articleList = data;
       })
   },
-  setArticleAs: (context, payload) => {
+  setSavedArticle: (context, payload) => {
     return api.getArticle(payload)
       .then(data => {
         context.commit('setArticle',data);
+        context.commit('setInitialArticle',data);
       })
   }
 };
