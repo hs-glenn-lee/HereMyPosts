@@ -19,7 +19,7 @@
       </div>
 
       <div class="editor-container">
-        <editor></editor>
+        <editor :article="getArticle"></editor>
       </div>
     </div>
   </div>

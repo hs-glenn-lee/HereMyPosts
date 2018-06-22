@@ -45,7 +45,6 @@ const mutations = {
 };
 const actions = {
   initArticle:  (context, payload) => {
-    console.log('initArticle')
     var articleId = payload;
     if(articleId) {
       return context.dispatch('setSavedArticle', articleId, {root: true})
@@ -62,12 +61,12 @@ const actions = {
     //validate
     validator.validate('saveArticle',state.article);
 
-    api.saveArticle(state.article)
+    return api.saveArticle(state.article)
       .then( data => {
-        console.log('!!!saveArticle')
+        return data;
       })
       .catch( err => {
-        console.error(err)
+        throw err;
       })
   },
   getArticlesOfCategory : (context, payload) => {

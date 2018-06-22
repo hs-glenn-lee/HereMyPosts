@@ -7,6 +7,7 @@
       <div class="left-pane-menu-item"
            @mouseover="onMenuItemMouserOver" @mouseleave="onMenuItemMouserLeave">
         <img
+          @click="onClickNewDocumentMenu"
           class="icon"
           src="@/assets/images/left-pane-icons/50w_newdocument.png"
         />
@@ -30,7 +31,7 @@
           @mouseleave="onMenuItemMouserLeave"/>
       </div>
       <div class="left-pane-menu-item"
-           @click="saveArticle"
+           @click="onClickSaveMenu"
            @mouseover="onMenuItemMouserOver"
            @mouseleave="onMenuItemMouserLeave">
         <img
@@ -86,8 +87,28 @@ export default {
     ]),
     ...mapActions([
       'test',
-      'saveArticle'
+      'saveArticle',
+      'initManager'
     ]),
+    onClickNewDocumentMenu (event) {
+      let account = this.getAccount;
+      this.$router.push({
+        name: "Manager",
+        params: { 'username': account.username}
+      })
+      this.initManager();
+    },
+    onClickSaveMenu (event) {
+      this.saveArticle().
+        then( data => {
+          let account = this.getAccount;
+          this.$router.push({
+            name: "ManagerSavedArticle",
+            params: { 'username': account.username, 'articleId': data.id }
+          })
+
+        })
+    },
     toggleCategoryPane (event) {
       event.stopPropagation();// because of check/mark pass
 
@@ -113,7 +134,8 @@ export default {
   computed: {
     ...mapGetters([
       'isCategoryPaneShowing',
-      'isTagPaneShowing'
+      'isTagPaneShowing',
+      'getAccount'
     ])
   },
   components: {

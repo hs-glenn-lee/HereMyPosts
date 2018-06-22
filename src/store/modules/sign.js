@@ -19,7 +19,6 @@ const getters = {
 const mutations = {
   setAccount: (state, payload) => {
     console.log('setAccount!')
-    console.log(payload);
     state.sign.account = payload;
   },
   setIsSignedIn: (state, payload) => {
