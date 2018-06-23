@@ -9,6 +9,7 @@
           :key="article.id"
           class="article-list-item">
         <span class="article-title"
+          v-bind:id="article.id"
           @click="onArticleTitleClick"
           @click.double="onArticleTitleDoubleClick">{{article.title}}</span>
       </li>

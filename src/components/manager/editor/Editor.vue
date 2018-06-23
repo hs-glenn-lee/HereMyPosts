@@ -79,17 +79,14 @@ export default {
   },
   watch: {
     getArticle () {
-      if(tinymceEditor) {
-        tinyMCE.execCommand('mceRemoveEditor', false, this.tinymceEditor.id);
+      console.log(this);
+      if(this.tinymceEditor) {
+        tinyMCE.execCommand('mceRemoveEditor', false, 'editor');
         this.init();
       }
     }
   },
   methods: {
-    resetContent () {
-      let contentHTML = document.querySelector('#editor_data').innerHTML;
-      document.querySelector('#editor').innerHTML = content;
-    },
     init () {
 
       langpack(tinymce) //set Laguage

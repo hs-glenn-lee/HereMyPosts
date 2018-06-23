@@ -95,7 +95,7 @@ export default {
       this.$router.push({
         name: "Manager",
         params: { 'username': account.username}
-      })
+      });
       this.initManager();
     },
     onClickSaveMenu (event) {
@@ -105,8 +105,8 @@ export default {
           this.$router.push({
             name: "ManagerSavedArticle",
             params: { 'username': account.username, 'articleId': data.id }
-          })
-
+          });
+          this.initManager(data.id);
         })
     },
     toggleCategoryPane (event) {
@@ -117,7 +117,6 @@ export default {
     },
     toggleTagPane (event) {
       event.stopPropagation();// because of check/mark pass
-      console.log('???')
       var cur = this.isTagPaneShowing;
       this.setIsTagPaneShowing(!cur);
     },

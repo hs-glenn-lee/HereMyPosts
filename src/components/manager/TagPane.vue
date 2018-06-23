@@ -12,7 +12,7 @@
       <div
         v-if="getArticleTags"
         class="tag-list">
-        <span v-for="tag in getArticleTags.toArray()"
+        <span v-for="tag in getArticleTags.toTagArray()"
               class="tag"
               :key="tag.id">{{tag.name}}
         </span>

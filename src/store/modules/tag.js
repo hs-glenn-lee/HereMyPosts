@@ -11,7 +11,6 @@ const getters = {
     return state.myTags;
   },
   getArticleTags: state => {
-    console.log('getArticleTags  getters')
     return state.articleTags;
   }
 };
@@ -50,6 +49,8 @@ const actions = {
     if(article.id) {
       api.getArticleTags(article.id)
         .then(data => {
+          console.log('initArticleTags with Id')
+          console.log(data)
           tagCol.addTags(data);
           context.commit('setArticleTags', tagCol)
         })

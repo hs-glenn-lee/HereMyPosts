@@ -57,7 +57,8 @@ export default {
     ]),
     ...mapActions([
       'getArticlesOfCategory',
-      'markPass'
+      'markPass',
+      'initManager'
     ]),
     closeCSLP () {
       this.setCategoryPaneIsShowing(false)
@@ -90,14 +91,21 @@ export default {
 
     },
     onArticleTitleDoubleClick(event) {
-
+      var articleId = event.currentTarget.id;
+      let account = this.getAccount;
+      this.$router.push({
+        name: "ManagerSavedArticle",
+        params: { 'username': account.username, 'articleId': articleId }
+      });
+      this.initManager(articleId);
     }
 
   },
   computed: {
     ...mapGetters([
       'isCategoryPaneShowing',
-      'getCategoryTree'
+      'getCategoryTree',
+      'getAccount'
     ])
   }
 }

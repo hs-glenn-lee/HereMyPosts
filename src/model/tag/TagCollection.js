@@ -2,15 +2,14 @@ import TagArticle from "./TagArticle";
 
 export default class TagCollection {
 
-  constructor(article) {
+  constructor(article, tagArticles) {//todo tag article로만 생성하게 바꾸자.
     this.article = article;
     this.tagMap = {};
+    this.tagArticles = tagArticles || [];
   }
 
   addTags(tagArray) {
-
     if(tagArray) {
-      console.log(tagArray)
       tagArray.forEach( (el) => {
         this.tagMap[el.name] = el;
       })
@@ -21,6 +20,7 @@ export default class TagCollection {
     if(this.findTag(tag.name)) {}
     else {
       this.tagMap[tag.name] = tag;
+      this.tagArticles.push(new TagArticle(undefined, this.article, tag))
     }
   }
 
@@ -32,11 +32,6 @@ export default class TagCollection {
     return this.tagMap[tagName];
   }
 
-  getTagArticle(tagName) {
-    var tag = this.findTag(tagName);
-    return new TagArticle(undefined, this.article, tag);
-  }
-
   getTagArticles() {
     var tagArticles = [];
     for(var tagName in this.tagMap) {
@@ -46,7 +41,7 @@ export default class TagCollection {
     return tagArticles;
   }
 
-  toArray () {
+  toTagArray () {
     var tagArray = [];
     for(var tagName in this.tagMap) {
       var tag = this.tagMap[tagName];
