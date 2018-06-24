@@ -12,9 +12,9 @@
       <div
         v-if="getArticleTags"
         class="tag-list">
-        <span v-for="tag in getArticleTags.toArray()"
+        <span v-for="ta in getArticleTagCollection"
               class="tag"
-              :key="tag.id">{{tag.name}}
+              :key="ta.id">{{ta.tag.name}}
         </span>
       </div>
     </div>
@@ -31,16 +31,10 @@
           <button @click="addTag" type="button">등록</button>
         </div>
         <div class="my-tag-list">
-          <!--<span class="tag"></span>-->
+          <span v-for="tagname in findTagOfMyTags" class="tag">{{tagname}}</span>
         </div>
       </div>
     </div>
-
-
-<!--    <div>
-      <article-list-pane :onArticleTitleClick="onArticleTitleClick"
-                         :onArticleTitleDoubleClick="onArticleTitleDoubleClick"></article-list-pane>
-    </div>-->
   </div>
 </template>
 
@@ -84,34 +78,39 @@
       },
 
       addTag () {
-        console.log('??????');
-        var tag = new Tag(undefined, this.tagNameInput, undefined, this.account);
-        if(this.getArticle.id) {
-          let tagArticle = new TagArticle(undefined, this.getArticle, tag);
-          this.addTagToSavedArticle(tagArticle)
-        }else {
-          console.log('??????!!!!!!!!');
-          this.addTagToArticleTags(tag);
-        }
-      }
+        this.addTag(new Tag(this.tagNameInput));
+      },
+
+      removeTag (tag) {
+        this.removeTag(tag);
+      },
+
+
+
     },
     created () {
-      /*if(this.getIsSignedIn) {
-        this.initMyTags();
-      }
-      if(this.getArticle) {
-        this.initArticleTags(this.getArticle);
-      }*/
     },
     computed: {
       ...mapGetters([
         'isTagPaneShowing',
         'getIsSignedIn',
         'getAccount',
-        'getArticleTags',
+        'getArticleTagCollection',
         'getArticle',
         'getMyTags'
-      ])
+      ]),
+      findTagOfMyTags () {
+        var myTags = this.getMyTags();
+        var ret = [];
+        var word = this.tagNameInput;
+
+        myTags.forEach(el => {
+          if(el.indexOf(word) || word === '') {
+            ret.push(el.name);
+          }
+        })
+        return ret;
+      }
     },
     components: {
 

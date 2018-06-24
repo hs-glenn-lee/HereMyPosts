@@ -53,10 +53,10 @@ const actions = {
       .then( () => {
         console.log('after syncSign');
         context.dispatch('initMyTags', undefined, {root:true});
-        if(isSavedArticle) {
+        if(isSavedArticle) {//저장된 글인 경우
           context.dispatch('initArticle', articleId, {root:true});
           context.dispatch('initArticleTags', undefined, {root:true});
-        }else {
+        }else {//new article
           console.log('!isSavedArticle');
           context.dispatch('initArticle', undefined)
             .catch( err => {

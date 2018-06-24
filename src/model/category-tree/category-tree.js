@@ -41,7 +41,7 @@ export default class CategoryTree {
     });
 
     //assemblying tree from map
-    var treeRoot = catNodeMap['default'];
+    var treeRoot;
     for(var catNode in catNodeMap) {
       var currCatNode = catNodeMap[catNode];
       var parentCatNode = catNodeMap[currCatNode.parentId]
@@ -51,6 +51,9 @@ export default class CategoryTree {
         parentCatNode.children.push(currCatNode)
       }
 
+      if(currCatNode.parentId == null) {
+        treeRoot = currCatNode;
+      }
     }
 
     //sorting children ny seq

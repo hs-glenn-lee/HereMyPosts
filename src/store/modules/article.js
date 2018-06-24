@@ -54,7 +54,7 @@ const actions = {
   saveArticle: context => {
     state.article.category = context.getters.getSelectedNode.cloneAsCategory();
     state.article.author = context.getters.getAccount;
-    state.article.tagArticles = context.getters.getArticleTags.getTagArticles();
+    //state.article.tagArticles = context.getters.articleTagCollection.getTagsArticles(); //TODO!!! tagArticle은 따로 저장!
     //validate
     validator.validate('saveArticle',state.article);
 

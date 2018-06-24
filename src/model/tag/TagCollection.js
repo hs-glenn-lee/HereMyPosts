@@ -2,42 +2,58 @@ import TagArticle from "./TagArticle";
 
 export default class TagCollection {
 
-  constructor(article) {
+  constructor(article, tagsArticles) {
     this.article = article;
     this.tagMap = {};
+    this.tagsArticles  = tagsArticles || [];
+    this.tagsArticles.forEach( (el) => {
+      this.tagMap[el.name] = el.tag;
+    });
   }
 
-  addTags(tagArray) {
+  setArticle (article) {
+    this.article = article || null;
+  }
 
-    if(tagArray) {
-      console.log(tagArray)
-      tagArray.forEach( (el) => {
-        this.tagMap[el.name] = el;
-      })
-    }
+  setTagsArticles (tagsArticles) {
+    this.tagsArticles  = tagsArticles || [];
+    this.tagMap = {};
+    this.tagsArticles.forEach( (el) => {
+      this.tagMap[el.name] = el.tag;
+    });
   }
 
   addTag(tag) {
-    if(this.findTag(tag.name)) {}
-    else {
+    if(!this.findTag(tag.name)) {
       this.tagMap[tag.name] = tag;
+      this.tagsArticles.push(new TagArticle(undefined, this.article, tag));
     }
   }
 
   removeTag(tag) {
-    delete this.tagMap[tag.name]
+    if(this.findTag(tag.name)) {
+      //remove from tagMap
+      delete this.tagMap[tag.name]
+
+      //remove from tagsArticles
+      let idx = this.tagsArticles.findIndex(el => {
+        if(el.tag.name === tag.name) {
+          return true
+        }else {
+          return false
+        }
+      });
+      if(idx > 0 )
+        this.tagsArticles.slice(idx,1);
+    }
+
   }
 
   findTag(tagName) {
     return this.tagMap[tagName];
   }
 
-  getTagArticle(tagName) {
-    var tag = this.findTag(tagName);
-    return new TagArticle(undefined, this.article, tag);
-  }
-
-  getTagArticles() {
+  getTagsArticles() {
     var tagArticles = [];
     for(var tagName in this.tagMap) {
       var tag = this.tagMap[tagName];
@@ -46,18 +62,8 @@ export default class TagCollection {
     return tagArticles;
   }
 
-  toArray () {
-    var tagArray = [];
-    for(var tagName in this.tagMap) {
-      var tag = this.tagMap[tagName];
-      tagArray.push(tag);
-    }
-    tagArray.sort();
-    return tagArray;
-  }
-
   isEmpty () {
-    return Object.keys(this.tagMap).length > 0;
+    return this.tagsArticles.length > 0;
   }
 
 }
