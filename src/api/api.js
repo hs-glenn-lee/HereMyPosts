@@ -139,40 +139,23 @@ export default {
       })
       .catch(err => {throw err});
   },
-  getArticleTags (articleId) {
+  getTagArticlesOfArticle (articleId) {
     return axiosAppJson.get('api/article/' + articleId +'/tags')
       .then(res => {
-        console.log('getArticleTags')
+        console.log('getTagArticlesOfArticle')
         console.log(res.data)
         return res.data;
       })
       .catch( err => {throw err})
   },
-  addTagToArticle (tagArticle) {
+  saveTagsArticles (tagArticle) {
     console.log(tagArticle);
-    return axiosAppJson.put('api/tag/addToArticle', tagArticle)
+    return axiosAppJson.put('api/tag/save', tagArticle)
       .then(res => {
-        console.log('addTagToArticle')
         console.log(res.data) // data is supposed to be tagArticle
         return res.data;
       })
       .catch( err => {throw err})
-  },
-  removeTagFromArticle (tagArticle) {
-    return axiosAppJson.post('api/tag/removeFromArticle', tagArticle)
-      .then(res => {
-        console.log('addTagToArticle')
-        console.log(res.data) // data is supposed to be tagArticle
-        return res.data;
-      })
-      .catch( err => {throw err})
-      .then(data => {
-        if(data.status === 'success') {
-          return data.data;//empty object
-        }else {
-          return Promise.reject(data.message);
-        }
-      })
   },
 
   //---settings

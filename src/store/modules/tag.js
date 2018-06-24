@@ -20,9 +20,6 @@ const mutations = {
   setArticleTagCollection: (state, payload) => {
     state.articleTagCollection = payload;
   },
-  setEmptyArticleTags : (state) => {
-    state.articleTagCollection = new TagCollection();
-  },
   addTag: (state, payload) => {
     var tag = payload;
     state.articleTagCollection.addTag(tag);
@@ -40,10 +37,11 @@ const actions = {
       })
   },
   initArticleTags: (context) => {
-    const article = context.rootGetters.getArticle;
+    var article = context.rootGetters.getArticle;
     let articleTagCollection = new TagCollection(article, null);
+
     if(article.id) {
-      api.getArticleTags(article.id)
+      api.getTagArticlesOfArticle(article.id)
         .then(data => {
           articleTagCollection.setTagsArticles(data);
           context.commit('setArticleTagCollection', articleTagCollection);
@@ -53,9 +51,14 @@ const actions = {
     }
 
   },
-  saveArticleTags: (context, payload) => {
-    var article = payload;
-
+  saveArticleTags: (context) => {
+    let article = context.rootGetters.getArticle;
+    let collection = context.state.articleTagCollection;
+    collection.setArticle(article);
+    let tagsArticles = collection.getTagsArticles();
+    console.error('saveArticleTags');
+    console.log(tagsArticles);
+    return api.saveTagsArticles(tagsArticles);
   }
 };
 

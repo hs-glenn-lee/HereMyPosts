@@ -1,9 +1,11 @@
 import TagArticle from "./TagArticle";
 
 export default class TagCollection {
-
+  //create with article, tagsArticles
+  // 1) article is not assigned = new article
+  // 2) article is set = saved article
   constructor(article, tagsArticles) {
-    this.article = article;
+    this.article = article || null;
     this.tagMap = {};
     this.tagsArticles  = tagsArticles || [];
     this.tagsArticles.forEach( (el) => {
@@ -24,9 +26,13 @@ export default class TagCollection {
   }
 
   addTag(tag) {
-    if(!this.findTag(tag.name)) {
+    console.error('TagCol addTag')
+    console.log(tag);
+    console.log(this.findTag(tag.name))
+    if(this.findTag(tag.name) === undefined) {
       this.tagMap[tag.name] = tag;
       this.tagsArticles.push(new TagArticle(undefined, this.article, tag));
+      console.log(this.tagsArticles)
     }
   }
 
@@ -54,12 +60,15 @@ export default class TagCollection {
   }
 
   getTagsArticles() {
-    var tagArticles = [];
-    for(var tagName in this.tagMap) {
-      var tag = this.tagMap[tagName];
-      tagArticles.push(new TagArticle(undefined, this.article, tag))
+    if(this.article === null || this.article === undefined) {
+      throw Error('this TagCollection property article is not assigned.');
     }
-    return tagArticles;
+    this.tagsArticles.forEach( el => {
+      if(el.article === null) {
+        el.article = this.article;
+      }
+    });
+    return this.tagsArticles;
   }
 
   isEmpty () {

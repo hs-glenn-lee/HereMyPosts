@@ -10,9 +10,9 @@
     <div class="tagged-tag-list">
       <div class="tag-list-label">이 글의 태그</div>
       <div
-        v-if="getArticleTags"
+        v-if="getArticleTagCollection"
         class="tag-list">
-        <span v-for="ta in getArticleTagCollection"
+        <span v-for="ta in getArticleTagCollection.tagsArticles"
               class="tag"
               :key="ta.id">{{ta.tag.name}}
         </span>
@@ -25,10 +25,10 @@
       </div>
       <div v-if="getMyTags">
         <div class="find-tag-input-wrapper">
-          <input v-model="tagNameInput"
+          <input v-model="inputTagName"
                  class="tag-name-input" type="text"
                  id="tag-name-input">
-          <button @click="addTag" type="button">등록</button>
+          <button @click="regTag" type="button">등록</button>
         </div>
         <div class="my-tag-list">
           <span v-for="tagname in findTagOfMyTags" class="tag">{{tagname}}</span>
@@ -52,7 +52,7 @@
     name: "TagPane",
     data () {
       return {
-        tagNameInput: ''
+        inputTagName: ''
       }
     },
     methods: {
@@ -64,7 +64,8 @@
       ]),
       ...mapMutations([
         'setIsTagPaneShowing',
-        'addTagToArticleTags'
+        'addTag',
+        'removeTag'
       ]),
 
       onArticleTitleClick(event) {
@@ -77,15 +78,13 @@
         this.setIsTagPaneShowing(false)
       },
 
-      addTag () {
-        this.addTag(new Tag(this.tagNameInput));
+      regTag () {
+        this.addTag(new Tag(this.inputTagName));
       },
 
       removeTag (tag) {
         this.removeTag(tag);
-      },
-
-
+      }
 
     },
     created () {
@@ -100,13 +99,12 @@
         'getMyTags'
       ]),
       findTagOfMyTags () {
-        var myTags = this.getMyTags();
+        var word = this.inputTagName;
+        var myTags = this.getMyTags;
         var ret = [];
-        var word = this.tagNameInput;
-
         myTags.forEach(el => {
-          if(el.indexOf(word) || word === '') {
-            ret.push(el.name);
+          if(el.indexOf(word) > -1 || word === '') {
+            ret.push(el);
           }
         })
         return ret;

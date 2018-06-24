@@ -54,8 +54,11 @@ const actions = {
         console.log('after syncSign');
         context.dispatch('initMyTags', undefined, {root:true});
         if(isSavedArticle) {//저장된 글인 경우
-          context.dispatch('initArticle', articleId, {root:true});
-          context.dispatch('initArticleTags', undefined, {root:true});
+          context.dispatch('initArticle', articleId, {root:true})
+            .then( () => {
+              context.dispatch('initArticleTags', undefined, {root:true});
+              })
+
         }else {//new article
 
           console.log('!isSavedArticle');
