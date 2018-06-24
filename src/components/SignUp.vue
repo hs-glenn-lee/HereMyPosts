@@ -152,6 +152,7 @@ export default {
     },
     signUpAndInAndGoToManage() {
       if(this.isFormValidate()) {
+        console.log(this.account)
         api.signUp(this.account)
           .then(na => {
             api.signIn({

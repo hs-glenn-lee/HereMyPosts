@@ -26,7 +26,7 @@ const mutations = {
 };
 const actions = {
   initCategoryTree: context => {
-
+    console.log('initCategoryTree')
     if(!context.state.categoryTree.isEmpty()){
       return Promise.resolve(this.categoryTree);
     }
@@ -35,7 +35,10 @@ const actions = {
         context.commit('setCategoryList',data);
         return this.categoryTree
       })
-      .catch(err => alert(err))
+      .catch(err => {
+        console.error(err)
+        alert(err)
+      })
   },
   setSelectedNode: (context, payload) => {
     context.commit('setSelectedNode',payload)

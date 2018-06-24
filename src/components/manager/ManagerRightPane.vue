@@ -1,5 +1,5 @@
 <template>
-  <div class="right-pane">
+  <div v-if="getArticle" class="right-pane">
     <div class="center-block">
       <div class="article-meta">
 
@@ -19,7 +19,7 @@
       </div>
 
       <div class="editor-container">
-        <editor v-if="getArticle"></editor>
+        <editor :article="getArticle"></editor>
       </div>
     </div>
   </div>
@@ -50,7 +50,7 @@
     computed: {
       title: {
         get() {
-          return this.$store.state.article.title
+          return this.$store.getters.getTitle
         },
         set (value) {
           this.$store.commit('setTitle', value)

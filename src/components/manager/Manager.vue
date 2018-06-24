@@ -32,21 +32,18 @@ export default {
     ])
   },
   created () {
-    console.log('Manager Component Created.')
+    console.log('[Manager.vue] Manager Component Created.')
     /*this.syncSign()*///todo if error occcur redirect to sign-in
     var currentPath = this.$route.path
     var paths = currentPath.split("/");
+
     this.initManager(paths[3]);//
-
-
   },
   components: {
     'left-pane': leftPaneComp,
     'right-pane': rightPaneComp,
     'alert-comp': alertComp
   }
-
-
 }
 </script>
 

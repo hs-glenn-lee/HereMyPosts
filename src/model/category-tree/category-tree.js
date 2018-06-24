@@ -32,8 +32,10 @@ export default class CategoryTree {
   }
 
   convListToTree () {
+    console.log('conv')
     //conv Category list to CategoryNode map,
     var catList = this.categoryList
+    console.log(catList);
     var catNodeMap = this.map;
 
     catList.forEach(function(el) {
@@ -49,6 +51,9 @@ export default class CategoryTree {
       if(parentCatNode) {
         currCatNode.parent = parentCatNode;
         parentCatNode.children.push(currCatNode)
+      }
+      if(currCatNode.parentId == null) {//!! null parentId means this node is root node
+        treeRoot = currCatNode
       }
 
       if(currCatNode.parentId == null) {

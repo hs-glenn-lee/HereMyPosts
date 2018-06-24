@@ -57,6 +57,7 @@ const actions = {
           context.dispatch('initArticle', articleId, {root:true});
           context.dispatch('initArticleTags', undefined, {root:true});
         }else {//new article
+
           console.log('!isSavedArticle');
           context.dispatch('initArticle', undefined)
             .catch( err => {

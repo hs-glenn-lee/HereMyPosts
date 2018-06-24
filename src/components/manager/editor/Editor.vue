@@ -1,5 +1,7 @@
 <template>
-  <textarea id="editor">{{getContent}}</textarea>
+  <div>
+    <textarea id="editor">{{getContent}}</textarea>
+  </div>
 </template>
 
 <script>
@@ -62,20 +64,30 @@
 export default {
   name: 'Manage',
   data () {
-    return {}
+    return {
+      tinymceEditor: null
+    }
   },
   mounted() {
     this.init()
   },
   computed : {
     ...mapGetters([
-      'getContent'
+      'getContent',
+      'getArticle'
     ])
   },
+  watch: {
+    getArticle () {
+      console.log(this);
+      if(this.tinymceEditor) {
+        tinyMCE.execCommand('mceRemoveEditor', false, 'editor');
+        this.init();
+      }
+    }
+  },
   methods: {
-
     init () {
-      /*console.log(this)*/
 
       langpack(tinymce) //set Laguage
 
@@ -145,13 +157,13 @@ export default {
         init_instance_callback: function(editor) {
           const _contentCssText = require('!!css-to-string-loader!css-loader!./content.css')
           editor.dom.addStyle(_contentCssText);
+          console.log('editor init!!!')
+          vm.tinymceEditor = editor;
         },
         setup: function(editor) {
           // init tinymce
           editor.on('init', function () {
-            //console.log(vm.getContent);
-            //tinymce.get('editor').setContent(vm.$store.getters.getArticle);
-            /*console.log(vm.$store.getters.getArticle)*/
+            tinymce.get('editor').setContent(vm.$store.getters.getContent);
           });
 
           // when typing keyup event

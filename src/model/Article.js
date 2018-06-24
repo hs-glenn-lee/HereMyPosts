@@ -20,7 +20,6 @@ export default class Article {
 
     this.createTimestamp = createTimestamp;
     this.updateTimestamp = updateTimestamp;
-
   }
 
 }
