@@ -3,7 +3,7 @@
     @click="checkPass">
     <left-pane></left-pane>
     <right-pane v-if="getArticle"></right-pane>
-    <alert-comp v-if="getIsAlertShowing" key="getAlertCount"></alert-comp>
+    <alert-comp v-if="getIsAlertShowing"></alert-comp>
   </div>
 </template>
 
@@ -24,19 +24,15 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'getAlertCount',
       'getAlertMessage',
       'getIsAlertShowing',
-      'getAlert',
       'getArticle'
     ])
   },
   created () {
-    console.log('[Manager.vue] Manager Component Created.')
     /*this.syncSign()*///todo if error occcur redirect to sign-in
     var currentPath = this.$route.path
     var paths = currentPath.split("/");
-
     this.initManager(paths[3]);//
   },
   components: {

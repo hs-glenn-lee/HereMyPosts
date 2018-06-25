@@ -62,11 +62,6 @@ const actions = {
 
     return api.saveArticle(state.article)
       .then( data => {
-        console.error(data);
-        context.dispatch('saveArticleTags',data,{root:true})
-          .then( tdata => {
-            return tdata;
-          });
         return data;
       })
       .catch( err => {

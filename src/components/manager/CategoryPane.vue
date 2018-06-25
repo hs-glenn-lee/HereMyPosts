@@ -3,9 +3,14 @@
        v-show="isCategoryPaneShowing"
         @click.right="function(e){e.preventDefault()}"
         @click="markPass('CategoryPane')"><!--prevent leftClick-->
+
+      <div class="pane-header">
+        <span class="pane-header-title">카테고리</span>
+      </div>
       <div class="close-icon" @click="closeCSLP(false)">
         <img src="@/assets/images/x-icon-30.png" style="width:20px;"/>
       </div>
+
 
       <div class="category-container">
         <category-tree-comp :onNodeNameRightClick="onNodeNameRightClick"
@@ -120,18 +125,25 @@ export default {
     background-color: white;
     z-index: 199;
   }
+  div.pane-header {
+    margin: 30px 0px 20px 20px;
+  }
+  span.pane-header-title {
+    color: #6A6A6A;
+    font-size: 1.3em;
+  }
   div.close-icon {
-    float:right;
-    margin-right: 10px;
-    margin-top: 10px;
+    position: absolute;
     opacity: 0.7;
-
+    display: inline-block;
+    top: 18px;
+    right: 18px;
   }
   div.close-icon:hover {
     cursor: pointer;
   }
   div.category-container {
-    margin-top: 70px;
+
   }
 
 </style>

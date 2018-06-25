@@ -36,8 +36,7 @@
       ...mapGetters([
         'getAlertCount',
         'getAlertMessage',
-        'getIsAlertShowing',
-        'getAlert'
+        'getIsAlertShowing'
       ]),
       alertStyle () {
         return {

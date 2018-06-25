@@ -12,7 +12,7 @@
       ])
     },
     created () {
-      this.syncSign()
+      //this.syncSign()
     }
 
   }

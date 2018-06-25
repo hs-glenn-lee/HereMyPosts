@@ -9,7 +9,7 @@
         <img
           @click="onClickNewDocumentMenu"
           class="icon"
-          src="@/assets/images/left-pane-icons/50w_newdocument.png"
+          src="@/assets/images/left-pane-icons/newdocument-icon-50w50h.png"
         />
       </div>
       <div class="left-pane-menu-item"
@@ -17,18 +17,18 @@
         <img
           @click="toggleCategoryPane"
           class="icon"
-          src="@/assets/images/left-pane-icons/50w_category_icon.png"/>
+          src="@/assets/images/left-pane-icons/category-icon-50w50h.png"/>
       </div>
       <!--<div class="left-pane-menu-item">PUB</div>-->
       <div class="left-pane-menu-item"
            @mouseover="onMenuItemMouserOver"
            @mouseleave="onMenuItemMouserLeave">
-        <img
-          class="icon"
-          src="@/assets/images/left-pane-icons/tag-icon-50w50h.png"
-          @click="toggleTagPane"
-          @mouseover="onMenuItemMouserOver"
-          @mouseleave="onMenuItemMouserLeave"/>
+          <img
+            class="icon"
+            src="@/assets/images/left-pane-icons/tag-icon-50w50h.png"
+            @click="toggleTagPane"
+            @mouseover="onMenuItemMouserOver"
+            @mouseleave="onMenuItemMouserLeave"/>
       </div>
       <div class="left-pane-menu-item"
            @click="onClickSaveMenu"
@@ -36,7 +36,7 @@
            @mouseleave="onMenuItemMouserLeave">
         <img
           class="icon"
-          src="@/assets/images/left-pane-icons/50w_saveicon.png"/>
+          src="@/assets/images/left-pane-icons/save-icon-50w50h.png"/>
       </div>
 
 
@@ -51,8 +51,6 @@
           src="@/assets/images/left-pane-icons/user-icon-50w50h.png"/>
       </div>
 
-      <!--<div class="left-pane-menu-item">SETTINGS</div>-->
-      <!--<button type="button" @click="test">test</button>-->
     </nav>
     <div class="">
       <category-pane></category-pane>
@@ -88,7 +86,8 @@ export default {
     ...mapActions([
       'test',
       'saveArticle',
-      'initManager'
+      'initManager',
+      'saveArticleTags'
     ]),
     onClickNewDocumentMenu (event) {
       let account = this.getAccount;
@@ -100,16 +99,18 @@ export default {
     },
     onClickSaveMenu (event) {
       this.saveArticle().
-        then( data => {
+        then( savedArticle => {
           console.error('after save article');
-          console.log(data);
-
-          let account = this.getAccount;
-          this.$router.push({
-            name: "ManagerSavedArticle",
-            params: { 'username': account.username, 'articleId': data.id }
-          });
-          this.initManager(data.id);
+          this.saveArticleTags(savedArticle)
+            .then( () => {
+              //router push to saved article and initManager
+              let account = this.getAccount;
+              this.$router.push({
+                name: "ManagerSavedArticle",
+                params: { 'username': account.username, 'articleId': savedArticle.id }
+              });
+              this.initManager(savedArticle.id);
+            });
         })
     },
     toggleCategoryPane (event) {
@@ -130,7 +131,8 @@ export default {
       event.currentTarget.classList.remove('up-here')
     },
     goSettings () {
-      this.$router.push({ name: "MySetting" })
+      let routeData = this.$router.resolve({ name: "MySetting" })
+      window.open(routeData.href, '_self');
     }
   },
   computed: {
@@ -169,7 +171,7 @@ export default {
     margin-bottom: 10px;
   }
   img.icon {
-    height:auto;
+    height: 35px;
     width: 35px;
   }
   img.icon:hover{

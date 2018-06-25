@@ -7,7 +7,7 @@
         <img
           @click="toggleCategoryPane"
           class="icon"
-          src="@/assets/images/left-pane-icons/50w_category_icon.png"/>
+          src="@/assets/images/left-pane-icons/category-icon-50w50h.png"/>
       </div>
 
       <!--<button type="button" @click="test">test</button>-->

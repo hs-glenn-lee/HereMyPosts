@@ -130,7 +130,7 @@
     },
     methods: {
       ...mapActions([
-
+        'syncSign'
       ]),
       ...mapMutations([
           'getIsSignedIn'
@@ -201,6 +201,7 @@
 
     },
     created () {
+      this.syncSign();
       this.getMySettings();
     }
   }

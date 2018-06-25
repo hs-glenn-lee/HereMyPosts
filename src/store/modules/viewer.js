@@ -2,8 +2,8 @@ import Manager from '@/model/manager/Manager'
 import validator from '@/model/validator/validator'
 
 const state = {
-  managerState: 'start',
-  passes: {
+  viewerState: 'start',
+  /*passes: {
     'CategoryPane': {
       fail: function(context) {
         context.commit('setCategoryPaneIsShowing', false);
@@ -17,10 +17,10 @@ const state = {
   },
   isCategoryPaneShowing: true,
   isArticleListPaneShowing: true,
-  isTagPaneShowing: true
+  isTagPaneShowing: true*/
 };
 const getters = {
-  isCategoryPaneShowing: state => {
+  /*isCategoryPaneShowing: state => {
     return state.isCategoryPaneShowing;
   },
   isArticleListPaneShowing: state => {
@@ -28,19 +28,19 @@ const getters = {
   },
   isTagPaneShowing: state => {
     return state.isTagPaneShowing;
-  }
+  }*/
 };
 const mutations = {
-  setCategoryPaneIsShowing: (state, payload) => {
+  /*setCategoryPaneIsShowing: (state, payload) => {
     state.isCategoryPaneShowing = payload;
   },
   setIsTagPaneShowing: (state, payload) => {
     state.isTagPaneShowing = payload;
-  }
+  }*/
 };
 const actions = {
-  initManager: (context, payload) => {
-
+  initViewer: (context, payload) => {
+    console.log('initViewer');
     context.state.managerState = 'load';
     const articleId = payload;
     const isSavedArticle = (articleId !== undefined);
@@ -51,24 +51,13 @@ const actions = {
         throw err;//user is not signed, so go to sing-in page
       })
       .then( () => {
-
+        console.log('after syncSign');
         context.dispatch('initMyTags', undefined, {root:true});
         if(isSavedArticle) {//저장된 글인 경우
           context.dispatch('initArticle', articleId, {root:true})
             .then( () => {
-                context.dispatch('initArticleTags', undefined, {root:true});
-              })
-
-        }else {//new article
-
-          context.dispatch('initArticle', undefined)
-            .catch( err => {
-              throw err; //todo error on getting article. this mean wrong articleId(not mine, or no matched article)
-            })
-            .then( () => {
-              context.dispatch('initCategoryTree', undefined, {root:true});
               context.dispatch('initArticleTags', undefined, {root:true});
-            })
+              })
         }
       })
   },

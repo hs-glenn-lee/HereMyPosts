@@ -8,8 +8,8 @@
       >
 
       <span v-if="categoryNode.hasChild()" class="node-open-flag" @click="onNodeOpenFlagClick">
-        <img :class="{hidden: open}" class="category-node-flag" src="@/assets/images/category/plus-icon-30.png">
-        <img :class="{hidden: !open}" class="category-node-flag" src="@/assets/images/category/minus-icon-30.png">
+        <img :class="{hidden: open}" class="category-node-flag" src="@/assets/images/category/close-icon-30w30h.png">
+        <img :class="{hidden: !open}" class="category-node-flag" src="@/assets/images/category/open-icon50w50h.png">
       </span>
       <span v-else class="category-node-blank-flag node-open-flag">
         <img class="category-node-flag" src="@/assets/images/category/blank-icon.png"/>
@@ -101,8 +101,8 @@ export default {
   }
 
   img.category-node-flag {
-    width: 14px;
-    height: 14px;
+    width: 10px;
+    height: 10px;
   }
 
   li.selected > div.node-info {
@@ -119,7 +119,7 @@ export default {
     padding-left: 5px;
     padding-right: 5px;
 
-    color: #AAAAAA;
+    color: #3A3A3A;
   }
 
   ul {
