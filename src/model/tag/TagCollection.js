@@ -64,8 +64,10 @@ export default class TagCollection {
       throw Error('this TagCollection property article is not assigned.');
     }
     this.tagsArticles.forEach( el => {
-      if(el.article === null) {
-        el.article = this.article;
+      if(el.article) {
+        if(el.article.id === null || el.article.id === undefined) {
+          el.article = this.article;
+        }
       }
     });
     return this.tagsArticles;

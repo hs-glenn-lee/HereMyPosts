@@ -101,8 +101,9 @@ export default {
     onClickSaveMenu (event) {
       this.saveArticle().
         then( data => {
-          console.error('after save article')
-          console.log(data)
+          console.error('after save article');
+          console.log(data);
+
           let account = this.getAccount;
           this.$router.push({
             name: "ManagerSavedArticle",
