@@ -42,7 +42,6 @@
       console.log(
         'feeditem'
       )
-      console.log(this.article);
     }
   }
 </script>

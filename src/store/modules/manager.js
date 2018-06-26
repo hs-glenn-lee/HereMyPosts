@@ -14,28 +14,16 @@ const state = {
         context.commit('setIsTagPaneShowing', false);
       }
     }
-  },
-  isCategoryPaneShowing: true,
-  isArticleListPaneShowing: true,
-  isTagPaneShowing: true
+  }
 };
 const getters = {
-  isCategoryPaneShowing: state => {
-    return state.isCategoryPaneShowing;
-  },
-  isArticleListPaneShowing: state => {
-    return state.isArticleListPaneShowing;
-  },
-  isTagPaneShowing: state => {
-    return state.isTagPaneShowing;
+  getManagerState: (state) => {
+    return state.managerState;
   }
 };
 const mutations = {
-  setCategoryPaneIsShowing: (state, payload) => {
-    state.isCategoryPaneShowing = payload;
-  },
-  setIsTagPaneShowing: (state, payload) => {
-    state.isTagPaneShowing = payload;
+  setManagerState: (state, payload) => {
+    this.managerState = payload;
   }
 };
 const actions = {
@@ -45,6 +33,7 @@ const actions = {
     const articleId = payload;
     const isSavedArticle = (articleId !== undefined);
 
+    //init data
     //summary sign => article => category, tag
     context.dispatch('syncSign', undefined, {root:true})
       .catch(err => {
@@ -56,8 +45,9 @@ const actions = {
         if(isSavedArticle) {//저장된 글인 경우
           context.dispatch('initArticle', articleId, {root:true})
             .then( () => {
-                context.dispatch('initArticleTags', undefined, {root:true});
-              })
+              context.dispatch('initCategoryTree', undefined, {root:true});
+              context.dispatch('initArticleTags', undefined, {root:true});
+            })
 
         }else {//new article
 
@@ -71,17 +61,23 @@ const actions = {
             })
         }
       })
-  },
- /* test: (context) => {
-    console.log('test')
-    validator.validate('test',undefined, function(exception) {
-      console.log('reject callback')
-      console.log(context.rootState.alert);
 
-      context.commit('setAlertMessage', exception.message);
-      context.commit('setAlertIsShowing', true);
-    });
-  },*/
+    //init ui
+    context.commit('setCategoryPaneIsShowing', false);
+    context.commit('setIsTagPaneShowing', false);
+    context.commit('setArticleListPaneShowing',false);
+
+  },
+  /* test: (context) => {
+     console.log('test')
+     validator.validate('test',undefined, function(exception) {
+       console.log('reject callback')
+       console.log(context.rootState.alert);
+
+       context.commit('setAlertMessage', exception.message);
+       context.commit('setAlertIsShowing', true);
+     });
+   },*/
   checkPass: (context, payload) => {//to not showing if click other components
     const event = payload;
 

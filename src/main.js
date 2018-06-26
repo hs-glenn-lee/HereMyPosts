@@ -27,7 +27,7 @@ Vue.mixin({
       rootEl.setAttribute('component-name',this.$options.name);
     }
 
-    console.log(this);
+    (this);
   }
 });*/
 

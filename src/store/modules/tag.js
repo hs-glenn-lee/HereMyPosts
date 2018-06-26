@@ -53,13 +53,13 @@ const actions = {
   },
   saveArticleTags: (context, payload) => {
     let article = payload;
-    console.log('saveArticleTags');
-    console.log(article);
     let collection = context.state.articleTagCollection;
     collection.setArticle(article);
     let tagsArticles = collection.getTagsArticles();
+    console.log('saveArticleTags')
     console.log(tagsArticles);
-    return api.saveTagsArticles(tagsArticles);
+    console.log(JSON.stringify(tagsArticles))
+    return api.saveTagsArticlesOfArticle(article.id, tagsArticles);
   }
 };
 

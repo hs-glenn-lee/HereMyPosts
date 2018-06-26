@@ -8,7 +8,7 @@
       <div class="article-list-wrapper">
         <ul class="article-list">
           <li v-if="isArticleListEmpty">
-            <span>empty</span>
+            <span>비어 있음</span>
           </li>
           <li v-for="article in getArticleList"
               :key="article.id"
@@ -20,7 +20,7 @@
                     @click.double="onArticleTitleDoubleClick">{{article.title}}</span>
             </div>
             <div class="article-create-timestamp">
-              <span class="article-create-timestamp">{{article.createTimestamp}}</span>
+              <span v-if="(article.createDateString)" class="article-create-timestamp">{{article.createDateString}}</span>
             </div>
             <div class="article-summary">
               <span class="article-summary">{{article.summary}}</span>
@@ -44,7 +44,8 @@ export default {
   },
   data () {
     return {
-      listHeight: ''
+      listHeight: '',
+      windowInnerHeight: 0
     }
   },
   computed: {
@@ -55,7 +56,6 @@ export default {
       'getSelectedNode'
     ]),
     getListHeight () {
-      console.log(this.listHeight);
       return this.listHeight;
     }
   },
@@ -64,20 +64,26 @@ export default {
       'setFocusedVueCompName'
     ]),
     calcListHeight() {
-      console.log('listHeight');
       let header = window.document.querySelector('div.article-list-pane-header');
       let headerHeight = header.offsetHeight;
-      let innerHeight = window.innerHeight;
+      this.innerHeight = window.innerHeight;
+      this.listHeight = 'height:' + (this.innerHeight - headerHeight - 2/*border px*/) + 'px;';
+    },
 
-      console.log(header)
-      console.log(headerHeight)
-      console.log(innerHeight - headerHeight)
-
-      this.listHeight = 'height:' + (innerHeight - headerHeight) + 'px;';
+  },
+  watch: {
+    windowInnerHeight (val,oldVal) {
+      if(val !== oldVal) {
+        this.calcListHeight();
+      }
     }
   },
   mounted() {
     this.calcListHeight();
+    var vm = this;
+    window.onresize = function(event) {
+      vm.windowInnerHeight = window.innerHeight;
+    };
   }
 }
 </script>
@@ -106,6 +112,7 @@ export default {
     overflow-y: scroll;
     overflow-x: hidden;
     height:100%;
+    border-top: 2px solid #ececec;
   }
 
   ul.article-list {
@@ -115,7 +122,7 @@ export default {
   li.article-list-item {
     width: 98%;
     padding: 3px 5px 3px 5px;
-    border-top: 1px solid #cccccc;
+    border-top: 1px solid #ececec;
   }
 
   div.article-title {
@@ -133,8 +140,8 @@ export default {
     color: #6A6A6A;
   }
 
-  ul > li.article-list-item:first-child {
+  /*ul > li.article-list-item:first-child {
     border-top: 1px solid #cccccc;
-  }
+  }*/
 
 </style>

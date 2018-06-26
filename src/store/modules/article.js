@@ -79,6 +79,7 @@ const actions = {
   setSavedArticle: (context, payload) => {
     return api.getArticle(payload)
       .then(data => {
+
         context.commit('setArticle',data);
         context.commit('setInitialArticle',data);
       })

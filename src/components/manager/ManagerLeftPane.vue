@@ -7,6 +7,7 @@
       <div class="left-pane-menu-item"
            @mouseover="onMenuItemMouserOver" @mouseleave="onMenuItemMouserLeave">
         <img
+          id="new-document-icon"
           @click="onClickNewDocumentMenu"
           class="icon"
           src="@/assets/images/left-pane-icons/newdocument-icon-50w50h.png"
@@ -15,7 +16,8 @@
       <div class="left-pane-menu-item"
            @mouseover="onMenuItemMouserOver" @mouseleave="onMenuItemMouserLeave">
         <img
-          @click="toggleCategoryPane"
+          id="category-icon"
+          @click="onClickCategoryMenu"
           class="icon"
           src="@/assets/images/left-pane-icons/category-icon-50w50h.png"/>
       </div>
@@ -24,13 +26,15 @@
            @mouseover="onMenuItemMouserOver"
            @mouseleave="onMenuItemMouserLeave">
           <img
+            id="tag-icon"
             class="icon"
             src="@/assets/images/left-pane-icons/tag-icon-50w50h.png"
-            @click="toggleTagPane"
+            @click="onClickTagMenu"
             @mouseover="onMenuItemMouserOver"
             @mouseleave="onMenuItemMouserLeave"/>
       </div>
       <div class="left-pane-menu-item"
+           id="save-icon"
            @click="onClickSaveMenu"
            @mouseover="onMenuItemMouserOver"
            @mouseleave="onMenuItemMouserLeave">
@@ -47,6 +51,7 @@
            @mouseover="onMenuItemMouserOver"
            @mouseleave="onMenuItemMouserLeave">
         <img
+          id="setting-icon"
           class="icon"
           src="@/assets/images/left-pane-icons/user-icon-50w50h.png"/>
       </div>
@@ -113,16 +118,21 @@ export default {
             });
         })
     },
-    toggleCategoryPane (event) {
+    onClickCategoryMenu (event) {
+      //toggle category pane show
       event.stopPropagation();// because of check/mark pass
-
       var cur = this.isCategoryPaneShowing;
       this.setCategoryPaneIsShowing(!cur);
+
+      this.hideOtherSubPane(event);
     },
-    toggleTagPane (event) {
+    onClickTagMenu (event) {
+      //toggle tag pane show
       event.stopPropagation();// because of check/mark pass
       var cur = this.isTagPaneShowing;
       this.setIsTagPaneShowing(!cur);
+
+      this.hideOtherSubPane(event);
     },
     onMenuItemMouserOver (event ) {
       event.currentTarget.classList.add('up-here')
@@ -133,6 +143,19 @@ export default {
     goSettings () {
       let routeData = this.$router.resolve({ name: "MySetting" })
       window.open(routeData.href, '_self');
+    },
+    hideOtherSubPane( event ) {
+      if(event.currentTarget.id === 'tag-icon') {
+        this.setCategoryPaneIsShowing(false)
+
+      }else if(event.currentTarget.id === 'category-icon') {
+        this.setIsTagPaneShowing(false)
+
+      }else {
+        this.setIsTagPaneShowing(false)
+        this.setCategoryPaneIsShowing(false)
+      }
+
     }
   },
   computed: {

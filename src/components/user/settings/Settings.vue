@@ -143,7 +143,7 @@
         validator.validate('saveIntroduction', this.accountSetting.introduction, rejectMessage => {
           alert(rejectMessage);
         })
-        api.saveIntroduction(this.introduction)
+        api.saveIntroduction(this.accountSetting.introduction)
           .then( data => {
             this.accountSetting.introduction = data.introduction;
           })
@@ -153,7 +153,8 @@
           alert(rejectMessage);
           return;
         })
-        api.savePenName(this.penName)
+
+        api.savePenName(this.accountSetting.penName)
           .then( data => {
             this.accountSetting.penName = data.penName;
           })

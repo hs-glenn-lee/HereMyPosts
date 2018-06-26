@@ -8,7 +8,6 @@ export default {
   signIn (payload) {
     return axiosAppJson.post('/api/sign-in', payload)
       .then(res => {
-
         return res.data
       })
       .catch(err => {
@@ -146,9 +145,8 @@ export default {
       })
       .catch( err => {throw err})
   },
-  saveTagsArticles (tagArticle) {
-    console.log(tagArticle);
-    return axiosAppJson.put('api/tag/save', tagArticle)
+  saveTagsArticlesOfArticle (articleId, tagArticle) {
+    return axiosAppJson.put('api/article/save-tag/'+articleId, tagArticle)
       .then(res => {
         console.log(res.data) // data is supposed to be tagArticle
         return res.data;

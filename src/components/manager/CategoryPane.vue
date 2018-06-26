@@ -58,7 +58,8 @@ export default {
   methods: {
     ...mapMutations([
       'setCategoryPaneIsShowing',
-      'setSelectedNode'
+      'setSelectedNode',
+      'setArticleListPaneShowing'
     ]),
     ...mapActions([
       'getArticlesOfCategory',
@@ -90,6 +91,7 @@ export default {
       var clickedNodeNameSpan = clickEvent.currentTarget;
       this.setSelectedNode(clickedNodeNameSpan.parentElement.parentElement.id)
       this.getArticlesOfCategory(clickedNodeNameSpan.parentElement.parentElement.id)
+      this.setArticleListPaneShowing(true);
     },
 
     onArticleTitleClick(event) {

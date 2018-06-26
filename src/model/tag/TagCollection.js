@@ -26,13 +26,9 @@ export default class TagCollection {
   }
 
   addTag(tag) {
-    console.error('TagCol addTag')
-    console.log(tag);
-    console.log(this.findTag(tag.name))
     if(this.findTag(tag.name) === undefined) {
       this.tagMap[tag.name] = tag;
       this.tagsArticles.push(new TagArticle(undefined, this.article, tag));
-      console.log(this.tagsArticles)
     }
   }
 
@@ -49,8 +45,9 @@ export default class TagCollection {
           return false
         }
       });
-      if(idx > 0 )
-        this.tagsArticles.slice(idx,1);
+
+      if(idx > -1 )
+        this.tagsArticles.splice(idx,1);
     }
 
   }

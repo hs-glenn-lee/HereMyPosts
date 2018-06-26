@@ -40,7 +40,7 @@
         'test',
         'saveArticle'
       ]),
-      toggleCategoryPane (event) {
+      onClickCategoryMenu (event) {
         event.stopPropagation();// because of check/mark pass
 
         var cur = this.isCategoryPaneShowing;

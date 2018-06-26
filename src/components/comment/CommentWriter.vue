@@ -65,8 +65,8 @@
         'setAlert'
       ]),
       writeComment () {
-        //console.log(this.commentToWrite)
-        console.log('writeComment')
+        //console.log('writeComment')
+
         var comment = this.commentToWrite;
         comment.content = this.content;
         comment.isAnonymous = !this.getIsSignedIn;

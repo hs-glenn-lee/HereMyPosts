@@ -33,7 +33,6 @@
         'alert-comp': alertComp
     },
     created() {
-      console.log(this.$route.params.articleId)
       this.setSavedArticle(this.$route.params.articleId);
     }
   }

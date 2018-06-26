@@ -3,6 +3,10 @@
        v-show="isTagPaneShowing"
        @click.right="function(e){e.preventDefault()}"
        @click="markPass('TagPane')">
+    <div class="pane-header">
+      <span class="pane-header-title">태그</span>
+    </div>
+
     <div class="close-icon" @click="closeTagPane(false)">
       <img src="@/assets/images/x-icon-30.png" style="width:20px;"/>
     </div>
@@ -12,9 +16,14 @@
       <div
         v-if="getArticleTagCollection"
         class="tag-list">
-        <span v-for="ta in getArticleTagCollection.tagsArticles"
-              class="tag"
+        <span
+              v-for="ta in getArticleTagCollection.tagsArticles"
+              class="tag tagged"
               :key="ta.id">{{ta.tag.name}}
+          <img
+            @click="removeTagFromTaggedList(ta.tag.name)"
+            class="remove-tag"
+            src="@/assets/images/x-icon-30.png">
         </span>
       </div>
     </div>
@@ -28,10 +37,16 @@
           <input v-model="inputTagName"
                  class="tag-name-input" type="text"
                  id="tag-name-input">
-          <button @click="regTag" type="button">등록</button>
+          <button @click="regTag" type="button" class="reg-tag-button">등록</button>
         </div>
         <div class="my-tag-list">
-          <span v-for="tagname in findTagOfMyTags" class="tag">{{tagname}}</span>
+          <span
+                v-bind:tag-name="tagname"
+                @click="regTagFromMyTagList"
+                v-for="tagname in findTagOfMyTags"
+                class="tag tag-candidate">
+            {{tagname}}
+          </span>
         </div>
       </div>
     </div>
@@ -82,8 +97,21 @@
         this.addTag(new Tag(this.inputTagName));
       },
 
-      removeTag (tag) {
-        this.removeTag(tag);
+      removeTagFromTaggedList (tagName) {
+        let col = this.getArticleTagCollection;
+        let tag = col.findTag(tagName);
+
+        if(tag) {
+          this.removeTag(tag);
+        }
+
+      },
+
+      regTagFromMyTagList (event) {
+        console.log('regTagFromMyTagList')
+        let clickedTag = event.currentTarget;
+        let tagName = clickedTag.getAttribute('tag-name');
+        this.addTag(new Tag(tagName));
       }
 
     },
@@ -135,14 +163,75 @@
     background-color: white;
     z-index: 199;
   }
+
+  div.pane-header {
+    margin: 30px 0px 20px 20px;
+  }
+  span.pane-header-title {
+    color: #6A6A6A;
+    font-size: 1.3em;
+  }
+
   div.close-icon {
-    float:right;
-    margin-right: 10px;
-    margin-top: 10px;
+    position: absolute;
     opacity: 0.7;
+    display: inline-block;
+    top: 18px;
+    right: 18px;
   }
   div.close-icon:hover {
     cursor: pointer;
+  }
+
+  div.tagged-tag-list {
+    padding-left: 20px;
+    padding-right: 20px;
+
+    margin-bottom: 20px;
+
+    word-break: break-word;
+  }
+
+  span.tag {
+    padding: 4px 4px 4px 4px;
+    margin: 2px 2px 2px 2px;
+    border: 1px solid #c1d9ff;
+
+    background-color: #c1d9ff;
+    border-radius: 6px;
+    display: inline-block;
+  }
+
+
+  div.tag-list-label {
+    color: #6A6A6A;
+    padding-bottom: 10px;
+  }
+
+  div.tagger {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  div.my-tag-list {
+    word-break: break-word;
+  }
+
+  div.find-tag-input-wrapper {
+    margin: 5px 0px 5px 0px;
+  }
+
+  #tag-name-input {
+    font-size: 1em;
+  }
+
+  button.reg-tag-button {
+    font-size: 1em;
+  }
+
+  img.remove-tag {
+    width:  10px;
+    height: 10px;
   }
 
 </style>
