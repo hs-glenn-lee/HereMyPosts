@@ -43,6 +43,8 @@ const actions = {
     if(article.id) {
       api.getTagArticlesOfArticle(article.id)
         .then(data => {
+          console.log('$$$$$$$$$')
+          console.log(data);
           articleTagCollection.setTagsArticles(data);
           context.commit('setArticleTagCollection', articleTagCollection);
         })

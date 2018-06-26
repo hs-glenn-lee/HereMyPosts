@@ -9,7 +9,7 @@ export default class TagCollection {
     this.tagMap = {};
     this.tagsArticles  = tagsArticles || [];
     this.tagsArticles.forEach( (el) => {
-      this.tagMap[el.name] = el.tag;
+      this.tagMap[el.tag.name] = el.tag;
     });
   }
 
@@ -21,7 +21,7 @@ export default class TagCollection {
     this.tagsArticles  = tagsArticles || [];
     this.tagMap = {};
     this.tagsArticles.forEach( (el) => {
-      this.tagMap[el.name] = el.tag;
+      this.tagMap[el.tag.name] = el.tag;
     });
   }
 

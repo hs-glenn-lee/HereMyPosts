@@ -98,9 +98,13 @@
       },
 
       removeTagFromTaggedList (tagName) {
+        console.log('removeTagFromTaggedList');
+
         let col = this.getArticleTagCollection;
         let tag = col.findTag(tagName);
 
+        console.log(col);
+        console.log(tag);
         if(tag) {
           this.removeTag(tag);
         }
@@ -232,6 +236,9 @@
   img.remove-tag {
     width:  10px;
     height: 10px;
+  }
+  img.remove-tag:hover {
+    cursor: pointer;
   }
 
 </style>

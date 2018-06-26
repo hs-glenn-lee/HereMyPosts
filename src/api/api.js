@@ -146,6 +146,7 @@ export default {
       .catch( err => {throw err})
   },
   saveTagsArticlesOfArticle (articleId, tagArticle) {
+    console.log(tagArticle);
     return axiosAppJson.put('api/article/save-tag/'+articleId, tagArticle)
       .then(res => {
         console.log(res.data) // data is supposed to be tagArticle
