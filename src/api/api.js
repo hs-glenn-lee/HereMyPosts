@@ -130,8 +130,6 @@ export default {
   getMyTags () {
     return axiosAppJson.get('api/tag/myTags')
       .then(res => {
-        console.log('getMyTags')
-        console.log(res.data)
         return res.data;
       })
       .catch(err => {throw err});
@@ -145,9 +143,9 @@ export default {
       })
       .catch( err => {throw err})
   },
-  saveTagsArticlesOfArticle (articleId, tagArticle) {
+  updateTagsArticlesOfArticle (articleId, tagArticle) {
     console.log(tagArticle);
-    return axiosAppJson.put('api/article/save-tag/'+articleId, tagArticle)
+    return axiosAppJson.put('api/article/update-tag/'+articleId, tagArticle)
       .then(res => {
         console.log(res.data) // data is supposed to be tagArticle
         return res.data;

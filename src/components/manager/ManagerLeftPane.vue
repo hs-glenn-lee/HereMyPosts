@@ -92,7 +92,7 @@ export default {
       'test',
       'saveArticle',
       'initManager',
-      'saveArticleTags'
+      'updateArticleTags'
     ]),
     onClickNewDocumentMenu (event) {
       let account = this.getAccount;
@@ -106,7 +106,7 @@ export default {
       this.saveArticle().
         then( savedArticle => {
           console.error('after save article');
-          this.saveArticleTags(savedArticle)
+          this.updateArticleTags(savedArticle)
             .then( () => {
               //router push to saved article and initManager
               let account = this.getAccount;

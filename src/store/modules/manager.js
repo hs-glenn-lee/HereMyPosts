@@ -37,15 +37,19 @@ const actions = {
     //summary sign => article => category, tag
     context.dispatch('syncSign', undefined, {root:true})
       .catch(err => {
-        throw err;//user is not signed, so go to sing-in page
+        throw err;//todo if error occcur redirect to sign-in
       })
       .then( () => {
 
         context.dispatch('initMyTags', undefined, {root:true});
         if(isSavedArticle) {//저장된 글인 경우
           context.dispatch('initArticle', articleId, {root:true})
-            .then( () => {
-              context.dispatch('initCategoryTree', undefined, {root:true});
+            .then( articleData => {
+              context.dispatch('initCategoryTree', undefined, {root:true})
+                .then( () => {
+                  context.commit('setSelectedNode',articleData.category.id);
+                })
+
               context.dispatch('initArticleTags', undefined, {root:true});
             })
 

@@ -33,7 +33,9 @@
         'alert-comp': alertComp
     },
     created() {
-      this.setSavedArticle(this.$route.params.articleId);
+      var currentPath = this.$route.path
+      var paths = currentPath.split("/");
+      this.initViewer(paths[3]);//
     }
   }
 </script>

@@ -43,8 +43,6 @@ const actions = {
     if(article.id) {
       api.getTagArticlesOfArticle(article.id)
         .then(data => {
-          console.log('$$$$$$$$$')
-          console.log(data);
           articleTagCollection.setTagsArticles(data);
           context.commit('setArticleTagCollection', articleTagCollection);
         })
@@ -53,15 +51,15 @@ const actions = {
     }
 
   },
-  saveArticleTags: (context, payload) => {
+  updateArticleTags: (context, payload) => {
     let article = payload;
     let collection = context.state.articleTagCollection;
     collection.setArticle(article);
     let tagsArticles = collection.getTagsArticles();
-    console.log('saveArticleTags')
+    console.log('updateArticleTags')
     console.log(tagsArticles);
     console.log(JSON.stringify(tagsArticles))
-    return api.saveTagsArticlesOfArticle(article.id, tagsArticles);
+    return api.updateTagsArticlesOfArticle(article.id, tagsArticles);
   }
 };
 

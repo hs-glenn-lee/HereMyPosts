@@ -122,7 +122,7 @@ export default {
   li.article-list-item {
     width: 98%;
     padding: 3px 5px 3px 5px;
-    border-top: 1px solid #ececec;
+    border-bottom: 1px solid #ececec;
   }
 
   div.article-title {

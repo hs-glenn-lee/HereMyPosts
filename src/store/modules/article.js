@@ -71,7 +71,15 @@ const actions = {
   getArticlesOfCategory : (context, payload) => {
     api.getArticlesOfCategory(payload)
       .then(data => {
-        //todo getArticlesOfCategory data ordering
+        data.sort((a,b) => {//createTimestamp desc
+          if(a.createTimestamp < b.createTimestamp) {
+            return 1;
+          }
+          if(a.createTimestamp >= b.createTimestamp) {
+            return -1;
+          }
+          return 0;
+        })
         console.log(data)
         state.articleList = data;
       })
@@ -82,6 +90,7 @@ const actions = {
         console.log(data);
         context.commit('setArticle',data);
         context.commit('setInitialArticle',data);
+        return data;
       })
   }
 };

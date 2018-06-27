@@ -1,11 +1,11 @@
 <template>
   <div>
-    <nav class="left-pane-menu" style="margin-top:10px; margin-bottom: 30px;">
+    <nav class="left-pane-menu">
       <div class="global-logo-picto" ><img src="@/assets/images/icon-picto-86w87h.png" style="width:50px;"/></div>
       <div class="left-pane-menu-item"
            @mouseover="onMenuItemMouserOver" @mouseleave="onMenuItemMouserLeave">
         <img
-          @click="toggleCategoryPane"
+          @click="onClickCategoryMenu"
           class="icon"
           src="@/assets/images/left-pane-icons/category-icon-50w50h.png"/>
       </div>

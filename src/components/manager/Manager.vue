@@ -30,7 +30,6 @@ export default {
     ])
   },
   created () {
-    /*this.syncSign()*///todo if error occcur redirect to sign-in
     var currentPath = this.$route.path
     var paths = currentPath.split("/");
     this.initManager(paths[3]);//

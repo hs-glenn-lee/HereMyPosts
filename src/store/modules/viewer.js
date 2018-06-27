@@ -41,24 +41,30 @@ const mutations = {
 const actions = {
   initViewer: (context, payload) => {
     console.log('initViewer');
-    context.state.managerState = 'load';
+    //context.state.viewerState = 'load';
     const articleId = payload;
     const isSavedArticle = (articleId !== undefined);
 
     //summary sign => article => category, tag
     context.dispatch('syncSign', undefined, {root:true})
       .catch(err => {
-        throw err;//user is not signed, so go to sing-in page
+        console.log(err);//not signed-in
+
       })
       .then( () => {
         console.log('after syncSign');
-        context.dispatch('initMyTags', undefined, {root:true});
+
         if(isSavedArticle) {//저장된 글인 경우
           context.dispatch('initArticle', articleId, {root:true})
             .then( () => {
-              context.dispatch('initArticleTags', undefined, {root:true});
+                context.dispatch('initArticleTags', undefined, {root:true});
               })
+        }else {
+          //article not found, then push to not found page
         }
+
+        context.dispatch('initMyTags', undefined, {root:true});
+        
       })
   },
  /* test: (context) => {
