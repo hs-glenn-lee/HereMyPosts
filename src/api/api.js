@@ -1,4 +1,4 @@
-import { axiosAppJson } from "@/api/axios-instances";
+import { axiosAppJson, axiosMultipart } from "@/api/axios-instances";
 export default {
   getMyAccount () {
     return axiosAppJson.get('/api/getMyAccount')
@@ -101,7 +101,16 @@ export default {
         return res.data })
       .catch( err => {throw err})
   },
-
+  uploadArticleImage(formData, articleId) {
+    return axiosMultipart.post('api/article/' + articleId + '/image', formData)
+      .then( res => {
+        return res.data;
+      })
+      .catch( err => {
+        console.error(err);
+        throw err;
+      })
+  },
 
   //---comment
   writeComment (comment) {
@@ -172,6 +181,15 @@ export default {
     return axiosAppJson.put('api/account/setting/save-pen-name', {penName})
       .then(res => {
         return res.data;
+      })
+      .catch( err => {throw err})
+  },
+
+  //--util
+  getNewArticleId () {
+    return axiosAppJson.get('api/article/utils/getNewArticleId')
+      .then(res => {
+        return res.data.newArticleId;
       })
       .catch( err => {throw err})
   }

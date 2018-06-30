@@ -19,6 +19,10 @@ module.exports = {
       '/uploaded-image' : {
         target: 'http://localhost:8080',
         changeOrigin: true
+      },
+      '/article/**/image/**' : {
+        target: 'http://localhost:8080',
+        changeOrigin: true
       }
     },
 

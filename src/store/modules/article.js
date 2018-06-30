@@ -3,8 +3,9 @@ import Article from '@/model/Article'
 import validator from '@/model/validator/validator.js'
 const state = {
   article: null/*new Article(null, '', '<!DOCTYPE html><html><head></head><body></body></html>', '', 0, false, 0, null, null)*/,
-  initialArticle: null, //to compare after modifiy article
-  articleList: []
+  oldArticle: null, //to compare after modifiy article
+  articleList: [],
+  isSavedArticle: false
 };
 const getters = {
   getArticle: state => {
@@ -22,13 +23,20 @@ const getters = {
   getArticleList: state => {
     return state.articleList
   },
+  getOldArticle: state => {
+    return state.oldArticle;
+  },
   isArticleListEmpty: state => {
     return state.articleList.length < 1
+  },
+  isSavedArticle: state => {
+    return state.isSavedArticle;
   }
 };
 const mutations = {
-  newArticle: state => {
-    state.article = new Article(null, '', '<!DOCTYPE html><html><head></head><body></body></html>', '', 0, false, 0, null, null);
+  setNewArticle: (state, payload) => {
+    let id = payload;
+    state.article = new Article(id, '', '<!DOCTYPE html><html><head></head><body></body></html>', '', 0, false, 0, null, null);
   },
   setTitle: (state, payload) => {
     state.article.title = payload;
@@ -39,8 +47,11 @@ const mutations = {
   setArticle: (state, payload) => {
     state.article = payload;
   },
-  setInitialArticle: (state, payload) => {
-    state.initialArticle = payload;
+  setOldArticle: (state, payload) => {
+    state.oldArticle = payload;
+  },
+  setIsSavedArticle: (state, payload) => {
+    state.isSavedArticle = payload;
   }
 };
 const actions = {
@@ -49,7 +60,7 @@ const actions = {
     if(articleId) {
       return context.dispatch('setSavedArticle', articleId, {root: true})
     }else {
-      context.commit('newArticle');
+      context.dispatch('setNewArticleWithId');
       return Promise.resolve('success');
     }
   },
@@ -84,12 +95,20 @@ const actions = {
         state.articleList = data;
       })
   },
+  setNewArticleWithId: (context) => {
+    return api.getNewArticleId()
+      .then(newArticleId => {
+        console.log(newArticleId)
+        context.commit('setNewArticle', newArticleId)
+      })
+  },
   setSavedArticle: (context, payload) => {
     return api.getArticle(payload)
       .then(data => {
         console.log(data);
         context.commit('setArticle',data);
-        context.commit('setInitialArticle',data);
+        context.commit('setIsSavedArticle', true);
+        //context.commit('setOldArticle', data);
         return data;
       })
   }

@@ -6,6 +6,7 @@
 
 <script>
   import tinymce from 'tinymce/tinymce'
+  import api from '@/api/api'
 
   import 'tinymce/themes/modern/theme';
 
@@ -100,8 +101,11 @@ export default {
         width: 1366,
         branding: false,
         theme: 'modern',
+        menu: {
+          //: {title: 'Insert', items: 'link media | template hr'}
+        },
         plugins: 'preview fullpage autolink visualblocks fullscreen image link media codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists textcolor wordcount imagetools  contextmenu colorpicker textpattern help',
-        toolbar1: 'formatselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | fontselect fontsizeselect | removeformat',
+        toolbar1: 'insert | formatselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | fontselect fontsizeselect | removeformat',
         statusbar: false,
         image_advtab: true,
         font_formats: '나눔손글씨=NanumBrush;나눔고딕=NanumGothic;Andale Mono=andale mono,times;Arial=arial,helvetica,sans-serif;Arial Black=arial black,avant garde;Book Antiqua=book antiqua,palatino;Comic Sans MS=comic sans ms,sans-serif;Courier New=courier new,courier;Georgia=georgia,palatino;Helvetica=helvetica;Impact=impact,chicago;Symbol=symbol;Tahoma=tahoma,arial,helvetica,sans-serif;Terminal=terminal,monaco;Times New Roman=times new roman,times;Trebuchet MS=trebuchet ms,geneva;Verdana=verdana,geneva;Webdings=webdings;Wingdings=wingdings,zapf dingbats',
@@ -117,42 +121,24 @@ export default {
 
         image_title: true,
         // enable automatic uploads of images represented by blob or data URIs
-        automatic_uploads: false,
+        automatic_uploads: true,
 
         file_picker_types: 'image',
-        // and here's our custom image picker
-        file_picker_callback: function(cb, value, meta) {
-          var input = document.createElement('input');
-          input.setAttribute('type', 'file');
-          input.setAttribute('accept', 'image/*');
+        relative_urls : false,
+        images_upload_handler: function(blobInfo, success, failure) {
+          var formData = new FormData();
 
-          // Note: In modern browsers input[type="file"] is functional without
-          // even adding it to the DOM, but that might not be the case in some older
-          // or quirky browsers like IE, so you might want to add it to the DOM
-          // just in case, and visually hide it. And do not forget do remove it
-          // once you do not need it anymore.
+          formData.append('file', blobInfo.blob(), blobInfo.filename());
 
-          input.onchange = function() {
-            var file = this.files[0];
+          var article = vm.getArticle;
+          api.uploadArticleImage(formData, article.id)
+            .catch( err => {
+              failure(err);
+            })
+            .then( data => {
+              success(data.location);
+            })
 
-            var reader = new FileReader();
-            reader.onload = function () {
-              // Note: Now we need to register the blob in TinyMCEs image blob
-              // registry. In the next release this part hopefully won't be
-              // necessary, as we are looking to handle it internally.
-              var id = 'blobid' + (new Date()).getTime();
-              var blobCache =  tinymce.activeEditor.editorUpload.blobCache;
-              var base64 = reader.result.split(',')[1];
-              var blobInfo = blobCache.create(id, file, base64);
-              blobCache.add(blobInfo);
-
-              // call the callback and populate the Title field with the file name
-              cb(blobInfo.blobUri(), { title: file.name });
-            };
-            reader.readAsDataURL(file);
-          };
-
-          input.click();
         },
         init_instance_callback: function(editor) {
           const _contentCssText = require('!!css-to-string-loader!css-loader!./content.css')
@@ -167,9 +153,12 @@ export default {
           });
 
           // when typing keyup event
-          editor.on('keyup', function () {
+          /*editor.on('keyup', function () {
             vm.$store.commit('setContent',editor.getContent({ format: 'raw' }));
-            /*console.log(editor.getContent({ format: 'raw' }))*/
+          });*/
+
+          editor.on('Change', function (e) {
+            vm.$store.commit('setContent',editor.getContent({ format: 'raw' }));
           });
 
         }

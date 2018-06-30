@@ -7,7 +7,7 @@
         <img
           @click="onClickCategoryMenu"
           class="icon"
-          src="@/assets/images/left-pane-icons/category-icon-50w50h.png"/>
+          src="@/assets/images/left-pane-icons/category-icon-40w40h.png"/>
       </div>
 
       <!--<button type="button" @click="test">test</button>-->

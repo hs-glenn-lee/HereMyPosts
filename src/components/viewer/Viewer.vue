@@ -16,7 +16,8 @@
     name: "Viewer",
     methods: {
       ...mapActions([
-        'setSavedArticle'
+        'setSavedArticle',
+        'initViewer'
       ])
     },
     computed: {

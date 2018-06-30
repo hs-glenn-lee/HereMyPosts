@@ -12,5 +12,11 @@ axios.interceptors.response.use(res => {
   console.log(res)
   return res // must return res not to block thread.
 })*/
+
+const axiosMultipart = axios.create({
+  baseURL: 'http://localhost:8081'
+})
+axiosMultipart.defaults.headers.post['Content-Type'] = 'multipart/form-data';
+
 const axiosAppJson = instance
-export { axiosAppJson }
+export { axiosAppJson, axiosMultipart }

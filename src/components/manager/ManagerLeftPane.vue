@@ -10,7 +10,7 @@
           id="new-document-icon"
           @click="onClickNewDocumentMenu"
           class="icon"
-          src="@/assets/images/left-pane-icons/newdocument-icon-50w50h.png"
+          src="@/assets/images/left-pane-icons/new-document-icon-40w40h.png"
         />
       </div>
       <div class="left-pane-menu-item"
@@ -19,7 +19,7 @@
           id="category-icon"
           @click="onClickCategoryMenu"
           class="icon"
-          src="@/assets/images/left-pane-icons/category-icon-50w50h.png"/>
+          src="@/assets/images/left-pane-icons/category-icon-40w40h.png"/>
       </div>
       <!--<div class="left-pane-menu-item">PUB</div>-->
       <div class="left-pane-menu-item"
@@ -28,7 +28,7 @@
           <img
             id="tag-icon"
             class="icon"
-            src="@/assets/images/left-pane-icons/tag-icon-50w50h.png"
+            src="@/assets/images/left-pane-icons/tag-icon-40w40h.png"
             @click="onClickTagMenu"
             @mouseover="onMenuItemMouserOver"
             @mouseleave="onMenuItemMouserLeave"/>
@@ -40,7 +40,7 @@
            @mouseleave="onMenuItemMouserLeave">
         <img
           class="icon"
-          src="@/assets/images/left-pane-icons/save-icon-50w50h.png"/>
+          src="@/assets/images/left-pane-icons/save-icon-40w40h.png"/>
       </div>
 
 
@@ -53,7 +53,7 @@
         <img
           id="setting-icon"
           class="icon"
-          src="@/assets/images/left-pane-icons/user-icon-50w50h.png"/>
+          src="@/assets/images/left-pane-icons/settings-icon-40w40h.png"/>
       </div>
 
     </nav>
@@ -194,8 +194,8 @@ export default {
     margin-bottom: 10px;
   }
   img.icon {
-    height: 35px;
-    width: 35px;
+    height: 40px;
+    width: 40px;
   }
   img.icon:hover{
     cursor: pointer;

@@ -38,9 +38,10 @@ const actions = {
   },
   initArticleTags: (context) => {
     var article = context.rootGetters.getArticle;
+    var isSavedArticle = context.rootGetters.isSavedArticle;
     let articleTagCollection = new TagCollection(article, null);
 
-    if(article.id) {
+    if(isSavedArticle) {
       api.getTagArticlesOfArticle(article.id)
         .then(data => {
           articleTagCollection.setTagsArticles(data);
