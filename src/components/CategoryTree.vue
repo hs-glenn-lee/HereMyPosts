@@ -51,5 +51,7 @@
 </script>
 
 <style scoped>
-
+  ul.tree-root > li:first-child{
+    margin-left: 16px;
+  }
 </style>

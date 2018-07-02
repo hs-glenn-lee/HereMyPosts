@@ -7,6 +7,10 @@
           <span class="article-meta-category-wrapper">
             <label class="article-meta-label">카테고리</label>
             <span class="selected-category-name">default</span>
+            <label class="article-meta-label">태그</label>
+            <span class="tags">
+              <span class="tag">태그1</span>
+            </span>
           </span>
         </div>
 

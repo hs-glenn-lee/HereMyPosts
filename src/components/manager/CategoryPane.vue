@@ -7,6 +7,12 @@
       <div class="pane-header">
         <span class="pane-header-title">카테고리</span>
       </div>
+      <div class="tool-bar">
+        <div class="tool-bar-buttons">
+          <span class="tool-button">펼치기</span>
+          <span class="tool-button">접기</span>
+        </div>
+      </div>
       <div class="close-icon" @click="closeCSLP(false)">
         <img src="@/assets/images/x-icon-30.png" style="width:20px;"/>
       </div>
@@ -128,24 +134,59 @@ export default {
     z-index: 199;
   }
   div.pane-header {
-    margin: 30px 0px 20px 20px;
+    /*background-color: rgb(66, 133, 244);*/
+    border-top: 3px solid #eaeaea;
+    padding-top: 16px;
+    padding-bottom: 8px;
+    /*border-bottom: 1px solid #eaeaea;*/
+    height: 40px;
+    line-height: 40px;
   }
   span.pane-header-title {
     color: #6A6A6A;
+    /*color: white;*/
+    padding-left: 16px;
     font-size: 1.3em;
   }
+
   div.close-icon {
     position: absolute;
     opacity: 0.7;
     display: inline-block;
-    top: 18px;
-    right: 18px;
+    top: 21px;
+    right: 10px;
   }
   div.close-icon:hover {
     cursor: pointer;
   }
-  div.category-container {
 
+  div.tool-bar {
+    background-color: #f8f8f8;
+    height: 28px;
+    line-height: 28px;
+  }
+
+  div.tool-bar-buttons {
+    padding-left: 16px;
+  }
+
+  span.tool-button {
+    margin: 1px 2px 1px 0px;
+    padding: 2px 3px 2px 2px;
+
+    border: 1px solid #f8f8f8;
+    background-color: #f8f8f8;
+
+    font-size: 14px;
+  }
+  span.tool-button:hover {
+    background-color: #eaeaea;
+    cursor: pointer;
+    border: 1px solid rgb(16,123,211);
+  }
+
+  div.category-container {
+    margin-top: 16px;
   }
 
 </style>
