@@ -20,10 +20,19 @@ module.exports = {
         target: 'http://localhost:8080',
         changeOrigin: true
       },
+      '/article/resources/image': {
+        target: 'http://localhost:8080',
+        changeOrigin: true
+      },
       '/article/**/image/**' : {
         target: 'http://localhost:8080',
         changeOrigin: true
+      },
+      '/front-assets/**' : {
+        target: 'http://localhost:8080',
+        changeOrigin: true
       }
+
     },
 
     // Various Dev Server settings

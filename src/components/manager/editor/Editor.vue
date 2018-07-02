@@ -94,6 +94,8 @@ export default {
 
       var vm = this;
 
+      var codesample_content_css_ = require('!!css-to-string-loader!css-loader!@/assets/prism/prism.css')
+
       tinymce.init({
         selector: '#editor',
         laguage: 'ko_KR',
@@ -104,25 +106,26 @@ export default {
         menu: {
           //: {title: 'Insert', items: 'link media | template hr'}
         },
-        plugins: 'preview fullpage autolink visualblocks fullscreen image link media codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists textcolor wordcount imagetools  contextmenu colorpicker textpattern help',
-        toolbar1: 'insert | formatselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | fontselect fontsizeselect | removeformat',
+        plugins: 'preview fullpage autolink visualblocks fullscreen image link media codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists textcolor wordcount imagetools  contextmenu colorpicker textpattern help code',
+        toolbar1: 'insert | fontselect fontsizeselect | bold italic strikethrough forecolor backcolor | alignleft aligncenter alignright alignjustify | formatselect | removeformat | codesample | code | link ',
         statusbar: false,
         image_advtab: true,
         font_formats: '나눔손글씨=NanumBrush;나눔고딕=NanumGothic;Andale Mono=andale mono,times;Arial=arial,helvetica,sans-serif;Arial Black=arial black,avant garde;Book Antiqua=book antiqua,palatino;Comic Sans MS=comic sans ms,sans-serif;Courier New=courier new,courier;Georgia=georgia,palatino;Helvetica=helvetica;Impact=impact,chicago;Symbol=symbol;Tahoma=tahoma,arial,helvetica,sans-serif;Terminal=terminal,monaco;Times New Roman=times new roman,times;Trebuchet MS=trebuchet ms,geneva;Verdana=verdana,geneva;Webdings=webdings;Wingdings=wingdings,zapf dingbats',
-        content_css: [
-          //'//@/assets/css/fonts/nanumgothic/font-nanumbrush.css',
-          //`static/css/fonts/nanumgothic/font-nanumbrush.css`
-          //'font-nanumbrush.css'
-          //'.'+t
-        ],//iframe을 뚫기 때문에 content_css에 ifr안에 적용되는 css를 넣어야한다.
 
-        images_upload_url: 'http://localhost:8080/article/resources/image',
-
-
+        codesample_languages: [
+          {text: 'JavaScript', value: 'javascript'},
+          {text: 'PHP', value: 'php'},
+          {text: 'Ruby', value: 'ruby'},
+          {text: 'Python', value: 'python'},
+          {text: 'Java', value: 'java'},
+          {text: 'C', value: 'c'},
+          {text: 'C#', value: 'csharp'},
+          {text: 'C++', value: 'cpp'}
+        ],
+        codesample_content_css: '/front-assets/default-prism.css',
+        images_upload_url: '/api/article/resources/image',
         image_title: true,
-        // enable automatic uploads of images represented by blob or data URIs
         automatic_uploads: true,
-
         file_picker_types: 'image',
         relative_urls : false,
         images_upload_handler: function(blobInfo, success, failure) {
@@ -141,9 +144,10 @@ export default {
 
         },
         init_instance_callback: function(editor) {
+          //set content css
           const _contentCssText = require('!!css-to-string-loader!css-loader!./content.css')
           editor.dom.addStyle(_contentCssText);
-          console.log('editor init!!!')
+
           vm.tinymceEditor = editor;
         },
         setup: function(editor) {

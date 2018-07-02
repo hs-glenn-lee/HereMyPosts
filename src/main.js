@@ -11,6 +11,9 @@ import './assets/css/global.css'
 import './assets/css/fonts/nanumbrush/font-nanumbrush.css'
 import './assets/css/fonts/nanum-gothic/font-nanumgothic.css'
 
+import './assets/prism/prism.css'
+import './assets/prism/prism.js'
+
 //textarea-plugin
 import VueTextareaAutosize from 'vue-textarea-autosize'
 Vue.use(VueTextareaAutosize);
