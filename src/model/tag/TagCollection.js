@@ -71,7 +71,35 @@ export default class TagCollection {
   }
 
   isEmpty () {
-    return this.tagsArticles.length > 0;
+    return !this.tagsArticles.length > 0;
+  }
+
+  equals (tagCollection) {
+    console.log(typeof this);
+    if(typeof tagCollection === typeof this) {
+      if(this.article.id === tagCollection.id) {
+        if(Object.keys(this.tagMap).length === Object.keys(tagCollection.tagMap).length) {
+          var tagMapKey;
+          for(tagMapKey in this.tagMap) {
+            if(tagCollection.tagMap[tagMapKey] === undefined) {
+              return false;
+            }
+          }
+          for(tagMapKey in tagCollection.tagMap) {
+            if(this.tagMap[tagMapKey] === undefined) {
+              return false;
+            }
+          }
+        }
+
+      }
+
+    }else {
+      return false;
+    }
+
+    return true;
+
   }
 
 }

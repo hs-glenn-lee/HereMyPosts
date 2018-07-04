@@ -136,7 +136,7 @@
           'getIsSignedIn'
       ]),
       goManager () {
-        let routeData = this.$router.resolve({ name: "Manager", params: { username: this.getAccount.username }})
+        let routeData = this.$lve({ name: "Manager", params: { username: this.getAccount.username }})
         window.open(routeData.href, '_self');
       },
       saveIntroduction () {

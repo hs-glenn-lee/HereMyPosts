@@ -19,7 +19,23 @@ const state = {
 const getters = {
   getManagerState: (state) => {
     return state.managerState;
-  }
+  },
+  needToSave: (state, getters) =>{
+    console.log('--needToSave--')
+
+    console.log('--needToSaveArticleTagCollection')
+    var x = getters.needToSaveArticleTagCollection;
+    console.log(x);
+
+    console.log('--needToSaveSelectedCategory')
+    var xx = getters.needToSaveSelectedCategory;
+    console.log(xx);
+
+    console.log('--needToSaveArticle')
+    var art = getters.needToSaveArticle;
+    console.log(art);
+
+  },
 };
 const mutations = {
   setManagerState: (state, payload) => {
@@ -28,10 +44,9 @@ const mutations = {
 };
 const actions = {
   initManager: (context, payload) => {
-
     context.state.managerState = 'load';
     const articleId = payload;
-    const isSavedArticle = (articleId !== undefined);
+    const initAsSavedArticle = (articleId !== undefined);
 
     //init data
     //summary sign => article => category, tag
@@ -40,29 +55,10 @@ const actions = {
         throw err;//todo if error occcur redirect to sign-in
       })
       .then( () => {
-
-        context.dispatch('initMyTags', undefined, {root:true});
-        if(isSavedArticle) {//저장된 글인 경우
-          context.dispatch('initArticle', articleId, {root:true})
-            .then( articleData => {
-              context.dispatch('initCategoryTree', undefined, {root:true})
-                .then( () => {
-                  context.commit('setSelectedNode',articleData.category.id);
-                })
-
-              context.dispatch('initArticleTags', undefined, {root:true});
-            })
-
+        if(initAsSavedArticle) {//저장된 글인 경우
+          return context.dispatch('loadSavedArticle', articleId, {root:true})
         }else {//new article
-
-          context.dispatch('initArticle', undefined)
-            .catch( err => {
-              throw err; //todo error on getting article. this mean wrong articleId(not mine, or no matched article)
-            })
-            .then( () => {
-              context.dispatch('initCategoryTree', undefined, {root:true});
-              context.dispatch('initArticleTags', undefined, {root:true});
-            })
+          return context.dispatch('newArticle', undefined, {root:true});
         }
       })
 
@@ -72,16 +68,45 @@ const actions = {
     context.commit('setArticleListPaneShowing',false);
 
   },
-  /* test: (context) => {
-     console.log('test')
-     validator.validate('test',undefined, function(exception) {
-       console.log('reject callback')
-       console.log(context.rootState.alert);
+  newArticle: (context) => {
+    //init ui
+    context.commit('setCategoryPaneIsShowing', false);
+    context.commit('setIsTagPaneShowing', false);
+    context.commit('setArticleListPaneShowing',false);
 
-       context.commit('setAlertMessage', exception.message);
-       context.commit('setAlertIsShowing', true);
-     });
-   },*/
+    return context.dispatch('initArticle', undefined)
+      .catch( err => {
+        throw err; //todo error on getting article. this mean wrong articleId(not mine, or no matched article)
+      })
+      .then( () => {
+        context.dispatch('initCategoryTree', undefined, {root:true})
+          .then( () => {
+            //context.commit('setSelectedNode', null, {root:true});
+          })
+        context.dispatch('initArticleTags', undefined, {root:true});
+      })
+
+  },
+  loadSavedArticle: (context, payload) => {
+    var articleId = payload;
+    //init ui
+    context.commit('setCategoryPaneIsShowing', false);
+    context.commit('setIsTagPaneShowing', false);
+    context.commit('setArticleListPaneShowing',false);
+
+
+    return context.dispatch('initArticle', articleId, {root:true})
+      .then( articleData => {
+        context.dispatch('initCategoryTree', undefined, {root:true})
+          .then( () => {
+            context.commit('setSelectedNodeById', articleData.category.id);
+            context.commit('setOldSelectedNodeById', articleData.category.id);
+          })
+
+        context.dispatch('initArticleTags', undefined, {root:true});
+      })
+  },
+
   checkPass: (context, payload) => {//to not showing if click other components
     const event = payload;
 

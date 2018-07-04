@@ -154,13 +154,14 @@ export default {
       if(this.isFormValidate()) {
         console.log(this.account)
         api.signUp(this.account)
-          .then(na => {
+          .then( () => {
             api.signIn({
               username: this.account.username,
               password: this.account.password
             })
               .then(data => {
-                this.$router.push({ name: "UserHome", params: { username: this.account.username }})
+                let routeData = this.$router.resolve({ name: "UserHome", params: { username: this.account.username }})
+                window.open(routeData.href, '_self');
               })
               .catch(message => {
                 alert(message)

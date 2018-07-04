@@ -67,7 +67,9 @@ export default {
             isSignedIn: true
           };
           this.setSign(sign);
-          this.$router.push({ name: "Manager", params: { username: this.username }})
+
+          let routeData = this.$router.resolve({ name: "Manager", params: { username: this.username }})
+          window.open(routeData.href, '_self');
         })
         .catch(message => {
           this.alertMessage = '! ' + message

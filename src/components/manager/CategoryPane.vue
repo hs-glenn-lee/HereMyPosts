@@ -13,9 +13,9 @@
           <span class="tool-button">접기</span>
         </div>
       </div>
-      <div class="close-icon" @click="closeCSLP(false)">
+<!--      <div class="close-icon" @click="closeCSLP(false)">
         <img src="@/assets/images/x-icon-30.png" style="width:20px;"/>
-      </div>
+      </div>-->
 
 
       <div class="category-container">
@@ -64,13 +64,13 @@ export default {
   methods: {
     ...mapMutations([
       'setCategoryPaneIsShowing',
-      'setSelectedNode',
+      'setSelectedNodeById',
       'setArticleListPaneShowing'
     ]),
     ...mapActions([
       'getArticlesOfCategory',
       'markPass',
-      'initManager'
+      'loadSavedArticle'
     ]),
     closeCSLP () {
       this.setCategoryPaneIsShowing(false)
@@ -95,7 +95,7 @@ export default {
     },
     onNodeNameClick(clickEvent) {
       var clickedNodeNameSpan = clickEvent.currentTarget;
-      this.setSelectedNode(clickedNodeNameSpan.parentElement.parentElement.id)
+      this.setSelectedNodeById(clickedNodeNameSpan.parentElement.parentElement.id)
       this.getArticlesOfCategory(clickedNodeNameSpan.parentElement.parentElement.id)
       this.setArticleListPaneShowing(true);
     },
@@ -105,12 +105,7 @@ export default {
     },
     onArticleTitleDoubleClick(event) {
       var articleId = event.currentTarget.id;
-      let account = this.getAccount;
-      this.$router.push({
-        name: "ManagerSavedArticle",
-        params: { 'username': account.username, 'articleId': articleId }
-      });
-      this.initManager(articleId);
+      this.loadSavedArticle(articleId);
     }
 
   },

@@ -1,8 +1,8 @@
 <template>
   <div class="article-list-pane"
-       v-show="isArticleListPaneShowing">
+      v-show="isArticleListPaneShowing">
     <div class="article-list-pane-header">
-      <span class="article-list-pane-title">{{this.getSelectedNode.name}} 글 목록</span>
+      <span class="article-list-pane-title" v-if="this.getSelectedNode">{{this.getSelectedNode.name}} 글 목록</span>
     </div>
 
     <div class="tool-bar">

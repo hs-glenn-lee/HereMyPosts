@@ -1,6 +1,6 @@
 <template>
   <li class="article-feed-item">
-    <div class="title" @click="goArticle(article.id)">{{article.title}}</div>
+    <div class="title" @click="goArticleViewer(article.id)">{{article.title}}</div>
     <div class="title">{{article.createTimestamp}}</div>
 
   </li>
@@ -28,9 +28,10 @@
       ...mapMutations([
 
       ]),
-      goArticle(articleId) {
+      goArticleViewer(articleId) {
         var username = this.$route.params.username;
-        this.$router.push({ path: "/"+username+"/article/"+articleId})
+        let routeData = this.$router.resolve({ path: "/"+username+"/article/"+articleId})
+        window.open(routeData.href, '_self');
       }
     },
     computed: {

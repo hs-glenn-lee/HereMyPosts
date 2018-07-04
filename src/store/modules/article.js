@@ -31,6 +31,30 @@ const getters = {
   },
   isSavedArticle: state => {
     return state.isSavedArticle;
+  },
+  needToSaveArticle: state => {
+    console.log('needToSaveArticle')
+    if(state.oldArticle) {
+      if(state.article) {
+        console.log( state.article.content === state.oldArticle.content )
+      }else {
+        return false;
+      }
+
+    }else {
+      if(state.article) {
+        console.log(state.article)
+        console.log(state.article.content === '<!DOCTYPE html><html><head></head><body></body></html>')
+        if( state.article.content === '<!DOCTYPE html><html><head></head><body></body></html>') {
+          return false;
+        } else {
+          return true;
+        }
+      }else {
+        return false;
+      }
+
+    }
   }
 };
 const mutations = {

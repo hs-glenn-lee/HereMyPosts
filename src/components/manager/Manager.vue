@@ -1,6 +1,7 @@
 <template>
   <div class="manager"
     @click="checkPass">
+    <div>{{needToSave}}</div>
     <left-pane></left-pane>
     <right-pane v-if="getArticle"></right-pane>
     <alert-comp v-if="getIsAlertShowing"></alert-comp>
@@ -26,13 +27,25 @@ export default {
     ...mapGetters([
       'getAlertMessage',
       'getIsAlertShowing',
-      'getArticle'
+      'getArticle',
+      'needToSave'
     ])
   },
   created () {
     var currentPath = this.$route.path
     var paths = currentPath.split("/");
-    this.initManager(paths[3]);//
+    var articleIdInPath = paths[3];
+
+    if(articleIdInPath) {
+      //this is just for convention.
+      //do not over use.
+      this.$router.replace({ name:'Manager', params: {username:paths[1]} })
+      this.initManager(articleIdInPath)
+    }else {
+      this.initManager()
+    }
+
+    /*this.initManager()*/
   },
   components: {
     'left-pane': leftPaneComp,

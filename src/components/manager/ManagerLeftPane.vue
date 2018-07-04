@@ -92,15 +92,11 @@ export default {
       'test',
       'saveArticle',
       'initManager',
-      'updateArticleTags'
+      'updateArticleTags',
+      'newArticle'
     ]),
     onClickNewDocumentMenu (event) {
-      let account = this.getAccount;
-      this.$router.push({
-        name: "Manager",
-        params: { 'username': account.username}
-      });
-      this.initManager();
+      this.newArticle();
     },
     onClickSaveMenu (event) {
       this.saveArticle().
@@ -108,13 +104,7 @@ export default {
           console.error('after save article');
           this.updateArticleTags(savedArticle)
             .then( () => {
-              //router push to saved article and initManager
-              let account = this.getAccount;
-              this.$router.push({
-                name: "ManagerSavedArticle",
-                params: { 'username': account.username, 'articleId': savedArticle.id }
-              });
-              this.initManager(savedArticle.id);
+              this.loadSavedArticle(savedArticle.id);
             });
         })
     },
