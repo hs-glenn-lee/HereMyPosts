@@ -38,7 +38,7 @@
         'getAlertMessage',
         'getIsAlertShowing'
       ]),
-      alertStyle () {
+      loadingStyle () {
         return {
           left: (this.alertX - 250 /*div.alert.width*/)+'px',
           top: (this.alertY-100 /*div.alert.height/2*/)+'px'

@@ -21,7 +21,7 @@
           class="icon"
           src="@/assets/images/left-pane-icons/category-icon-40w40h.png"/>
       </div>
-      <!--<div class="left-pane-menu-item">PUB</div>-->
+
       <div class="left-pane-menu-item"
            @mouseover="onMenuItemMouserOver"
            @mouseleave="onMenuItemMouserLeave">
@@ -34,6 +34,7 @@
             @mouseleave="onMenuItemMouserLeave"/>
       </div>
       <div class="left-pane-menu-item"
+           :class="{'need-to-save':needToSave}"
            id="save-icon"
            @click="onClickSaveMenu"
            @mouseover="onMenuItemMouserOver"
@@ -93,7 +94,8 @@ export default {
       'saveArticle',
       'initManager',
       'updateArticleTags',
-      'newArticle'
+      'newArticle',
+      'loadSavedArticle'
     ]),
     onClickNewDocumentMenu (event) {
       this.newArticle();
@@ -152,7 +154,8 @@ export default {
     ...mapGetters([
       'isCategoryPaneShowing',
       'isTagPaneShowing',
-      'getAccount'
+      'getAccount',
+      'needToSave'
     ])
   },
   components: {
@@ -166,7 +169,7 @@ export default {
 <style scoped>
   .left-pane-menu {
     left: 0;
-    width: 73px;
+    width: 60px;
 
     /**/
     border-right: 1px solid #ececec;
@@ -191,11 +194,17 @@ export default {
     cursor: pointer;
   }
 
+  #save-icon.need-to-save img.icon{
+    background-color: indianred;
+    transition: 0.5s;
+    border-radius: 18px;
+  }
+
   div.left-pane-menu-item.up-here img.icon{
     background-color: #e6ffcc;
     transition: 0.5s;
 
-    border-radius: 17px;
+    border-radius: 21px;
   }
 
   div.intended-blank-space:after{
@@ -203,4 +212,6 @@ export default {
     display: block;
     height: 200px;
   }
+
+
 </style>

@@ -160,7 +160,7 @@
 
 <style scoped>
   div.tag-pane {
-    position: absolute; left: 73px; top: 0px; right: 0px; bottom: 0px;
+    position: absolute; left: 60px; top: 0px; right: 0px; bottom: 0px;
     width: 400px;
     border-right: 2px solid #eaeaea;
     border-left: 2px solid #ececec;

@@ -21,18 +21,14 @@ const getters = {
   },
   needToSaveSelectedCategory: state => {
     console.log('***needToSaveSelectedCategory')
-    console.log(state.oldSelectedNode);
-    console.log(state.selectedNode);
     if(state.oldSelectedNode === null) {
-
       if(state.selectedNode === null) {
         return false;
       }else {
         return true;
       }
     }else {
-
-      return (state.oldSelectedNode.id === state.selectedNode.id);
+      return !(state.oldSelectedNode.id === state.selectedNode.id);
     }
   }
 };

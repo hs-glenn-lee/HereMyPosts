@@ -52,7 +52,7 @@
 
 <style scoped>
   div.right-pane {
-    margin-left: 73px;
+    margin-left: 60px;
     width: 100%;
     height: 100%;
     background-color: white;

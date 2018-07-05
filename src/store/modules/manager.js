@@ -3,6 +3,7 @@ import validator from '@/model/validator/validator'
 
 const state = {
   managerState: 'start',
+  isLoading:  false,
   passes: {
     'CategoryPane': {
       fail: function(context) {
@@ -21,25 +22,29 @@ const getters = {
     return state.managerState;
   },
   needToSave: (state, getters) =>{
-    console.log('--needToSave--')
 
-    console.log('--needToSaveArticleTagCollection')
-    var x = getters.needToSaveArticleTagCollection;
-    console.log(x);
+    var saveTag = getters.needToSaveArticleTagCollection;
+    console.log('--needToSaveArticleTagCollection : ' + saveTag)
 
-    console.log('--needToSaveSelectedCategory')
-    var xx = getters.needToSaveSelectedCategory;
-    console.log(xx);
+    var saveCat = getters.needToSaveSelectedCategory;
+    console.log('--needToSaveSelectedCategory : ' + saveCat)
 
-    console.log('--needToSaveArticle')
-    var art = getters.needToSaveArticle;
-    console.log(art);
+    var saveArticle = getters.needToSaveArticle;
+    console.log('--needToSaveArticle : ' + saveArticle)
+
+    return saveTag || saveCat || saveArticle;
 
   },
+  isLoading: (state) => {
+    return state.isLoading;
+  }
 };
 const mutations = {
   setManagerState: (state, payload) => {
-    this.managerState = payload;
+    state.managerState = payload;
+  },
+  setIsLoading: (state, payload) => {
+    state.isLoading = payload;
   }
 };
 const actions = {
@@ -74,6 +79,22 @@ const actions = {
     context.commit('setIsTagPaneShowing', false);
     context.commit('setArticleListPaneShowing',false);
 
+    context.commit('setIsLoading',true);
+    var waitingFor = {'initCategoryTree': false, 'initArticleTags': false};
+    var onComplete = function (actionName) {
+      waitingFor[actionName] = true;
+      var isAllComplete = true;
+      for(var actionNameKey in waitingFor) {
+        isAllComplete = isAllComplete && (waitingFor[actionNameKey]);
+      }
+
+      if(isAllComplete) {
+        setTimeout( () => {
+          context.commit('setIsLoading',!isAllComplete);
+        }, 500)
+      }
+    };
+
     return context.dispatch('initArticle', undefined)
       .catch( err => {
         throw err; //todo error on getting article. this mean wrong articleId(not mine, or no matched article)
@@ -81,9 +102,11 @@ const actions = {
       .then( () => {
         context.dispatch('initCategoryTree', undefined, {root:true})
           .then( () => {
-            //context.commit('setSelectedNode', null, {root:true});
+            context.commit('setSelectedNode', null, {root:true});
+            onComplete('initCategoryTree')
           })
-        context.dispatch('initArticleTags', undefined, {root:true});
+        context.dispatch('initArticleTags', undefined, {root:true})
+          .then( () => {onComplete('initArticleTags')});
       })
 
   },
@@ -94,6 +117,24 @@ const actions = {
     context.commit('setIsTagPaneShowing', false);
     context.commit('setArticleListPaneShowing',false);
 
+    context.commit('setIsLoading',true);
+    var waitingFor = {'initCategoryTree': false, 'initArticleTags': false};
+    var onComplete = function (actionName) {
+      waitingFor[actionName] = true;
+      var isAllComplete = true;
+      for(var actionNameKey in waitingFor) {
+        isAllComplete = isAllComplete && (waitingFor[actionNameKey]);
+      }
+      if(isAllComplete) {
+        setTimeout( () => {
+          context.commit('setIsLoading',!isAllComplete);
+        }, 500)
+      }
+
+      if(!context.state.isLoading) {
+        console.log( 'complete !' )
+      }
+    };
 
     return context.dispatch('initArticle', articleId, {root:true})
       .then( articleData => {
@@ -101,9 +142,11 @@ const actions = {
           .then( () => {
             context.commit('setSelectedNodeById', articleData.category.id);
             context.commit('setOldSelectedNodeById', articleData.category.id);
+            onComplete('initCategoryTree')
           })
 
-        context.dispatch('initArticleTags', undefined, {root:true});
+        context.dispatch('initArticleTags', undefined, {root:true})
+          .then( () => { onComplete('initArticleTags')});
       })
   },
 

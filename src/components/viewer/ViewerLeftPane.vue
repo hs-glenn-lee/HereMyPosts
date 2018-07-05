@@ -68,7 +68,7 @@
 <style scoped>
   .left-pane-menu {
     left: 0;
-    width: 73px;
+    width: 60px;
 
     /**/
     border-right: 1px solid #ececec;

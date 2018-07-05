@@ -1,10 +1,10 @@
 <template>
   <div class="manager"
     @click="checkPass">
-    <div>{{needToSave}}</div>
     <left-pane></left-pane>
     <right-pane v-if="getArticle"></right-pane>
     <alert-comp v-if="getIsAlertShowing"></alert-comp>
+    <loading-comp></loading-comp>
   </div>
 </template>
 
@@ -13,6 +13,7 @@
 import leftPaneComp from './ManagerLeftPane'
 import rightPaneComp from './ManagerRightPane'
 import alertComp from '@/components/Alert'
+import loadingComp from '@/components/Loading'
 import { mapActions } from 'vuex'
 import { mapGetters } from 'vuex'
 export default {
@@ -28,7 +29,7 @@ export default {
       'getAlertMessage',
       'getIsAlertShowing',
       'getArticle',
-      'needToSave'
+      'isLoading'
     ])
   },
   created () {
@@ -50,7 +51,8 @@ export default {
   components: {
     'left-pane': leftPaneComp,
     'right-pane': rightPaneComp,
-    'alert-comp': alertComp
+    'alert-comp': alertComp,
+    'loading-comp': loadingComp,
   }
 }
 </script>

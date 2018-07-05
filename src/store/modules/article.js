@@ -33,23 +33,28 @@ const getters = {
     return state.isSavedArticle;
   },
   needToSaveArticle: state => {
-    console.log('needToSaveArticle')
+    console.log('needToSaveArticle%%%%%%%%%%%%%%')
+    console.log(state.oldArticle);
+    console.log(state.article);
+
     if(state.oldArticle) {
       if(state.article) {
-        console.log( state.article.content === state.oldArticle.content )
+
+        console.log(state.article.title)
+        console.log(state.oldArticle.title)
+
+        console.log(state.article.content)
+        console.log(state.oldArticle.content)
+
+        return (state.article.title !== state.oldArticle.title) || (state.article.content !== state.oldArticle.content)
       }else {
         return false;
       }
 
     }else {
       if(state.article) {
-        console.log(state.article)
-        console.log(state.article.content === '<!DOCTYPE html><html><head></head><body></body></html>')
-        if( state.article.content === '<!DOCTYPE html><html><head></head><body></body></html>') {
-          return false;
-        } else {
-          return true;
-        }
+        return !( state.article.title === '')
+        return !( state.article.content === '<!DOCTYPE html><html><head></head><body></body></html>')
       }else {
         return false;
       }
@@ -124,15 +129,16 @@ const actions = {
       .then(newArticleId => {
         console.log(newArticleId)
         context.commit('setNewArticle', newArticleId)
+        context.commit('setOldArticle', null);
       })
   },
   setSavedArticle: (context, payload) => {
     return api.getArticle(payload)
       .then(data => {
-        console.log(data);
+        var copy = Object.assign({},data)
         context.commit('setArticle',data);
         context.commit('setIsSavedArticle', true);
-        //context.commit('setOldArticle', data);
+        context.commit('setOldArticle', copy);
         return data;
       })
   }
