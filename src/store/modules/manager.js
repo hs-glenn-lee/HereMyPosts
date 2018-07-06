@@ -3,7 +3,7 @@ import validator from '@/model/validator/validator'
 
 const state = {
   managerState: 'start',
-  isLoading:  false,
+  isManagerLoading:  false,
   passes: {
     'CategoryPane': {
       fail: function(context) {
@@ -35,16 +35,16 @@ const getters = {
     return saveTag || saveCat || saveArticle;
 
   },
-  isLoading: (state) => {
-    return state.isLoading;
+  isManagerLoading: (state) => {
+    return state.isManagerLoading;
   }
 };
 const mutations = {
   setManagerState: (state, payload) => {
     state.managerState = payload;
   },
-  setIsLoading: (state, payload) => {
-    state.isLoading = payload;
+  setIsManagerLoading: (state, payload) => {
+    state.isManagerLoading = payload;
   }
 };
 const actions = {
@@ -79,7 +79,7 @@ const actions = {
     context.commit('setIsTagPaneShowing', false);
     context.commit('setArticleListPaneShowing',false);
 
-    context.commit('setIsLoading',true);
+    context.commit('setIsManagerLoading',true);
     var waitingFor = {'initCategoryTree': false, 'initArticleTags': false};
     var onComplete = function (actionName) {
       waitingFor[actionName] = true;
@@ -90,7 +90,7 @@ const actions = {
 
       if(isAllComplete) {
         setTimeout( () => {
-          context.commit('setIsLoading',!isAllComplete);
+          context.commit('setIsManagerLoading',!isAllComplete);
         }, 500)
       }
     };
@@ -117,7 +117,7 @@ const actions = {
     context.commit('setIsTagPaneShowing', false);
     context.commit('setArticleListPaneShowing',false);
 
-    context.commit('setIsLoading',true);
+    context.commit('setIsManagerLoading',true);
     var waitingFor = {'initCategoryTree': false, 'initArticleTags': false};
     var onComplete = function (actionName) {
       waitingFor[actionName] = true;
@@ -127,11 +127,11 @@ const actions = {
       }
       if(isAllComplete) {
         setTimeout( () => {
-          context.commit('setIsLoading',!isAllComplete);
+          context.commit('setIsManagerLoading',!isAllComplete);
         }, 500)
       }
 
-      if(!context.state.isLoading) {
+      if(!context.state.isManagerLoading) {
         console.log( 'complete !' )
       }
     };

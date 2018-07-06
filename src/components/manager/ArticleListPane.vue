@@ -1,6 +1,11 @@
 <template>
   <div class="article-list-pane"
       v-show="isArticleListPaneShowing">
+    <div class="loading" :class="{'showing': isManagerLoading }">
+      <img class="loading-img"
+           :style="getLoadingImgStyle"
+           src="@/assets/images/loading.gif">
+    </div>
     <div class="article-list-pane-header">
       <span class="article-list-pane-title" v-if="this.getSelectedNode">{{this.getSelectedNode.name}} 글 목록</span>
     </div>
@@ -59,7 +64,8 @@ export default {
   data () {
     return {
       listHeight: '',
-      windowInnerHeight: 0
+      windowInnerHeight: 0,
+      loadingImgPaddingTop: 0
     }
   },
   computed: {
@@ -67,10 +73,14 @@ export default {
       'getArticleList',
       'isArticleListEmpty',
       'isArticleListPaneShowing',
-      'getSelectedNode'
+      'getSelectedNode',
+      'isManagerLoading'
     ]),
     getListHeight () {
       return this.listHeight;
+    },
+    getLoadingImgStyle () {
+      return {'padding-top': this.loadingImgPaddingTop + 'px'};
     }
   },
   methods: {
@@ -83,6 +93,10 @@ export default {
       this.innerHeight = window.innerHeight;
       this.listHeight = 'height:' + (this.innerHeight - headerHeight - 2/*border px*/) + 'px;';
     },
+    calcLoadingImgPaddingTop () {
+      let loadingDivHeight = window.document.querySelector('div.article-list-pane');
+      this.loadingImgPaddingTop = (loadingDivHeight.clientHeight/2) - 120 /*loading img height*/;
+    }
 
   },
   watch: {
@@ -94,6 +108,7 @@ export default {
   },
   mounted() {
     this.calcListHeight();
+    this.calcLoadingImgPaddingTop();
     var vm = this;
     window.onresize = function(event) {
       vm.windowInnerHeight = window.innerHeight;
@@ -111,6 +126,32 @@ export default {
     background-color: white;
     z-index: 199;
     height:100%;
+  }
+
+  div.loading {
+    width: 100%;
+    height: 100%;
+
+    position: absolute;
+    left: 0px;
+    top: 0px;
+
+    z-index: 200;
+
+    background-color : #ececec;
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  div.loading.showing {
+    visibility: visible;
+    opacity: 0.7;
+    transition: visibility 0s, opacity 0.5s linear;
+  }
+
+  img.loading-img {
+    display: block;
+    margin: auto;
   }
 
   div.article-list-pane-header {

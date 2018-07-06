@@ -1,6 +1,6 @@
 <template>
   <div class="loading"
-        :class="{'showing':isLoading}"
+        :class="{'showing':isManagerLoading}"
         ><!--:style="loadingStyle"-->
 
     <div class="loading-img-wrapper"
@@ -32,7 +32,7 @@
     },
     computed: {
       ...mapGetters([
-        'isLoading'
+        'isManagerLoading'
       ]),
       wrapperDivStyle () {
         return {

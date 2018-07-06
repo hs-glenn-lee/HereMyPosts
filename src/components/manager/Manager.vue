@@ -29,7 +29,7 @@ export default {
       'getAlertMessage',
       'getIsAlertShowing',
       'getArticle',
-      'isLoading'
+      'isManagerLoading'
     ])
   },
   created () {

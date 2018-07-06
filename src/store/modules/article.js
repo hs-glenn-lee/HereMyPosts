@@ -109,7 +109,7 @@ const actions = {
       })
   },
   getArticlesOfCategory : (context, payload) => {
-    api.getArticlesOfCategory(payload)
+    return api.getArticlesOfCategory(payload)
       .then(data => {
         data.sort((a,b) => {//createTimestamp desc
           if(a.createTimestamp < b.createTimestamp) {
@@ -120,7 +120,7 @@ const actions = {
           }
           return 0;
         })
-        console.log(data)
+
         state.articleList = data;
       })
   },
