@@ -1,7 +1,6 @@
 <template>
   <div class="loading"
-        :class="{'showing':isManagerLoading}"
-        ><!--:style="loadingStyle"-->
+        :class="{'showing':isManagerLoading}">
 
     <div class="loading-img-wrapper"
           :style="wrapperDivStyle">

@@ -1,29 +1,31 @@
 <template>
-  <div v-if="getArticle" class="right-pane">
-    <div class="center-block">
-      <div class="article-meta">
+  <div v-if="getArticle" class="right-pane" >
+    <div class="right-pane-wrapper" :style="rightPaneWrapperStyle">
+      <div class="center-block">
+        <div class="article-meta">
 
-        <div class="article-meta-category">
-          <span class="article-meta-category-wrapper">
-            <label class="article-meta-label">카테고리</label>
-            <span class="selected-category-name">default</span>
-            <label class="article-meta-label">태그</label>
-            <span class="tags">
-              <span class="tag">태그1</span>
+          <div class="article-meta-category">
+            <span class="article-meta-category-wrapper">
+              <label class="article-meta-label">카테고리</label>
+              <span class="selected-category-name">default</span>
+              <label class="article-meta-label">태그</label>
+              <span class="tags">
+                <span class="tag">태그1</span>
+              </span>
             </span>
-          </span>
+          </div>
+
+          <div class="title">
+            <input class="title-input"
+                   type="text"
+                   v-model="title"
+                   placeholder="제목"/>
+          </div>
         </div>
 
-        <div class="title">
-          <input class="title-input"
-                 type="text"
-                 v-model="title"
-                 placeholder="제목"/>
+        <div class="editor-container">
+          <editor :article="getArticle"></editor>
         </div>
-      </div>
-
-      <div class="editor-container">
-        <editor :article="getArticle"></editor>
       </div>
     </div>
   </div>
@@ -38,7 +40,9 @@
     name: 'EditorComp',
     data () {
       return {
-        'empty-input-style': 'border:none'
+        'empty-input-style': 'border:none',
+        rightPaneWrapperWidth: 0,
+        rightPaneHeight: 0
       }
     },
     methods: {
@@ -46,10 +50,18 @@
         'newArticle',
         'getArticle',
         'getCategoryTreeRoot'
-      ])
+      ]),
+      calcRightPaneWidth() {
+        var $divRightPane = window.document.querySelector('div.right-pane')
+        this.rightPaneWrapperWidth = $divRightPane.offsetWidth - 60 /*left-pane-width*/;
+        this.rightPaneHeight = $divRightPane.offsetHeight;
+      }
     },
     created () {
 
+    },
+    mounted () {
+      this.calcRightPaneWidth();
     },
     computed: {
       title: {
@@ -58,6 +70,11 @@
         },
         set (value) {
           this.$store.commit('setTitle', value)
+        }
+      },
+      rightPaneWrapperStyle () {
+        return {
+          'width': this.rightPaneWrapperWidth + 'px'
         }
       }
     },

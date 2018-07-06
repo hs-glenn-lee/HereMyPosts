@@ -6,43 +6,58 @@
            :style="getLoadingImgStyle"
            src="@/assets/images/loading.gif">
     </div>
-    <div class="article-list-pane-header">
-      <span class="article-list-pane-title" v-if="this.getSelectedNode">{{this.getSelectedNode.name}} 글 목록</span>
-    </div>
-
-    <div class="tool-bar">
-      <div class="tool-bar-buttons">
-        <span class="tool-button">정렬</span>
-        <span class="tool-button">제목검색</span>
-        <span class="tool-button">페이지로 보기</span>
-        <span class="tool-button">최근 글</span><!-- 우로 정렬 -->
+    <div class="not-list">
+      <div class="article-list-pane-header">
+        <span class="article-list-pane-title" v-if="this.getSelectedNode">{{this.getSelectedNode.name}} 글 목록</span>
       </div>
-      <div class="tool-input">
-        <!--<input type="text">-->
+
+      <div class="tool-bar">
+        <div class="tool-bar-buttons">
+          <span class="tool-button">정렬</span>
+          <span class="tool-button">제목검색</span>
+          <span class="tool-button">페이지로 보기</span>
+          <span class="tool-button">최근 글</span><!-- 우로 정렬 -->
+        </div>
+        <div class="tool-input">
+          <div class="order-params">
+            <span>update-time</span>
+            <span>title</span>
+            <span>asc</span>
+            <span>desc</span>
+          </div>
+          <div class="title-search-input">
+            <input type="text">
+            <button type="button">찾기</button>
+          </div>
+        </div>
       </div>
     </div>
-
 
     <div class="list-height" :style="getListHeight">
       <div class="article-list-wrapper">
         <ul class="article-list">
           <li v-if="isArticleListEmpty">
-            <span>비어 있음</span>
+            <div class="empty-list-item">
+              <label class="empty-list-label">비어 있음</label>
+            </div>
+
           </li>
           <li v-for="article in getArticleList"
               :key="article.id"
               class="article-list-item">
-            <div class="article-title">
+            <div class="article-list-item-wrapper">
+              <div class="article-title">
               <span class="article-title"
                     v-bind:id="article.id"
                     @click="onArticleTitleClick"
                     @click.double="onArticleTitleDoubleClick">{{article.title}}</span>
-            </div>
-            <div class="article-create-timestamp">
-              <span v-if="(article.createDateString)" class="article-create-timestamp">{{article.createDateString}}</span>
-            </div>
-            <div class="article-summary">
-              <span class="article-summary">{{article.summary}}</span>
+              </div>
+              <div class="article-create-timestamp">
+                <span v-if="(article.createDateString)" class="article-create-timestamp">{{article.createDateString}}</span>
+              </div>
+              <div class="article-summary">
+                <span class="article-summary">{{article.summary}}</span>
+              </div>
             </div>
           </li>
         </ul>
@@ -88,10 +103,10 @@ export default {
       'setFocusedVueCompName'
     ]),
     calcListHeight() {
-      let header = window.document.querySelector('div.article-list-pane-header');
-      let headerHeight = header.offsetHeight;
+      let notList = window.document.querySelector('div.not-list');
+      let notListHeight = notList.offsetHeight;
       this.innerHeight = window.innerHeight;
-      this.listHeight = 'height:' + (this.innerHeight - headerHeight - 2/*border px*/) + 'px;';
+      this.listHeight = 'height:' + (this.innerHeight - notListHeight - 2/*border px*/) + 'px;';
     },
     calcLoadingImgPaddingTop () {
       let loadingDivHeight = window.document.querySelector('div.article-list-pane');
@@ -166,19 +181,18 @@ export default {
 
   span.article-list-pane-title {
     color: #6A6A6A;
-    padding-left: 16px;
+    padding-left: 4px;
     font-size: 1.3em;
   }
 
   div.tool-bar {
     background-color: #f8f8f8;
-    height: 28px;
     line-height: 28px;
     /*border-bottom: 1px solid #eaeaea;*/
   }
 
   div.tool-bar-buttons {
-    padding-left: 16px;
+    /*padding-left: 16px;*/
   }
 
   span.tool-button {
@@ -205,6 +219,16 @@ export default {
     /*border-top: 2px solid #ececec;*/
   }
 
+  div.empty-list-item {
+    text-align: center;
+    padding-top: 10px;
+  }
+
+  label.empty-list-label {
+    font-size: 1.2em;
+    color: #999999;
+  }
+
   ul.article-list {
 
   }
@@ -213,6 +237,13 @@ export default {
     width: 98%;
     padding: 3px 5px 3px 5px;
     border-bottom: 1px solid #ececec;
+  }
+
+  div.article-list-item-wrapper {
+    border: 4px solid white;
+  }
+  div.article-list-item-wrapper:hover {
+    border: 4px solid #acacac;
   }
 
   div.article-title {

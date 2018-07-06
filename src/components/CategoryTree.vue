@@ -3,6 +3,7 @@
     <ul class="tree-root">
       <category-node
         class="category-node"
+        ref="root"
         :categoryNode="getCategoryTreeRoot"
         :onNodeNameClick="onNodeNameClick"
         :onNodeNameRightClick="onNodeNameRightClick"
@@ -36,6 +37,16 @@
     ]),
     findNodeElement (id) {
 
+    },
+    openAllCategoryNodes () {
+      console.log('openAllCategoryNodes')
+      console.log(this.$refs.root)
+      this.$refs.root.openMe();
+      this.$refs.root.openChildren();
+    },
+    closeAllCategoryNodes () {
+      this.$refs.root.closeMe();
+      this.$refs.root.closeChildren();
     }
 
   },

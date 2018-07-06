@@ -9,8 +9,12 @@
       </div>
       <div class="tool-bar">
         <div class="tool-bar-buttons">
-          <span class="tool-button">펼치기</span>
-          <span class="tool-button">접기</span>
+          <span
+            @click="openAllCategoryNodes"
+            class="tool-button">펼치기</span>
+          <span
+            @click="closeAllCategoryNodes"
+            class="tool-button">접기</span>
         </div>
       </div>
 <!--      <div class="close-icon" @click="closeCSLP(false)">
@@ -19,8 +23,10 @@
 
 
       <div class="category-container">
-        <category-tree-comp :onNodeNameRightClick="onNodeNameRightClick"
-                            :onNodeNameClick="onNodeNameClick"></category-tree-comp>
+        <category-tree-comp
+          ref="$categoryTreeComp"
+          :onNodeNameRightClick="onNodeNameRightClick"
+          :onNodeNameClick="onNodeNameClick"></category-tree-comp>
       </div>
 
       <c-node-right-click-menu v-bind:is="rightClickMenu"
@@ -106,7 +112,15 @@ export default {
     onArticleTitleDoubleClick(event) {
       var articleId = event.currentTarget.id;
       this.loadSavedArticle(articleId);
+    },
+
+    openAllCategoryNodes () {
+      this.$refs.$categoryTreeComp.openAllCategoryNodes();
+    },
+    closeAllCategoryNodes () {
+      this.$refs.$categoryTreeComp.closeAllCategoryNodes();
     }
+
 
   },
   computed: {

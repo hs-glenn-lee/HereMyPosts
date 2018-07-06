@@ -29,6 +29,7 @@
       <category-node-comp
         class="item"
         v-for="cnode in categoryNode.children"
+        :ref="cnode.id"
         :key="cnode.id"
         :categoryNode="cnode"
         :onNodeNameClick="onNodeNameClick"
@@ -65,6 +66,24 @@ export default {
     },
     toggleOpen () {
       this.open = !this.open
+    },
+    openMe () {
+      this.open = true;
+    },
+    closeMe () {
+      this.open = false;
+    },
+    openChildren () {
+      for(var childrenCompRef in this.$refs) {
+        this.$refs[childrenCompRef][0].openMe(); /* [0] --- something wrong with v-for and ref ...*/
+        this.$refs[childrenCompRef][0].openChildren();
+      }
+    },
+    closeChildren () {
+      for(var childrenCompRef in this.$refs) {
+        this.$refs[childrenCompRef][0].closeMe();
+        this.$refs[childrenCompRef][0].closeChildren();
+      }
     }
   },
   computed: {
