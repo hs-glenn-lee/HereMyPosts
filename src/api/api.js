@@ -94,8 +94,8 @@ export default {
       .catch( err => {throw err})
   },
 
-  getRecentArticles(username) {
-    return axiosAppJson.get('api/'+username+'/recent-articles')
+  getRecentArticles(username, pageParameter) {
+    return axiosAppJson.post('api/'+username+'/recent-articles', pageParameter)
       .then(res => {
         console.log(res)
         return res.data })

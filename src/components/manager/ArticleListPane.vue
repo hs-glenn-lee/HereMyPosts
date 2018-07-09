@@ -7,30 +7,37 @@
            src="@/assets/images/loading.gif">
     </div>
     <div class="not-list">
+
       <div class="article-list-pane-header">
-        <span class="article-list-pane-title" v-if="this.getSelectedNode">{{this.getSelectedNode.name}} 글 목록</span>
+        <span class="article-list-pane-title" v-if="this.getListOf === 'category'">{{this.getSelectedNode.name}} 글 목록</span>
+        <span class="article-list-pane-title" v-if="this.getListOf === 'recent'" >최근 글</span>
       </div>
 
-      <div class="tool-bar">
-        <div class="tool-bar-buttons">
-          <span class="tool-button">정렬</span>
-          <span class="tool-button">제목검색</span>
-          <span class="tool-button">페이지로 보기</span>
-          <span class="tool-button">최근 글</span><!-- 우로 정렬 -->
-        </div>
+      <div v-if="getListOf === 'category'" class="tool-bar">
         <div class="tool-input">
-          <div class="order-params">
-            <span>update-time</span>
-            <span>title</span>
-            <span>asc</span>
-            <span>desc</span>
+          <div class="tool-buttons">
+            <span class="tool-button"
+                  :class="{'selected': (getSortProperty==='updateTimestamp')}"
+                  @click="setSortProperty('updateTimestamp')">날짜</span>
+            <span class="tool-button"
+                  :class="{'selected': (getSortProperty==='title')}"
+                  @click="setSortProperty('title')">제목</span>
+            <span class="tool-button"
+                  :class="{'selected': (getSortDirection==='asc')}"
+                  @click="setSortDirection('asc')">asc</span>
+            <span class="tool-button"
+                  :class="{'selected': (getSortDirection==='desc')}"
+                  @click="setSortDirection('desc')">desc</span>
+            <span class="tool-button go-recent-button"
+                  @click="getRecentArticles(0)">최근 글</span>
           </div>
           <div class="title-search-input">
-            <input type="text">
-            <button type="button">찾기</button>
+            <label>제목</label>
+            <input ref="searchWord" v-on:keyup="inputSearchWord" class="search-word" type="text">
           </div>
         </div>
       </div>
+
     </div>
 
     <div class="list-height" :style="getListHeight">
@@ -53,7 +60,7 @@
                     @click.double="onArticleTitleDoubleClick">{{article.title}}</span>
               </div>
               <div class="article-create-timestamp">
-                <span v-if="(article.createDateString)" class="article-create-timestamp">{{article.createDateString}}</span>
+                <span v-if="(article.updateDateString)" class="article-create-timestamp">{{article.updateDateString}}</span>
               </div>
               <div class="article-summary">
                 <span class="article-summary">{{article.summary}}</span>
@@ -69,6 +76,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import { mapMutations } from 'vuex';
+import { mapActions } from 'vuex';
 
 export default {
   name: 'CategorySubLeftPaneComp',
@@ -79,6 +87,7 @@ export default {
   data () {
     return {
       listHeight: '',
+      notListHeight: 0,
       windowInnerHeight: 0,
       loadingImgPaddingTop: 0
     }
@@ -89,7 +98,10 @@ export default {
       'isArticleListEmpty',
       'isArticleListPaneShowing',
       'getSelectedNode',
-      'isManagerLoading'
+      'isManagerLoading',
+      'getListOf',
+      'getSortDirection',
+      'getSortProperty'
     ]),
     getListHeight () {
       return this.listHeight;
@@ -100,22 +112,41 @@ export default {
   },
   methods: {
     ...mapMutations([
-      'setFocusedVueCompName'
+      'setFocusedVueCompName',
+      'setSortProperty',
+      'setSortDirection',
+      'setSearchWord'
+    ]),
+    ...mapActions([
+      'getRecentArticles'
     ]),
     calcListHeight() {
       let notList = window.document.querySelector('div.not-list');
+      console.log('notList');
+
       let notListHeight = notList.offsetHeight;
+      console.log(notListHeight)
+
       this.innerHeight = window.innerHeight;
       this.listHeight = 'height:' + (this.innerHeight - notListHeight - 2/*border px*/) + 'px;';
     },
     calcLoadingImgPaddingTop () {
       let loadingDivHeight = window.document.querySelector('div.article-list-pane');
       this.loadingImgPaddingTop = (loadingDivHeight.clientHeight/2) - 120 /*loading img height*/;
+    },
+    inputSearchWord() {
+      var searchWord = this.$refs.searchWord.value;
+      this.setSearchWord(searchWord)
     }
 
   },
   watch: {
     windowInnerHeight (val,oldVal) {
+      if(val !== oldVal) {
+        this.calcListHeight();
+      }
+    },
+    getListOf (val,oldVal) {
       if(val !== oldVal) {
         this.calcListHeight();
       }
@@ -188,7 +219,7 @@ export default {
   div.tool-bar {
     background-color: #f8f8f8;
     line-height: 28px;
-    /*border-bottom: 1px solid #eaeaea;*/
+    padding-bottom: 4px;
   }
 
   div.tool-bar-buttons {
@@ -204,9 +235,31 @@ export default {
     background-color: #f8f8f8;
 
     font-size: 14px;
+  }
 
+
+  div.title-search-input {
+    padding-left: 4px;
+  }
+
+  div.title-search-input > label {
+    margin-right: 8px;
+  }
+
+  input.search-word {
+    font-size: 0.7em;
+    width: 80%;
+  }
+
+  span.tool-button.go-recent-button {
+    margin-left: 40px;
   }
   span.tool-button:hover {
+    background-color: #eaeaea;
+    cursor: pointer;
+    border: 1px solid rgb(16,123,211);
+  }
+  span.tool-button.selected {
     background-color: #eaeaea;
     cursor: pointer;
     border: 1px solid rgb(16,123,211);

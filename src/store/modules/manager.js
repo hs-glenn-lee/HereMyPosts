@@ -70,17 +70,16 @@ const actions = {
     //init ui
     context.commit('setCategoryPaneIsShowing', false);
     context.commit('setIsTagPaneShowing', false);
-    context.commit('setArticleListPaneShowing',false);
 
   },
   newArticle: (context) => {
     //init ui
     context.commit('setCategoryPaneIsShowing', false);
     context.commit('setIsTagPaneShowing', false);
-    context.commit('setArticleListPaneShowing',false);
+    context.commit('setArticleListPaneShowing',true);
 
     context.commit('setIsManagerLoading',true);
-    var waitingFor = {'initCategoryTree': false, 'initArticleTags': false};
+    var waitingFor = {'initCategoryTree': false, 'initArticleTags': false, 'getRecentArticles' : false};
     var onComplete = function (actionName) {
       waitingFor[actionName] = true;
       var isAllComplete = true;
@@ -107,6 +106,8 @@ const actions = {
           })
         context.dispatch('initArticleTags', undefined, {root:true})
           .then( () => {onComplete('initArticleTags')});
+        context.dispatch('getRecentArticles', 0, {root:true})
+          .then( () => {onComplete('getRecentArticles')});
       })
 
   },
