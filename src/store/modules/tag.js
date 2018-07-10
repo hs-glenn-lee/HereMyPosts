@@ -29,6 +29,9 @@ const getters = {
         return true;
       }
     }else {
+      console.log('**needToSaveArticleTagCollection')
+      console.log(state.articleTagCollection)
+      console.log(state.oldArticleTagCollection)
       return !state.articleTagCollection.equals(state.oldArticleTagCollection);
     }
   }

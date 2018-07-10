@@ -12,7 +12,12 @@
     </div>
 
     <div class="tagged-tag-list">
-      <div class="tag-list-label">이 글의 태그</div>
+      <div class="tag-list-label">
+        <span v-if="(getArticle)">
+          {{getArticle.title}}
+        </span>
+
+        글의 태그</div>
       <div
         v-if="getArticleTagCollection"
         class="tag-list">
@@ -27,6 +32,8 @@
         </span>
       </div>
     </div>
+
+    <div class="context-switch-line"> </div>
 
     <div class="tagger" v-if="getIsSignedIn">
       <div class="tagger-label">
@@ -194,6 +201,7 @@
     margin-bottom: 20px;
 
     word-break: break-word;
+
   }
 
   span.tag {
@@ -210,6 +218,14 @@
   div.tag-list-label {
     color: #6A6A6A;
     padding-bottom: 10px;
+  }
+
+  div.context-switch-line {
+    border-bottom: 1px solid #aaaaaa;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
   }
 
   div.tagger {

@@ -9,7 +9,7 @@
     <div class="not-list">
 
       <div class="article-list-pane-header">
-        <span class="article-list-pane-title" v-if="this.getListOf === 'category'">{{this.getSelectedNode.name}} 글 목록</span>
+        <span class="article-list-pane-title" v-if="(this.getListOf === 'category') && (this.getSelectedNode)">{{this.getSelectedNode.name}} 글 목록</span>
         <span class="article-list-pane-title" v-if="this.getListOf === 'recent'" >최근 글</span>
       </div>
 
