@@ -73,8 +73,6 @@ const getters = {
   },
   needToSaveArticle: state => {
     console.log('needToSaveArticle%%%%%%%%%%%%%%')
-    console.log(state.oldArticle);
-    console.log(state.article);
 
     if(state.oldArticle) {
       if(state.article) {

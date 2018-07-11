@@ -24,32 +24,27 @@ const getters = {
     return state.oldArticleTagCollection;
   },
   needToSaveArticleTagCollection: (state, getters) => {
-    console.log('!!!needToSaveArticleTagCollection')
+
     var curTagCol = getters.getArticleTagCollection;
     var oldTagCol = getters.getOldArticleTagCollection;
 
-    if(oldTagCol === null) {
-      if(curTagCol === null) {
-        return false;
-      }
-
-      if(curTagCol.isEmpty()) {
-        return false
+    if(oldTagCol) {
+      if(curTagCol) {
+        return !oldTagCol.equals(curTagCol);
       }else {
-        return true;
-      }
-    }else {
-      console.log('eqauls tag col')
-      console.log(state.articleTagCollection)
-      console.log(state.oldArticleTagCollection)
-
-      console.log(curTagCol)
-      console.log(oldTagCol)
-      if(curTagCol === null) {
         return false;
       }
 
-      return !oldTagCol.equals(curTagCol);
+    }else {
+      if(curTagCol) {
+        if(curTagCol.isEmpty()) {
+          return false
+        }else {
+          return true;
+        }
+      }else {
+        return false;
+      }
     }
   }
 };
@@ -94,18 +89,15 @@ const actions = {
     if(isSavedArticle) {
       api.getTagArticlesOfArticle(article.id)
         .then(data => {
-          console.log('api return')
-          console.log(data);
           var tagsArticles = [];
 
           if(data.length > 0) {
             data.forEach( el => {
-              console.log('????')
+              //parse and push
               var dataArticle = el.article;
               var article = new Article(dataArticle.id, dataArticle.title, dataArticle.content, dataArticle.summary, dataArticle.readCount,
                 dataArticle.isDel, dataArticle.isPublic, dataArticle.category, dataArticle.author, dataArticle.createTimestamp,
                 dataArticle.updateTimestamp, dataArticle.createDateString, dataArticle.updateDateString);
-
               var tag = new Tag(el.tag.name);
               var tagArticle = new TagArticle(el.id, article, tag);
               tagsArticles.push(tagArticle)
@@ -113,12 +105,10 @@ const actions = {
             articleTagCollection.setTagsArticles(tagsArticles);
           }
 
+          //deep copy
+          var oldArticleTagCollection = new TagCollection(article, null);
+          oldArticleTagCollection.setTagsArticles(articleTagCollection.getTagsArticles().slice(0))
 
-          console.log(tagsArticles)
-
-          var oldArticleTagCollection = Object.assign({},articleTagCollection)
-          console.log('&7777777777777777')
-          console.log(articleTagCollection)
           context.commit('setOldArticleTagCollection', oldArticleTagCollection);
           context.commit('setArticleTagCollection', articleTagCollection);
         })
