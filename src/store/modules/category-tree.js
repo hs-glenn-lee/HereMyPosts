@@ -21,15 +21,22 @@ const getters = {
   },
   needToSaveSelectedCategory: state => {
     console.log('***needToSaveSelectedCategory')
+
     if(state.oldSelectedNode === null) {
       if(state.selectedNode === null) {
         return false;
       }else {
-        return true;
+        return true
       }
     }else {
-      return !(state.oldSelectedNode.id === state.selectedNode.id);
+      if(state.selectedNode === null) {
+        return true
+      }else {
+
+        return !(state.oldSelectedNode.id === state.selectedNode.id);
+      }
     }
+
   }
 };
 const mutations = {

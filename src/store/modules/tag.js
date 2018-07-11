@@ -1,5 +1,9 @@
 import api from '@/api/api'
 import TagCollection from "../../model/tag/TagCollection";
+import Article from '@/model/Article.js'
+import Tag from '@/model/tag/Tag.js'
+import TagArticle from '@/model/tag/TagArticle.js'
+
 import Vue from 'vue'
 const state = {
   myTags: null,
@@ -13,26 +17,39 @@ const getters = {
   getArticleTagCollection: state => {
     return state.articleTagCollection;
   },
+  getTagsArticles: state => {
+    state.articleTagCollection.tagsArticles;
+  },
   getOldArticleTagCollection: state => {
     return state.oldArticleTagCollection;
   },
-  needToSaveArticleTagCollection: state => {
+  needToSaveArticleTagCollection: (state, getters) => {
+    console.log('!!!needToSaveArticleTagCollection')
+    var curTagCol = getters.getArticleTagCollection;
+    var oldTagCol = getters.getOldArticleTagCollection;
 
-    if(state.oldArticleTagCollection === null) {
-      if(state.articleTagCollection === null) {
+    if(oldTagCol === null) {
+      if(curTagCol === null) {
         return false;
       }
 
-      if(state.articleTagCollection.isEmpty()) {
+      if(curTagCol.isEmpty()) {
         return false
       }else {
         return true;
       }
     }else {
-      console.log('**needToSaveArticleTagCollection')
+      console.log('eqauls tag col')
       console.log(state.articleTagCollection)
       console.log(state.oldArticleTagCollection)
-      return !state.articleTagCollection.equals(state.oldArticleTagCollection);
+
+      console.log(curTagCol)
+      console.log(oldTagCol)
+      if(curTagCol === null) {
+        return false;
+      }
+
+      return !oldTagCol.equals(curTagCol);
     }
   }
 };
@@ -67,8 +84,8 @@ const actions = {
   },
   initArticleTags: (context) => {
     //reset
-    context.commit('setArticleTagCollection', null);
-    context.commit('setOldArticleTagCollection', null);
+ /*   context.commit('setArticleTagCollection', null);
+    context.commit('setOldArticleTagCollection', null);*/
 
     var article = context.rootGetters.getArticle;
     var isSavedArticle = context.rootGetters.isSavedArticle;
@@ -77,12 +94,37 @@ const actions = {
     if(isSavedArticle) {
       api.getTagArticlesOfArticle(article.id)
         .then(data => {
-          articleTagCollection.setTagsArticles(data);
+          console.log('api return')
+          console.log(data);
+          var tagsArticles = [];
+
+          if(data.length > 0) {
+            data.forEach( el => {
+              console.log('????')
+              var dataArticle = el.article;
+              var article = new Article(dataArticle.id, dataArticle.title, dataArticle.content, dataArticle.summary, dataArticle.readCount,
+                dataArticle.isDel, dataArticle.isPublic, dataArticle.category, dataArticle.author, dataArticle.createTimestamp,
+                dataArticle.updateTimestamp, dataArticle.createDateString, dataArticle.updateDateString);
+
+              var tag = new Tag(el.tag.name);
+              var tagArticle = new TagArticle(el.id, article, tag);
+              tagsArticles.push(tagArticle)
+            });
+            articleTagCollection.setTagsArticles(tagsArticles);
+          }
+
+
+          console.log(tagsArticles)
+
+          var oldArticleTagCollection = Object.assign({},articleTagCollection)
+          console.log('&7777777777777777')
+          console.log(articleTagCollection)
+          context.commit('setOldArticleTagCollection', oldArticleTagCollection);
           context.commit('setArticleTagCollection', articleTagCollection);
-          context.commit('setOldArticleTagCollection', articleTagCollection);
         })
     }else {
       context.commit('setArticleTagCollection', articleTagCollection);
+      context.commit('setOldArticleTagCollection', null);
     }
 
   },
