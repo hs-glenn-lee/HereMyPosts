@@ -202,8 +202,7 @@
     padding: 4px 4px 4px 4px;
     margin: 2px 2px 2px 2px;
     border: 1px solid #c1d9ff;
-
-    background-color: #c1d9ff;
+    background-color: #e7effb;
     border-radius: 6px;
     display: inline-block;
   }

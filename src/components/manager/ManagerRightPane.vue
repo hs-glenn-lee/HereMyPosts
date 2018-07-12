@@ -4,28 +4,25 @@
       <div class="center-block">
         <div class="article-meta">
 
-          <div class="article-meta-obj">
-              <label class="article-meta-label">
-                카테고리
-              </label>
+          <div class="article-meta-obj" @click="showCategoryPane">
+              <label class="article-meta-label">카테고리</label>
               <span class="selected-category-name"
                     v-if="getSelectedNode">{{getSelectedNode.name}}
               </span>
-              <span class="h-gap"></span>
           </div>
-          <div class="article-meta-obj">
+          <span class="h-gap"></span>
+          <div class="article-meta-obj" @click="showTagPane">
               <label class="article-meta-label">태그</label>
-              <span class="tags">
-                  <div
-                    v-if="getArticleTagCollection"
-                    class="tag-list">
-                    <span
-                      v-for="ta in getArticleTagCollection.tagsArticles"
-                      class="tag tagged"
-                      :key="ta.id">
-                      {{ta.tag.name}}
-                    </span>
-                  </div>
+              <span
+                v-if="(getArticleTagCollection) && getArticleTagCollection.tagsArticles.length > 0"
+                class="tag-list">
+                <span
+                  v-for="ta in getArticleTagCollection.tagsArticles.slice(0,4)"
+                  class="tag tagged"
+                  :key="ta.id">
+                  {{ta.tag.name}}
+                </span>
+                <span v-if="getArticleTagCollection.tagsArticles.length > 4" class="ellipsis"><img style="width:16px;height:16px;vertical-align: middle;" src="@/assets/images/article-list-pane/more-icon-16w16h.png"></span>
               </span>
           </div>
           <div class="title">
@@ -63,12 +60,27 @@
       ...mapMutations([
         'newArticle',
         'getArticle',
-        'getCategoryTreeRoot'
+        'getCategoryTreeRoot',
+        'setCategoryPaneIsShowing',
+        'setIsTagPaneShowing'
       ]),
       calcRightPaneWidth() {
         var $divRightPane = window.document.querySelector('div.right-pane')
         this.rightPaneWrapperWidth = $divRightPane.offsetWidth - 60 /*left-pane-width*/;
         this.rightPaneHeight = $divRightPane.offsetHeight;
+      },
+      showCategoryPane(e) {
+        //@click="setCategoryPaneIsShowing(true)"
+        console.log('showCategoryPane')
+        e.stopPropagation();
+        this.setCategoryPaneIsShowing(true)
+
+      },
+      showTagPane(e) {
+        //@click="setIsTagPaneShowing(true)"
+        console.log('showTagPane')
+        e.stopPropagation()
+        this.setIsTagPaneShowing(true)
       }
     },
     created () {
@@ -137,21 +149,31 @@
     display: inline-block;
     padding: 4px 8px 4px 5px;
     border-bottom: 1px solid white;
+    vertical-align: middle;
   }
   div.article-meta-obj:hover {
+    cursor: pointer;
     border-bottom: 1px solid #dfdfdf;
     transition: 0.3s;
   }
 
-  label.article-meta-label{
+  label.article-meta-label {
     color: #5f5f5f;
-    font-size: 1.2em;
-    height: 1.3em;
+    font-size: 1.3em;
+    line-height: 1.3em;
+    vertical-align: middle;
+  }
+  label.article-meta-label:hover {
+    cursor: pointer;
   }
   span.selected-category-name {
-    font-size: 1.4em;
-    line-height: 1.5em;
+    font-size: 1.3em;
+    line-height: 1.3em;
     margin-left: 8px;
+    vertical-align: middle;
+  }
+  span.selected-category-name:hover {
+    cursor: pointer;
   }
   span.h-gap {
     display: inline-block;
@@ -159,19 +181,25 @@
     height: 12px;
   }
 
-  div.tag-list {
-    display: inline-block;
+  span.tag-list {
+    display: inline;
+    padding-left: 4px;
+  }
+  span.tag-list:hover {
+    cursor: pointer;
   }
   span.tag {
     padding: 4px 4px 4px 4px;
-    margin: 2px 2px 2px 2px;
+    margin-right: 4px;
     border: 1px solid #c1d9ff;
-
-    background-color: #c1d9ff;
+    font-size: 14px;
+    display:inline-block;
+    background-color: #e7effb;
     border-radius: 6px;
-    display: inline-block;
   }
-
+  span.tag:hover {
+    cursor: pointer;
+  }
 
   div.title {
     margin-top: 10px;
@@ -181,6 +209,7 @@
     width:1352px;
     border: none;
     border-bottom: 1px solid white;
+    border-radius: 0px;
 
     font-size: 1.3em;
     height: 1.3em;
