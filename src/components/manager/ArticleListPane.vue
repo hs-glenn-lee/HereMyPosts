@@ -7,8 +7,7 @@
            src="@/assets/images/loading.gif">
     </div>
     <div class="not-list">
-
-      <div class="article-list-pane-header">
+      <div class="article-list-pane-header" :class="{'has-border-bottom': (this.getListOf === 'recent')}">
         <span class="article-list-pane-title" v-if="(this.getListOf === 'category') && (this.getSelectedNode)">{{this.getSelectedNode.name}} 글 목록</span>
         <span class="article-list-pane-title" v-if="this.getListOf === 'recent'" >최근 글</span>
       </div>
@@ -16,25 +15,41 @@
       <div v-if="getListOf === 'category'" class="tool-bar">
         <div class="tool-input">
           <div class="tool-buttons">
-            <span class="tool-button"
-                  :class="{'selected': (getSortProperty==='updateTimestamp')}"
-                  @click="setSortProperty('updateTimestamp')">날짜</span>
-            <span class="tool-button"
-                  :class="{'selected': (getSortProperty==='title')}"
-                  @click="setSortProperty('title')">제목</span>
-            <span class="tool-button"
-                  :class="{'selected': (getSortDirection==='asc')}"
-                  @click="setSortDirection('asc')">asc</span>
-            <span class="tool-button"
-                  :class="{'selected': (getSortDirection==='desc')}"
-                  @click="setSortDirection('desc')">desc</span>
+            <span class="tool-button"><img @click="setSelectedListTool('sort')" class="tool-button-img" src="@/assets/images/article-list-pane/sort-arrows-16w16h.png"></span>
+            <span class="tool-button"><img @click="setSelectedListTool('search')" class="tool-button-img" src="@/assets/images/article-list-pane/mag-icon-16w16h.png"></span>
             <span class="tool-button go-recent-button"
                   @click="getRecentArticles(0)">최근 글</span>
           </div>
-          <div class="title-search-input">
-            <label>제목</label>
-            <input ref="searchWord" v-on:keyup="inputSearchWord" class="search-word" type="text">
+          <div class="tool-controllers">
+            <div class="tool-controller">
+              <div v-show="selectedListTool === 'search'" class="title-search-input">
+                <label>제목</label>
+                <input ref="searchWord" v-on:keyup="inputSearchWord" class="search-word" type="text">
+              </div>
+            </div>
+            <div v-show="selectedListTool === 'sort'" class="tool-controller sort-controller">
+              <label class="sort-controller-label">기준</label>
+              <span class="v-bar"><img src="@/assets/images/article-list-pane/v-bar-img.png"></span>
+              <span class="sort-controller-button"
+                    :class="{'selected': (getSortProperty==='updateTimestamp')}"
+                    @click="setSortProperty('updateTimestamp')">날짜</span>
+              <span class="sort-controller-button"
+                    :class="{'selected': (getSortProperty==='title')}"
+                    @click="setSortProperty('title')">제목</span>
+
+              <span class="h-gap"></span>
+
+              <label class="sort-controller-label">방향</label>
+              <span class="v-bar"><img src="@/assets/images/article-list-pane/v-bar-img.png"></span>
+              <span class="sort-controller-button"
+                    :class="{'selected': (getSortDirection==='asc')}"
+                    @click="setSortDirection('asc')">asc</span>
+              <span class="sort-controller-button"
+                    :class="{'selected': (getSortDirection==='desc')}"
+                    @click="setSortDirection('desc')">desc</span>
+            </div>
           </div>
+
         </div>
       </div>
 
@@ -56,8 +71,8 @@
               <div class="article-title">
               <span class="article-title"
                     v-bind:id="article.id"
-                    @click="onArticleTitleClick"
-                    @click.double="onArticleTitleDoubleClick">{{article.title}}</span>
+                    @click="onArticleClick"
+                    @click.double="onArticleDoubleClick">{{article.title}}</span>
               </div>
               <div class="article-create-timestamp">
                 <span v-if="(article.updateDateString)" class="article-create-timestamp">{{article.updateDateString}}</span>
@@ -81,15 +96,16 @@ import { mapActions } from 'vuex';
 export default {
   name: 'CategorySubLeftPaneComp',
   props: {
-    onArticleTitleClick:  Function,
-    onArticleTitleDoubleClick: Function
+    onArticleClick:  Function,
+    onArticleDoubleClick: Function
   },
   data () {
     return {
       listHeight: '',
       notListHeight: 0,
       windowInnerHeight: 0,
-      loadingImgPaddingTop: 0
+      loadingImgPaddingTop: 0,
+      selectedListTool: 'search'
     }
   },
   computed: {
@@ -122,9 +138,9 @@ export default {
     ]),
     calcListHeight() {
       let notList = window.document.querySelector('div.not-list');
-      console.log('notList');
 
       let notListHeight = notList.offsetHeight;
+      console.log('notListHeight')
       console.log(notListHeight)
 
       this.innerHeight = window.innerHeight;
@@ -137,18 +153,25 @@ export default {
     inputSearchWord() {
       var searchWord = this.$refs.searchWord.value;
       this.setSearchWord(searchWord)
+    },
+    setSelectedListTool (payload) {
+      this.selectedListTool = payload;
     }
 
   },
   watch: {
     windowInnerHeight (val,oldVal) {
       if(val !== oldVal) {
-        this.calcListHeight();
+        this.$nextTick(() => {
+          this.calcListHeight();
+        })
       }
     },
     getListOf (val,oldVal) {
       if(val !== oldVal) {
-        this.calcListHeight();
+        this.$nextTick(() => {
+          this.calcListHeight();
+        })
       }
     }
   },
@@ -165,7 +188,7 @@ export default {
 
 <style scoped>
   div.article-list-pane {
-    position: absolute; left: 400px; top: 0px; right: 0px; bottom: 0px;
+    position: absolute; left: 399px; /*400-1px*/ top: 0px; right: 0px; bottom: 0px;
     width: 400px;
     border-right: 2px solid #eaeaea;
     /*border-left: 2px solid #ececec;*/
@@ -201,15 +224,14 @@ export default {
   }
 
   div.article-list-pane-header {
-    /*background-color: #f8f8f8;*/
     padding-top: 16px;
     padding-bottom: 8px;
-    border-top: 3px solid #eaeaea;
-    /*border-bottom: 1px solid #eaeaea;*/
     height: 40px;
     line-height: 40px;
   }
-
+  div.article-list-pane-header.has-border-bottom {
+    border-bottom: 1px solid #ececec;
+  }
   span.article-list-pane-title {
     color: #6A6A6A;
     padding-left: 4px;
@@ -218,52 +240,102 @@ export default {
 
   div.tool-bar {
     background-color: #f8f8f8;
-    line-height: 28px;
-    padding-bottom: 4px;
+    padding-top: 2px;
+    padding-bottom: 2px;
   }
 
   div.tool-bar-buttons {
     /*padding-left: 16px;*/
   }
 
+  div.tool-buttons {
+    padding-left: 4px;
+    line-height: 28px;
+    height: 30px;
+    vertical-align: middle;
+  }
   span.tool-button {
     margin: 1px 2px 1px 0px;
-    padding: 2px 3px 2px 2px;
+    padding: 2px 2px 0px 2px;
 
     border: 1px solid #f8f8f8;
-
-    background-color: #f8f8f8;
-
-    font-size: 14px;
-  }
-
-
-  div.title-search-input {
-    padding-left: 4px;
-  }
-
-  div.title-search-input > label {
-    margin-right: 8px;
-  }
-
-  input.search-word {
-    font-size: 0.7em;
-    width: 80%;
-  }
-
-  span.tool-button.go-recent-button {
-    margin-left: 40px;
+    font-size: 16px;
   }
   span.tool-button:hover {
     background-color: #eaeaea;
     cursor: pointer;
-    border: 1px solid rgb(16,123,211);
   }
-  span.tool-button.selected {
-    background-color: #eaeaea;
+  img.tool-button-img {
+    width: 13px;
+    height: 13px;
+    vertical-align: middle;
+  }
+  span.tool-button.go-recent-button {
+    padding: 3px 3px 3px 3px;
+    font-size: 12px;
+    background: #aaaaaa;
+    border-radius: 5px;
+    color: white;
+  }
+
+  div.tool-controllers {
+    padding-left: 4px;
+    height: 28px;
+    line-height: 28px;
+    vertical-align: middle;
+  }
+  div.tool-controller {
+
+  }
+
+  label.sort-controller-label {
+    color: #888888;
+    font-size: 14px;
+  }
+  span.sort-controller-button {
+   font-size: 14px;
+  }
+  span.sort-controller-button:hover {
+    font-weight: bold;
     cursor: pointer;
-    border: 1px solid rgb(16,123,211);
   }
+  span.sort-controller-button.selected {
+    font-weight: bold;
+  }
+
+  span.h-gap {
+    display: inline-block;
+    width:24px;
+    height: 12px;
+  }
+  span.v-bar {
+    vertical-align: middle;
+    height: 16px;
+    line-height: 16px;
+  }
+  span.v-bar img{
+    width: 1px;
+    height: 14px;
+    opacity: 0.7;
+    vertical-align: middle;
+    margin-left: 2px;
+    margin-right: 2px;
+  }
+
+  div.title-search-input > label {
+    color: #888888;
+    margin-right: 4px;
+    font-size: 14px;
+  }
+
+  input.search-word {
+    vertical-align: middle;
+    font-size: 12px;
+    padding: 2px 4px 2px 4px;
+    width: 85%;
+    border: #999999;
+  }
+
 
   div.article-list-wrapper {
     overflow-y: scroll;

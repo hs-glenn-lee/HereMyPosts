@@ -11,10 +11,10 @@
         <div class="tool-bar-buttons">
           <span
             @click="openAllCategoryNodes"
-            class="tool-button">펼치기</span>
+            class="sort-controller-button">펼치기</span>
           <span
             @click="closeAllCategoryNodes"
-            class="tool-button">접기</span>
+            class="sort-controller-button">접기</span>
         </div>
       </div>
 <!--      <div class="close-icon" @click="closeCSLP(false)">
@@ -36,8 +36,8 @@
       </c-node-right-click-menu>
 
       <div>
-        <article-list-pane :onArticleTitleClick="onArticleTitleClick"
-                           :onArticleTitleDoubleClick="onArticleTitleDoubleClick"></article-list-pane>
+        <article-list-pane :onArticleClick="onArticleClick"
+                           :onArticleDoubleClick="onArticleDoubleClick"></article-list-pane>
       </div>
   </div>
 </template>
@@ -106,10 +106,10 @@ export default {
       this.setArticleListPaneShowing(true);
     },
 
-    onArticleTitleClick(event) {
+    onArticleClick(event) {
 
     },
-    onArticleTitleDoubleClick(event) {
+    onArticleDoubleClick(event) {
       var articleId = event.currentTarget.id;
       this.loadSavedArticle(articleId);
     },
@@ -143,11 +143,8 @@ export default {
     z-index: 199;
   }
   div.pane-header {
-    /*background-color: rgb(66, 133, 244);*/
-    border-top: 3px solid #eaeaea;
     padding-top: 16px;
     padding-bottom: 8px;
-    /*border-bottom: 1px solid #eaeaea;*/
     height: 40px;
     line-height: 40px;
   }
@@ -179,7 +176,7 @@ export default {
     padding-left: 16px;
   }
 
-  span.tool-button {
+  span.sort-controller-button {
     margin: 1px 2px 1px 0px;
     padding: 2px 3px 2px 2px;
 
@@ -188,7 +185,7 @@ export default {
 
     font-size: 14px;
   }
-  span.tool-button:hover {
+  span.sort-controller-button:hover {
     background-color: #eaeaea;
     cursor: pointer;
     border: 1px solid rgb(16,123,211);

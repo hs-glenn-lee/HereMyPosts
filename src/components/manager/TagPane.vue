@@ -90,10 +90,10 @@
         'removeTag'
       ]),
 
-      onArticleTitleClick(event) {
+      onArticleClick(event) {
 
       },
-      onArticleTitleDoubleClick(event) {
+      onArticleDoubleClick(event) {
 
       },
       closeTagPane(event) {
@@ -105,21 +105,15 @@
       },
 
       removeTagFromTaggedList (tagName) {
-        console.log('removeTagFromTaggedList');
-
         let col = this.getArticleTagCollection;
         let tag = col.findTag(tagName);
 
-        console.log(col);
-        console.log(tag);
         if(tag) {
           this.removeTag(tag);
         }
-
       },
 
       regTagFromMyTagList (event) {
-        console.log('regTagFromMyTagList')
         let clickedTag = event.currentTarget;
         let tagName = clickedTag.getAttribute('tag-name');
         this.addTag(new Tag(tagName));
@@ -173,6 +167,7 @@
     border-left: 2px solid #ececec;
     background-color: white;
     z-index: 199;
+
   }
 
   div.pane-header {
@@ -201,7 +196,6 @@
     margin-bottom: 20px;
 
     word-break: break-word;
-
   }
 
   span.tag {
@@ -214,9 +208,7 @@
     display: inline-block;
   }
 
-
   div.tag-list-label {
-    color: #6A6A6A;
     padding-bottom: 10px;
   }
 

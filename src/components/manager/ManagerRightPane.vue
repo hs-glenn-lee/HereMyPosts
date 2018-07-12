@@ -4,17 +4,30 @@
       <div class="center-block">
         <div class="article-meta">
 
-          <div class="article-meta-category">
-            <span class="article-meta-category-wrapper">
-              <label class="article-meta-label">카테고리</label>
-              <span class="selected-category-name">default</span>
+          <div class="article-meta-obj">
+              <label class="article-meta-label">
+                카테고리
+              </label>
+              <span class="selected-category-name"
+                    v-if="getSelectedNode">{{getSelectedNode.name}}
+              </span>
+              <span class="h-gap"></span>
+          </div>
+          <div class="article-meta-obj">
               <label class="article-meta-label">태그</label>
               <span class="tags">
-                <span class="tag">태그1</span>
+                  <div
+                    v-if="getArticleTagCollection"
+                    class="tag-list">
+                    <span
+                      v-for="ta in getArticleTagCollection.tagsArticles"
+                      class="tag tagged"
+                      :key="ta.id">
+                      {{ta.tag.name}}
+                    </span>
+                  </div>
               </span>
-            </span>
           </div>
-
           <div class="title">
             <input class="title-input"
                    type="text"
@@ -34,6 +47,7 @@
 <script>
   import editorComp from './editor/Editor'
   import { mapMutations } from 'vuex'
+  import { mapGetters } from 'vuex'
 
 
   export default {
@@ -62,8 +76,19 @@
     },
     mounted () {
       this.calcRightPaneWidth();
+      var vm = this;
+      window.onresize = function(event) {
+        vm.$nextTick(function() {
+          vm.calcRightPaneWidth();
+        })
+
+      };
     },
     computed: {
+      ...mapGetters([
+        'getSelectedNode',
+        'getArticleTagCollection'
+      ]),
       title: {
         get() {
           return this.$store.getters.getTitle
@@ -108,31 +133,45 @@
     width: 1366px;
   }
 
-  div.article-meta-category {
-    height:2em;
-  }
-
-  span.article-meta-category-wrapper {
+  div.article-meta-obj {
+    display: inline-block;
     padding: 4px 8px 4px 5px;
     border-bottom: 1px solid white;
   }
-  span.article-meta-category-wrapper:hover {
+  div.article-meta-obj:hover {
     border-bottom: 1px solid #dfdfdf;
     transition: 0.3s;
-  }
-
-  span.selected-category-name {
-    font-size: 1.4em;
-    line-height: 1.5em;
-    margin-left: 8px;
   }
 
   label.article-meta-label{
     color: #5f5f5f;
     font-size: 1.2em;
     height: 1.3em;
-
   }
+  span.selected-category-name {
+    font-size: 1.4em;
+    line-height: 1.5em;
+    margin-left: 8px;
+  }
+  span.h-gap {
+    display: inline-block;
+    width:24px;
+    height: 12px;
+  }
+
+  div.tag-list {
+    display: inline-block;
+  }
+  span.tag {
+    padding: 4px 4px 4px 4px;
+    margin: 2px 2px 2px 2px;
+    border: 1px solid #c1d9ff;
+
+    background-color: #c1d9ff;
+    border-radius: 6px;
+    display: inline-block;
+  }
+
 
   div.title {
     margin-top: 10px;
