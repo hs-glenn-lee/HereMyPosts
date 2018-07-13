@@ -11,6 +11,9 @@ export default {
     'saveArticle': {
       check (val, reject) {
         var article = val;
+        if(article === null || article === undefined) {
+          reject('article is falsy.');
+        }
         if(article.title.length === 0) {
           reject('제목을 입력해 주세요.')
         }

@@ -67,12 +67,12 @@
           <li v-for="article in getArticleList"
               :key="article.id"
               class="article-list-item">
-            <div class="article-list-item-wrapper">
+            <div class="article-list-item-wrapper"
+                 v-bind:id="article.id"
+                 @click="onArticleClick"
+                 @click.double="onArticleDoubleClick">
               <div class="article-title">
-              <span class="article-title"
-                    v-bind:id="article.id"
-                    @click="onArticleClick"
-                    @click.double="onArticleDoubleClick">{{article.title}}</span>
+              <span class="article-title">{{article.title}}</span>
               </div>
               <div class="article-create-timestamp">
                 <span v-if="(article.updateDateString)" class="article-create-timestamp">{{article.updateDateString}}</span>
@@ -369,6 +369,7 @@ export default {
   }
   div.article-list-item-wrapper:hover {
     border: 4px solid #acacac;
+    cursor:pointer;
   }
 
   div.article-title {

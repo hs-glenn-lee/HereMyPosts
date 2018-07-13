@@ -22,18 +22,16 @@ const getters = {
     return state.managerState;
   },
   needToSave: (state, getters) =>{
-
+    if(!getters.isValidArticleToSave) {
+      return false;
+    }
     var saveTag = getters.needToSaveArticleTagCollection;
-    console.log('--needToSaveArticleTagCollection : ' + saveTag)
-
+    /*console.log('--needToSaveArticleTagCollection : ' + saveTag)*/
     var saveCat = getters.needToSaveSelectedCategory;
-    console.log('--needToSaveSelectedCategory : ' + saveCat)
-
+    /*console.log('--needToSaveSelectedCategory : ' + saveCat)*/
     var saveArticle = getters.needToSaveArticle;
-    console.log('--needToSaveArticle : ' + saveArticle)
-
+    /*console.log('--needToSaveArticle : ' + saveArticle)*/
     return saveTag || saveCat || saveArticle;
-
   },
   isManagerLoading: (state) => {
     return state.isManagerLoading;
@@ -65,7 +63,7 @@ const actions = {
         }else {//new article
           return context.dispatch('newArticle', undefined, {root:true});
         }
-      })
+      });
 
     //init ui
     context.commit('setCategoryPaneIsShowing', false);
@@ -116,7 +114,7 @@ const actions = {
     //init ui
     context.commit('setCategoryPaneIsShowing', false);
     context.commit('setIsTagPaneShowing', false);
-    context.commit('setArticleListPaneShowing',false);
+
 
     context.commit('setIsManagerLoading',true);
     var waitingFor = {'initCategoryTree': false, 'initArticleTags': false};

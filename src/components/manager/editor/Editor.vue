@@ -69,6 +69,7 @@ export default {
       tinymceEditor: null
     }
   },
+  props: ['editorHeight'],
   mounted() {
     this.init()
   },
@@ -93,7 +94,6 @@ export default {
       langpack(tinymce) //set Laguage
 
       var vm = this;
-
       var codesample_content_css_ = require('!!css-to-string-loader!css-loader!@/assets/prism/prism.css')
 
       tinymce.init({
@@ -149,6 +149,7 @@ export default {
           editor.dom.addStyle(_contentCssText);
 
           vm.tinymceEditor = editor;
+          vm.setEditorHeight();
         },
         setup: function(editor) {
           // init tinymce
@@ -168,8 +169,14 @@ export default {
         }
 
       });
-
-
+    },
+    setEditorHeight() {
+      console.log('setEditorHeight!!!')
+      if(this.tinymceEditor) {
+        console.log('setEditorHeight!!!22222222222')
+        console.log(this.editorHeight)
+        this.tinymceEditor.theme.resizeTo (1366, this.editorHeight);
+      }
     }
   }
 }

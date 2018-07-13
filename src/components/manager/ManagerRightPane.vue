@@ -33,8 +33,8 @@
           </div>
         </div>
 
-        <div class="editor-container">
-          <editor :article="getArticle"></editor>
+        <div class="editor-container" ><!--:style="editorContainerStyle"-->
+          <editor ref="editorComp" :article="getArticle" :editorHeight="editorHeight"></editor>
         </div>
       </div>
     </div>
@@ -53,7 +53,7 @@
       return {
         'empty-input-style': 'border:none',
         rightPaneWrapperWidth: 0,
-        rightPaneHeight: 0
+        editorHeight: 0
       }
     },
     methods: {
@@ -64,22 +64,27 @@
         'setCategoryPaneIsShowing',
         'setIsTagPaneShowing'
       ]),
-      calcRightPaneWidth() {
+      calcRightPaneWidth () {
         var $divRightPane = window.document.querySelector('div.right-pane')
         this.rightPaneWrapperWidth = $divRightPane.offsetWidth - 60 /*left-pane-width*/;
-        this.rightPaneHeight = $divRightPane.offsetHeight;
+
+      },
+      calcEditorHeight () {
+        console.log('calcEditorHeight')
+        var $divRightPane = window.document.querySelector('div.right-pane');
+        var $articleMetaDiv = window.document.querySelector('div.article-meta');
+        var articleMetaHeight = Math.max( $articleMetaDiv.scrollHeight, $articleMetaDiv.offsetHeight );
+        var rightPaneHeight = Math.max( $divRightPane.scrollHeight, $divRightPane.offsetHeight );
+        var editorHeight = rightPaneHeight - articleMetaHeight-50 /*editor tool bar height and just a little space*/;
+        this.editorHeight = (editorHeight < 0)? 50 : editorHeight;
       },
       showCategoryPane(e) {
-        //@click="setCategoryPaneIsShowing(true)"
-        console.log('showCategoryPane')
         e.stopPropagation();
         this.setCategoryPaneIsShowing(true)
 
       },
       showTagPane(e) {
-        //@click="setIsTagPaneShowing(true)"
-        console.log('showTagPane')
-        e.stopPropagation()
+        e.stopPropagation();
         this.setIsTagPaneShowing(true)
       }
     },
@@ -88,12 +93,12 @@
     },
     mounted () {
       this.calcRightPaneWidth();
+      this.calcEditorHeight();
       var vm = this;
       window.onresize = function(event) {
-        vm.$nextTick(function() {
+          console.log('onresize')
           vm.calcRightPaneWidth();
-        })
-
+          vm.calcEditorHeight();
       };
     },
     computed: {
@@ -113,10 +118,25 @@
         return {
           'width': this.rightPaneWrapperWidth + 'px'
         }
+      },
+      editorContainerStyle () {
+        return {
+          'height' : this.editorHeight + 'px'
+        }
       }
     },
     components: {
       'editor': editorComp
+    },
+    watch: {
+      /*editorHeight:  function (val, oldVal) {
+        console.log('??????????????????????????????????')
+        if(val !== oldVal) {
+          console.log('editorHeight')
+          console.log(val);
+          this.$refs.editorComp.setEditorHeight(val);
+        }
+      }*/
     }
   }
 </script>
@@ -162,6 +182,7 @@
     font-size: 1.3em;
     line-height: 1.3em;
     vertical-align: middle;
+
   }
   label.article-meta-label:hover {
     cursor: pointer;
@@ -183,7 +204,8 @@
 
   span.tag-list {
     display: inline;
-    padding-left: 4px;
+    margin-left: 8px;
+
   }
   span.tag-list:hover {
     cursor: pointer;

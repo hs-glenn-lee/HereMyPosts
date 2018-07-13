@@ -2,6 +2,8 @@ import api from '@/api/api'
 import Article from '@/model/Article'
 import validator from '@/model/validator/validator.js'
 import PageParameter from "../../model/PageParameter";
+
+
 const state = {
   article: null/*new Article(null, '', '<!DOCTYPE html><html><head></head><body></body></html>', '', 0, false, 0, null, null)*/,
   oldArticle: null, //to compare after modifiy article
@@ -71,8 +73,16 @@ const getters = {
   getSearchWord: state => {
     return state.searchWord;
   },
+  isValidArticleToSave: (state) => {
+    try {
+      validator.validate('saveArticle',state.article);
+      return true;
+    }catch (err) {
+      return false;
+    }
+  },
   needToSaveArticle: state => {
-    console.log('needToSaveArticle%%%%%%%%%%%%%%')
+    console.log('needToSaveArticle%%%%%%%%%%%%%%');
 
     if(state.oldArticle) {
       if(state.article) {
