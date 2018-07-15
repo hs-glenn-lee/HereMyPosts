@@ -7,7 +7,7 @@
 
       <div class="right-block">
         <span class="username">{{getAccount.username}}</span>
-        <span class="manager-anchor" @click="goManager">글 관리로 이동</span>
+        <span class="manager-anchor psd-hover-cursor-pointer" @click="goManager">글 관리로 이동</span>
       </div>
     </header>
 
@@ -270,9 +270,6 @@
     background-color: rgb(235,168,0); /*rgb(255,228,51);*/
   }
 
-  span.manager-anchor:hover {
-    cursor: pointer;
-  }
   div.center-block {
     margin: auto;
     width: 1366px;

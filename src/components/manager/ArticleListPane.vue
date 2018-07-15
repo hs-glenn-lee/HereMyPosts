@@ -15,9 +15,9 @@
       <div v-if="getListOf === 'category'" class="tool-bar">
         <div class="tool-input">
           <div class="tool-buttons">
-            <span class="tool-button"><img @click="setSelectedListTool('sort')" class="tool-button-img" src="@/assets/images/article-list-pane/sort-arrows-16w16h.png"></span>
-            <span class="tool-button"><img @click="setSelectedListTool('search')" class="tool-button-img" src="@/assets/images/article-list-pane/mag-icon-16w16h.png"></span>
-            <span class="tool-button go-recent-button"
+            <span class="tool-button psd-hover-cursor-pointer"><img @click="setSelectedListTool('sort')" class="tool-button-img" src="@/assets/images/article-list-pane/sort-arrows-16w16h.png"></span>
+            <span class="tool-button psd-hover-cursor-pointer"><img @click="setSelectedListTool('search')" class="tool-button-img" src="@/assets/images/article-list-pane/mag-icon-16w16h.png"></span>
+            <span class="tool-button psd-hover-cursor-pointer go-recent-button"
                   @click="getRecentArticles(0)">최근 글</span>
           </div>
           <div class="tool-controllers">
@@ -30,10 +30,10 @@
             <div v-show="selectedListTool === 'sort'" class="tool-controller sort-controller">
               <label class="sort-controller-label">기준</label>
               <span class="v-bar"><img src="@/assets/images/article-list-pane/v-bar-img.png"></span>
-              <span class="sort-controller-button"
+              <span class="sort-controller-button psd-hover-cursor-pointer"
                     :class="{'selected': (getSortProperty==='updateTimestamp')}"
                     @click="setSortProperty('updateTimestamp')">날짜</span>
-              <span class="sort-controller-button"
+              <span class="sort-controller-button psd-hover-cursor-pointer"
                     :class="{'selected': (getSortProperty==='title')}"
                     @click="setSortProperty('title')">제목</span>
 
@@ -41,10 +41,10 @@
 
               <label class="sort-controller-label">방향</label>
               <span class="v-bar"><img src="@/assets/images/article-list-pane/v-bar-img.png"></span>
-              <span class="sort-controller-button"
+              <span class="sort-controller-button psd-hover-cursor-pointer"
                     :class="{'selected': (getSortDirection==='asc')}"
                     @click="setSortDirection('asc')">asc</span>
-              <span class="sort-controller-button"
+              <span class="sort-controller-button psd-hover-cursor-pointer"
                     :class="{'selected': (getSortDirection==='desc')}"
                     @click="setSortDirection('desc')">desc</span>
             </div>
@@ -67,7 +67,7 @@
           <li v-for="article in getArticleList"
               :key="article.id"
               class="article-list-item">
-            <div class="article-list-item-wrapper"
+            <div class="article-list-item-wrapper psd-hover-cursor-pointer"
                  v-bind:id="article.id"
                  @click="onArticleClick"
                  @click.double="onArticleDoubleClick">
@@ -263,7 +263,6 @@ export default {
   }
   span.tool-button:hover {
     background-color: #eaeaea;
-    cursor: pointer;
   }
   img.tool-button-img {
     width: 13px;
@@ -297,7 +296,6 @@ export default {
   }
   span.sort-controller-button:hover {
     font-weight: bold;
-    cursor: pointer;
   }
   span.sort-controller-button.selected {
     font-weight: bold;
@@ -369,7 +367,6 @@ export default {
   }
   div.article-list-item-wrapper:hover {
     border: 4px solid #acacac;
-    cursor:pointer;
   }
 
   div.article-title {

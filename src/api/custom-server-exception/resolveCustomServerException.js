@@ -1,5 +1,6 @@
 import NotSignedInError from "./NotSignedInError";
 //if occured error is Customized error, return Custom js Error
+//if not return as axiosError is.
 export default function (axiosError) {
   if(axiosError.response.status === 403) {
     if(axiosError.response.data) {

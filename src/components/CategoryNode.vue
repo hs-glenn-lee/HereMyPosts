@@ -106,13 +106,11 @@ export default {
 
     min-height: 30px;
 
-
     -moz-user-select: none;
     -webkit-user-select: none;
     -ms-user-select:none;
     user-select:none;
     -o-user-select:none;
-
   }
 
   .hidden {
@@ -124,10 +122,6 @@ export default {
     height: 10px;
   }
 
-  li.selected > div.node-info {
-    color: #004e8c;
-    font-weight: bold;
-  }
 
   div.node-info {
     display: inline-block;
@@ -139,6 +133,18 @@ export default {
     padding-right: 5px;
 
     color: #3A3A3A;
+  }
+
+  li.selected > div.node-info > span.node-name {
+    color: #fefefe;
+    font-weight: bold;
+    background-color: #888888;
+    font-size: 20px;
+    border-radius: 3px;
+  }
+
+  span.node-name{
+    padding: 1px 2px 1px 2px;
   }
 
   ul {

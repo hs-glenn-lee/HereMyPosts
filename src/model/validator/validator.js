@@ -11,8 +11,15 @@ export default {
     'saveArticle': {
       check (val, reject) {
         var article = val;
+
         if(article === null || article === undefined) {
           reject('article is falsy.');
+        }
+        if(article.category === undefined || article.category === null) {
+          reject('카테고리를 선택해 주세요')
+        }
+        if(article.author === undefined || article.author === null) {
+          reject('로그아웃 되었습니다.')
         }
         if(article.title.length === 0) {
           reject('제목을 입력해 주세요.')

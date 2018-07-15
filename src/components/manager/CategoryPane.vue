@@ -11,13 +11,13 @@
         <div class="tool-bar-buttons">
           <span
             @click="openAllCategoryNodes"
-            class="sort-controller-button">펼치기</span>
+            class="sort-controller-button psd-hover-cursor-pointer">펼치기</span>
           <span
             @click="closeAllCategoryNodes"
-            class="sort-controller-button">접기</span>
+            class="sort-controller-button psd-hover-cursor-pointer">접기</span>
         </div>
       </div>
-<!--      <div class="close-icon" @click="closeCSLP(false)">
+<!--      <div class="close-icon psd-hover-cursor-pointer" @click="closeCSLP(false)">
         <img src="@/assets/images/x-icon-30.png" style="width:20px;"/>
       </div>-->
 
@@ -162,9 +162,7 @@ export default {
     top: 21px;
     right: 10px;
   }
-  div.close-icon:hover {
-    cursor: pointer;
-  }
+
 
   div.tool-bar {
     background-color: #f8f8f8;
@@ -187,7 +185,6 @@ export default {
   }
   span.sort-controller-button:hover {
     background-color: #eaeaea;
-    cursor: pointer;
     border: 1px solid rgb(16,123,211);
   }
 

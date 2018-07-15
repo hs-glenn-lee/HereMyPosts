@@ -56,13 +56,14 @@ const actions = {
     //summary sign => article => category, tag
     return context.dispatch('syncSign', undefined, {root:true})
       .catch(err => {
-        console.log('error occured syncSign')
-        console.log(err)
         return Promise.reject(err);
-        //throw err;//todo if error occcur redirect to sign-in
-
       })
-      .then( () => {
+      .then( data => {
+        if(username !== data.username) {
+          var appError = new Error('잘못된 요청입니다.');
+          appError.name = 'BadRequest';
+          return Promise.reject(appError);
+        }
         if(initAsSavedArticle) {//저장된 글인 경우
           return context.dispatch('loadSavedArticle', articleId, {root:true})
         }else {//new article

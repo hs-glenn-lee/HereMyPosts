@@ -4,21 +4,21 @@
       <div class="center-block">
         <div class="article-meta">
 
-          <div class="article-meta-obj" @click="showCategoryPane">
-              <label class="article-meta-label">카테고리</label>
-              <span class="selected-category-name"
+          <div class="article-meta-obj psd-hover-cursor-pointer" @click="onClickCategoryMeta">
+              <label class="article-meta-label psd-hover-cursor-pointer">카테고리</label>
+              <span class="selected-category-name psd-hover-cursor-pointer"
                     v-if="getSelectedNode">{{getSelectedNode.name}}
               </span>
           </div>
           <span class="h-gap"></span>
-          <div class="article-meta-obj" @click="showTagPane">
-              <label class="article-meta-label">태그</label>
+          <div class="article-meta-obj psd-hover-cursor-pointer" @click="onClickTagMeta">
+              <label class="article-meta-label psd-hover-cursor-pointer">태그</label>
               <span
                 v-if="(getArticleTagCollection) && getArticleTagCollection.tagsArticles.length > 0"
-                class="tag-list">
+                class="tag-list psd-hover-cursor-pointer">
                 <span
                   v-for="ta in getArticleTagCollection.tagsArticles.slice(0,4)"
-                  class="tag tagged"
+                  class="tag tagged psd-hover-cursor-pointer"
                   :key="ta.id">
                   {{ta.tag.name}}
                 </span>
@@ -33,7 +33,7 @@
           </div>
         </div>
 
-        <div class="editor-container" ><!--:style="editorContainerStyle"-->
+        <div class="editor-container"><!--:style="editorContainerStyle"-->
           <editor ref="editorComp" :article="getArticle" :editorHeight="editorHeight"></editor>
         </div>
       </div>
@@ -78,14 +78,11 @@
         var editorHeight = rightPaneHeight - articleMetaHeight-50 /*editor tool bar height and just a little space*/;
         this.editorHeight = (editorHeight < 0)? 50 : editorHeight;
       },
-      showCategoryPane(e) {
-        e.stopPropagation();
-        this.setCategoryPaneIsShowing(true)
-
+      onClickCategoryMeta(evt) {
+        this.$emit('clickCategoryMeta',evt);
       },
-      showTagPane(e) {
-        e.stopPropagation();
-        this.setIsTagPaneShowing(true)
+      onClickTagMeta(evt) {
+        this.$emit('clickTagMeta',evt)
       }
     },
     created () {
@@ -172,7 +169,6 @@
     vertical-align: middle;
   }
   div.article-meta-obj:hover {
-    cursor: pointer;
     border-bottom: 1px solid #dfdfdf;
     transition: 0.3s;
   }
@@ -184,18 +180,14 @@
     vertical-align: middle;
 
   }
-  label.article-meta-label:hover {
-    cursor: pointer;
-  }
+
   span.selected-category-name {
     font-size: 1.3em;
     line-height: 1.3em;
     margin-left: 8px;
     vertical-align: middle;
   }
-  span.selected-category-name:hover {
-    cursor: pointer;
-  }
+
   span.h-gap {
     display: inline-block;
     width:24px;
@@ -207,9 +199,7 @@
     margin-left: 8px;
 
   }
-  span.tag-list:hover {
-    cursor: pointer;
-  }
+
   span.tag {
     padding: 4px 4px 4px 4px;
     margin-right: 4px;
@@ -219,9 +209,7 @@
     background-color: #e7effb;
     border-radius: 6px;
   }
-  span.tag:hover {
-    cursor: pointer;
-  }
+
 
   div.title {
     margin-top: 10px;

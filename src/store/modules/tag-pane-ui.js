@@ -2,7 +2,7 @@ import CategoryTree from '@/model/category-tree/category-tree'
 import api from "@/api/api";
 
 const state = {
-  isTagPaneShowing: true
+  isTagPaneShowing: false
 };
 const getters = {
   isTagPaneShowing: state => {

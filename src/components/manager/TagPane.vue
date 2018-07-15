@@ -7,7 +7,7 @@
       <span class="pane-header-title">태그</span>
     </div>
 
-    <div class="close-icon" @click="closeTagPane(false)">
+    <div class="close-icon psd-hover-cursor-pointer" @click="closeTagPane(false)">
       <img src="@/assets/images/x-icon-30.png" style="width:20px;"/>
     </div>
 
@@ -27,7 +27,7 @@
               :key="ta.id">{{ta.tag.name}}
           <img
             @click="removeTagFromTaggedList(ta.tag.name)"
-            class="remove-tag"
+            class="remove-tag psd-hover-cursor-pointer"
             src="@/assets/images/x-icon-30.png">
         </span>
       </div>
@@ -185,9 +185,6 @@
     top: 18px;
     right: 18px;
   }
-  div.close-icon:hover {
-    cursor: pointer;
-  }
 
   div.tagged-tag-list {
     padding-left: 20px;
@@ -243,9 +240,6 @@
   img.remove-tag {
     width:  10px;
     height: 10px;
-  }
-  img.remove-tag:hover {
-    cursor: pointer;
   }
 
 </style>

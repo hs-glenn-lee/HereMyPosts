@@ -3,7 +3,7 @@ export default {
   getMyAccount () {
     return axiosAppJson.get('/api/getMyAccount')
       .then(res => { return res.data })
-      .catch(err=>{ throw err.message })
+      .catch(err=>{ throw err })
   },
   signIn (payload) {
     return axiosAppJson.post('/api/sign-in', payload)
@@ -12,6 +12,7 @@ export default {
       })
       .catch(err => {
         console.log(err)
+        return Promise.reject(err);
       })
       .then(data => {
         if(data.status === 'success') {

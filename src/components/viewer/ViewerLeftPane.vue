@@ -6,7 +6,7 @@
            @mouseover="onMenuItemMouserOver" @mouseleave="onMenuItemMouserLeave">
         <img
           @click="onClickCategoryMenu"
-          class="icon"
+          class="icon psd-hover-cursor-pointer"
           src="@/assets/images/left-pane-icons/category-icon-40w40h.png"/>
       </div>
 
@@ -88,9 +88,6 @@
   img.icon {
     height:auto;
     width: 40px;
-  }
-  img.icon:hover{
-    cursor: pointer;
   }
 
   div.left-pane-menu-item.up-here {

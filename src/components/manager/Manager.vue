@@ -1,8 +1,11 @@
 <template>
   <div class="manager"
     @click="checkPass">
-    <left-pane></left-pane>
-    <right-pane v-if="getArticle"></right-pane>
+    <left-pane ref="leftPane"></left-pane>
+    <right-pane
+      @clickCategoryMeta="onClickCategoryMeta"
+      @clickTagMeta="onClickTagMeta"
+      v-if="getArticle"></right-pane>
     <alert-comp v-if="getIsAlertShowing"></alert-comp>
     <loading-comp></loading-comp>
   </div>
@@ -22,7 +25,15 @@ export default {
     ...mapActions([
       'initManager',
       'checkPass'
-    ])
+    ]),
+    onClickCategoryMeta (evt) {
+      evt.stopPropagation()
+      this.$refs.leftPane.showCategoryPaneExc(evt)
+    },
+    onClickTagMeta (evt) {
+      evt.stopPropagation()
+      this.$refs.leftPane.showTagPaneExc(evt)
+    }
   },
   computed: {
     ...mapGetters([
@@ -36,7 +47,7 @@ export default {
     var currentPath = this.$route.path
     var paths = currentPath.split("/");
     var articleIdInPath = paths[3];
-    var usernameInPath = paths[2];
+    var usernameInPath = paths[1];
     var managerInitParam = {};
     managerInitParam.articleId = articleIdInPath;
     managerInitParam.username = usernameInPath;
@@ -44,31 +55,22 @@ export default {
     if(articleIdInPath) {
       //this is just for convention.
       //do not over use.
-      this.$router.replace({ name:'Manager', params: {username:paths[1]} })
+      this.$router.replace({ name:'Manager', params: {username:usernameInPath} })
     }
 
-    try {
-      this.initManager(managerInitParam)
-        .catch( error => {
-          console.log('123123123')
-          if(error.name === 'NotSignedInError') {
-            console.error(error)
-            let routeData = this.$router.resolve({ name:'OnNotSignedInError'})
-            window.open(routeData.href, '_self');
-          }else {
-            throw error;
-          }
-        })
-    }catch (error) {
-      console.log(error)
-      if(error.name === 'NotSignedInError') {
-        console.error(error)
-        let routeData = this.$router.resolve({ name:'OnNotSignedInError'})
-        window.open(routeData.href, '_self');
-      }else {
-        throw error;
-      }
-    }
+    this.initManager(managerInitParam)
+      .catch( error => {
+        if(error.name === 'NotSignedInError') {
+          let routeData = this.$router.resolve({ name:'OnNotSignedInError'})
+          window.open(routeData.href, '_self');
+        }else if( error.name === 'BadRequest') {
+          let routeData = this.$router.resolve({ name:'OnBadRequest'})
+          window.open(routeData.href, '_self');
+        }else {
+          throw error;
+        }
+      })
+
   },
   components: {
     'left-pane': leftPaneComp,

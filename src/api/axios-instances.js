@@ -13,7 +13,7 @@ axiosAppJson.defaults.headers.post['Accepts'] = 'application/json';
 axiosAppJson.interceptors.response.use(function (response) {
   return response;
 }, function (error) {
-  const resolvedError = resolveCustomServerException(error);
+  var resolvedError = resolveCustomServerException(error);
   return Promise.reject(resolvedError);
 });
 

@@ -85,3 +85,7 @@ span.underline-link:hover {
 .hidden {
   display: none;
 }
+
+.psd-hover-cursor-pointer:hover {
+  cursor: pointer;
+}

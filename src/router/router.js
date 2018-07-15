@@ -10,6 +10,8 @@ import UserHome from '@/components/user/home/UserHome.vue'
 import Settings from '@/components/user/settings/Settings.vue'
 import TermsOfService from '@/components/TermsOfService.vue'
 import PrivacyPolicy from '@/components/PrivacyPolicy.vue'
+import NotSignedInExceptionComp from '@/components/Exceptions/custom/NotSignedInException.vue'
+import BadRequest400 from '@/components/Exceptions/BadRequest400.vue';
 
 Vue.use(Router)
 
@@ -70,7 +72,12 @@ export default new Router({
     {
       name: 'OnNotSignedInError',
       path: '/error/not-signed-in',
-      component: PrivacyPolicy
+      component: NotSignedInExceptionComp
+    },
+    {
+      name: 'OnBadRequest',
+      path: '/error/bad-request',
+      component: BadRequest400
     }
   ]
 })
