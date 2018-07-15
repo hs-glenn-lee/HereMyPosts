@@ -69,7 +69,7 @@ export default {
           this.setSign(sign);
 
           let routeData = this.$router.resolve({ name: "Manager", params: { username: this.username }})
-          window.open(routeData.href, '_self');
+          open(routeData.href, '_self');
         })
         .catch(message => {
           this.alertMessage = '! ' + message

@@ -48,14 +48,19 @@ const mutations = {
 const actions = {
   initManager: (context, payload) => {
     context.state.managerState = 'load';
-    const articleId = payload;
+    const articleId = payload.articleId;
+    const username = payload.username;
     const initAsSavedArticle = (articleId !== undefined);
 
     //init data
     //summary sign => article => category, tag
-    context.dispatch('syncSign', undefined, {root:true})
+    return context.dispatch('syncSign', undefined, {root:true})
       .catch(err => {
-        throw err;//todo if error occcur redirect to sign-in
+        console.log('error occured syncSign')
+        console.log(err)
+        return Promise.reject(err);
+        //throw err;//todo if error occcur redirect to sign-in
+
       })
       .then( () => {
         if(initAsSavedArticle) {//저장된 글인 경우

@@ -36,17 +36,39 @@ export default {
     var currentPath = this.$route.path
     var paths = currentPath.split("/");
     var articleIdInPath = paths[3];
+    var usernameInPath = paths[2];
+    var managerInitParam = {};
+    managerInitParam.articleId = articleIdInPath;
+    managerInitParam.username = usernameInPath;
 
     if(articleIdInPath) {
       //this is just for convention.
       //do not over use.
       this.$router.replace({ name:'Manager', params: {username:paths[1]} })
-      this.initManager(articleIdInPath)
-    }else {
-      this.initManager()
     }
 
-    /*this.initManager()*/
+    try {
+      this.initManager(managerInitParam)
+        .catch( error => {
+          console.log('123123123')
+          if(error.name === 'NotSignedInError') {
+            console.error(error)
+            let routeData = this.$router.resolve({ name:'OnNotSignedInError'})
+            window.open(routeData.href, '_self');
+          }else {
+            throw error;
+          }
+        })
+    }catch (error) {
+      console.log(error)
+      if(error.name === 'NotSignedInError') {
+        console.error(error)
+        let routeData = this.$router.resolve({ name:'OnNotSignedInError'})
+        window.open(routeData.href, '_self');
+      }else {
+        throw error;
+      }
+    }
   },
   components: {
     'left-pane': leftPaneComp,

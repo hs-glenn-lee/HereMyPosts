@@ -66,6 +66,11 @@ export default new Router({
       name: 'PrivacyPolicy',
       path: '/agreements/privacy-policy',
       component: PrivacyPolicy
+    },
+    {
+      name: 'OnNotSignedInError',
+      path: '/error/not-signed-in',
+      component: PrivacyPolicy
     }
   ]
 })
