@@ -14,6 +14,11 @@ const state = {
       fail: function(context) {
         context.commit('setIsTagPaneShowing', false);
       }
+    },
+    'CategoryNodeRightClickMenu': {
+      fail: function(context) {
+        context.commit('setRightClickMenuShowing', false);
+      }
     }
   }
 };

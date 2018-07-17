@@ -2,7 +2,7 @@
   <div class="tag-pane"
        v-show="isTagPaneShowing"
        @click.right="function(e){e.preventDefault()}"
-       @click="markPass('TagPane')">
+       @click="('TagPane')">
     <div class="pane-header">
       <span class="pane-header-title">태그</span>
     </div>

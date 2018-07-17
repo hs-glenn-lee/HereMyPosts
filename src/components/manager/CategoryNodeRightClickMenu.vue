@@ -1,5 +1,7 @@
 <template>
-  <div :style="menuPositionStyle" class="rc-click-menu">
+  <div :style="menuPositionStyle"
+       class="rc-click-menu"
+       @click="markPass('CategoryNodeRightClickMenu')">
     <div class="rc-clicked-node-name"><span >{{categoryNode.name}}</span></div>
     <ul class="menu-list" v-if="operation === ''">
       <li class="menu-list-item"
@@ -19,6 +21,7 @@
 
 <script>
 import CreateCategoryNodeComp from './CreateCategoryNodeComp'
+import {mapActions} from 'vuex'
   export default {
     name: 'CNodeRightClickMenu',
     props: [
@@ -32,6 +35,9 @@ import CreateCategoryNodeComp from './CreateCategoryNodeComp'
       }
     },
     methods: {
+      ...mapActions([
+        'markPass'
+      ]),
       showCreateCategoryNodeComp() {
         this.operation = 'createCategoryNode'
       }
@@ -43,6 +49,13 @@ import CreateCategoryNodeComp from './CreateCategoryNodeComp'
     },
     components: {
       'create-category-node-comp': CreateCategoryNodeComp
+    },
+    watch: {
+      categoryNode (val, oldVal) {
+        if(val !== oldVal) {
+          this.operation = ''
+        }
+      }
     }
 
   }

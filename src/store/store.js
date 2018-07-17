@@ -12,6 +12,7 @@ import ArticleListPaneUi from '@/store/modules/article-list-pane-ui.js';
 import CategoryPaneUi from '@/store/modules/category-pane-ui.js';
 import TagPaneUi from '@/store/modules/tag-pane-ui.js';
 import viewer from '@/store/modules/viewer.js';
+import RightClickMenuUi from '@/store/modules/right-click-menu-ui.js';
 
 Vue.use(Vuex)
 
@@ -30,6 +31,7 @@ export const store = new Vuex.Store({
     ArticleListPaneUi,
     CategoryPaneUi,
     TagPaneUi,
+    RightClickMenuUi,
     viewer
   }
 })

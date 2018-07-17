@@ -29,10 +29,12 @@
           :onNodeNameClick="onNodeNameClick"></category-tree-comp>
       </div>
 
-      <c-node-right-click-menu v-bind:is="rightClickMenu"
-                               :category-node="rightClickedCategoryNode"
-                                :top="rightClickedTop"
-                                :left="rightClickedLeft">
+      <c-node-right-click-menu
+        v-bind:is="rightClickMenu"
+        v-if="isRightClickMenuShowing"
+        :category-node="rightClickedCategoryNode"
+        :top="rightClickedTop"
+        :left="rightClickedLeft">
       </c-node-right-click-menu>
 
       <div>
@@ -71,7 +73,8 @@ export default {
     ...mapMutations([
       'setCategoryPaneIsShowing',
       'setSelectedNodeById',
-      'setArticleListPaneShowing'
+      'setArticleListPaneShowing',
+      'setRightClickMenuShowing',
     ]),
     ...mapActions([
       'getArticlesOfCategory',
@@ -88,16 +91,29 @@ export default {
       clickEvent.stopPropagation();
       var clickedNodeNameSpan = clickEvent.currentTarget;
 
-
       var nodeId = clickedNodeNameSpan.parentElement.parentElement.id;
-
       var targetNode = this.getCategoryTree.find(nodeId);
 
       this.rightClickedTop = clickEvent.pageY;
-      this.rightClickedLeft = clickEvent.pageX - 70; // i don't know why this need sub 70
+      this.rightClickedLeft = clickEvent.pageX - 70; // i don't know why this need to sub 70
       this.rightClickedCategoryNode = targetNode;
       this.rightClickMenu = 'c-node-right-click-menu';
 
+      //if menu position-y is to low(too big) to show whole menu.
+      var categoryPane = window.document.querySelector('div.category-pane');
+      if(categoryPane) {
+        var categoryPaneHeight = categoryPane.offsetHeight;
+        var menuHeight = 106; //set hard
+        var curTop = (this.rightClickedTop);
+        var lack = (curTop + menuHeight) - categoryPaneHeight;
+        if( lack > 0 ) {
+          this.rightClickedTop -= (lack + 5 /*just little space*/);
+        }
+      }
+
+
+
+      this.setRightClickMenuShowing(true)
     },
     onNodeNameClick(clickEvent) {
       var clickedNodeNameSpan = clickEvent.currentTarget;
@@ -127,7 +143,8 @@ export default {
     ...mapGetters([
       'isCategoryPaneShowing',
       'getCategoryTree',
-      'getAccount'
+      'getAccount',
+      'isRightClickMenuShowing'
     ])
   }
 }
@@ -136,7 +153,7 @@ export default {
 <style scoped>
   div.category-pane {
     position: absolute; left: 60px; top: 0px; right: 0px; bottom: 0px;
-    width: 400px;
+    width: 800px;
     border-right: 2px solid #eaeaea;
     border-left: 2px solid #ececec;
     background-color: white;
