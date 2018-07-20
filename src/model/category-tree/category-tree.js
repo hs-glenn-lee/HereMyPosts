@@ -9,7 +9,6 @@ export default class CategoryTree {
   constructor() {
     this.categoryList = [];
     this.root = new CategoryNode({id:'empty', parentId: null, name: 'empty', seq: 0})
-    this.map = {};
   }
 
   isEmpty() {
@@ -36,7 +35,7 @@ export default class CategoryTree {
     //conv Category list to CategoryNode map,
     var catList = this.categoryList
 
-    var catNodeMap = this.map;
+    var catNodeMap = {};
 
     catList.forEach(function(el) {
       catNodeMap[el.id] = new CategoryNode(el, null, null)
@@ -97,12 +96,19 @@ export default class CategoryTree {
 
   }
 
-  find (id) {
-    console.log('---------------')
-    console.log(id);
-    console.log(this.map[id]);
-    return this.map[id];
+  find (id, node) {
+    var cur = node || this.root;
+    var curChildren = cur.getChildren();
+    if(cur.id === id) {
+      return cur;
+    }else if(curChildren.length > 0) {
+      var found = null;
+      for(var i=0; found == null && i < curChildren.length; i++) {
+        found = this.find(id, curChildren[i]);
+      }
+      return found;
+    }
+    return null;
   }
-
 
 }

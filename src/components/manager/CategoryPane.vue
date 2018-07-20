@@ -32,6 +32,7 @@
       <c-node-right-click-menu
         v-bind:is="rightClickMenu"
         v-if="isRightClickMenuShowing"
+        @newCategoryCreated="setIsRightClickMenuShowing(false)"
         :category-node="rightClickedCategoryNode"
         :top="rightClickedTop"
         :left="rightClickedLeft">
@@ -74,7 +75,7 @@ export default {
       'setCategoryPaneIsShowing',
       'setSelectedNodeById',
       'setArticleListPaneShowing',
-      'setRightClickMenuShowing',
+      'setIsRightClickMenuShowing',
     ]),
     ...mapActions([
       'getArticlesOfCategory',
@@ -93,6 +94,9 @@ export default {
 
       var nodeId = clickedNodeNameSpan.parentElement.parentElement.id;
       var targetNode = this.getCategoryTree.find(nodeId);
+      console.log('%%%%%')
+      console.log('id '+ nodeId);
+      console.log(targetNode);
 
       this.rightClickedTop = clickEvent.pageY;
       this.rightClickedLeft = clickEvent.pageX - 70; // i don't know why this need to sub 70
@@ -113,7 +117,7 @@ export default {
 
 
 
-      this.setRightClickMenuShowing(true)
+      this.setIsRightClickMenuShowing(true)
     },
     onNodeNameClick(clickEvent) {
       var clickedNodeNameSpan = clickEvent.currentTarget;

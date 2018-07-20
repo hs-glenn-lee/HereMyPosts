@@ -39,7 +39,6 @@
           var vm =  this;
           this.validatingMsg = '이미 하위에 있는 카테고리 이름입니다.';
           this.isValid = false;
-
         }
 
 
@@ -51,6 +50,7 @@
             parentNode.addChild(new CategoryNodeClass(data, parentNode));
           });
 
+        this.$emit('newCategoryCreated');
       }
     },
     computed: {

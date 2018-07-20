@@ -10,7 +10,7 @@ const getters = {
   }
 };
 const mutations = {
-  setRightClickMenuShowing: (state, payload) => {
+  setIsRightClickMenuShowing: (state, payload) => {
     state.isRightClickMenuShowing = payload;
   }
 };

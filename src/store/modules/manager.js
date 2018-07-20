@@ -17,7 +17,7 @@ const state = {
     },
     'CategoryNodeRightClickMenu': {
       fail: function(context) {
-        context.commit('setRightClickMenuShowing', false);
+        context.commit('setIsRightClickMenuShowing', false);
       }
     }
   }

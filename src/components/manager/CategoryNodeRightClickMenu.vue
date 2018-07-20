@@ -13,6 +13,7 @@
     </ul>
 
     <create-category-node-comp
+      @newCategoryCreated="propagateVueEvent"
       v-if="operation ==='createCategoryNode'"
       :category-node="categoryNode"></create-category-node-comp>
   </div>
@@ -38,6 +39,9 @@ import {mapActions} from 'vuex'
       ...mapActions([
         'markPass'
       ]),
+      propagateVueEvent () {
+        this.$emit('newCategoryCreated')
+      },
       showCreateCategoryNodeComp() {
         this.operation = 'createCategoryNode'
       }
