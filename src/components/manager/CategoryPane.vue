@@ -3,7 +3,7 @@
        v-show="isCategoryPaneShowing"
         @click.right="function(e){e.preventDefault()}"
         @click="markPass('CategoryPane')"><!--prevent leftClick-->
-
+    <div class="category-pane-info">
       <div class="pane-header">
         <span class="pane-header-title">카테고리</span>
       </div>
@@ -17,31 +17,29 @@
             class="sort-controller-button psd-hover-cursor-pointer">접기</span>
         </div>
       </div>
-<!--      <div class="close-icon psd-hover-cursor-pointer" @click="closeCSLP(false)">
-        <img src="@/assets/images/x-icon-30.png" style="width:20px;"/>
-      </div>-->
+    </div>
 
+    <div class="category-container">
+      <category-tree-comp
+        ref="$categoryTreeComp"
+        :onNodeNameRightClick="onNodeNameRightClick"
+        :onNodeNameClick="onNodeNameClick">
+      </category-tree-comp>
+    </div>
 
-      <div class="category-container">
-        <category-tree-comp
-          ref="$categoryTreeComp"
-          :onNodeNameRightClick="onNodeNameRightClick"
-          :onNodeNameClick="onNodeNameClick"></category-tree-comp>
-      </div>
+    <c-node-right-click-menu
+      v-bind:is="rightClickMenu"
+      v-if="isRightClickMenuShowing"
+      @newCategoryCreated="setIsRightClickMenuShowing(false)"
+      :category-node="rightClickedCategoryNode"
+      :top="rightClickedTop"
+      :left="rightClickedLeft">
+    </c-node-right-click-menu>
 
-      <c-node-right-click-menu
-        v-bind:is="rightClickMenu"
-        v-if="isRightClickMenuShowing"
-        @newCategoryCreated="setIsRightClickMenuShowing(false)"
-        :category-node="rightClickedCategoryNode"
-        :top="rightClickedTop"
-        :left="rightClickedLeft">
-      </c-node-right-click-menu>
-
-      <div>
-        <article-list-pane :onArticleClick="onArticleClick"
-                           :onArticleDoubleClick="onArticleDoubleClick"></article-list-pane>
-      </div>
+    <div>
+      <article-list-pane :onArticleClick="onArticleClick"
+                         :onArticleDoubleClick="onArticleDoubleClick"></article-list-pane>
+    </div>
   </div>
 </template>
 
@@ -158,6 +156,7 @@ export default {
   div.category-pane {
     position: absolute; left: 60px; top: 0px; right: 0px; bottom: 0px;
     width: 800px;
+    height: 100%;
     border-right: 2px solid #eaeaea;
     border-left: 2px solid #ececec;
     background-color: white;

@@ -61,7 +61,7 @@
 
   //import nanumGothicFontURL from '@/assets/css/fonts/nanumgothic/font-nanumbrush.css'
   import { mapGetters } from 'vuex'
-
+  import validator from '@/model/validator/validator.js'
 export default {
   name: 'Manage',
   data () {
@@ -130,7 +130,8 @@ export default {
         relative_urls : false,
         images_upload_handler: function(blobInfo, success, failure) {
           var formData = new FormData();
-
+          var targetFile = blobInfo.blob();
+          validator.validate('MaxUploadImageSize',targetFile);
           formData.append('file', blobInfo.blob(), blobInfo.filename());
 
           var article = vm.getArticle;

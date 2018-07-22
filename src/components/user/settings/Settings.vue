@@ -171,13 +171,23 @@
       uploadProfilePictureFile () {
         this.profilePictureFile = this.$refs.file.files[0];
         let formData = new FormData();
+        try {
+          validator.validate('MaxUploadImageSize', this.profilePictureFile);
+        }catch(err) {
+          alert(err.message);
+          return;
+        }
+
+
         formData.append('file', this.profilePictureFile);
+
         axios.post( '/api/account/setting/upload-profile-picture',
           formData,
           {
             headers: {
               'Content-Type': 'multipart/form-data'
             }
+
           }).then(res => {
           this.accountSetting = res.data;
         })

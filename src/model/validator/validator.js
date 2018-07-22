@@ -127,6 +127,18 @@ export default {
           reject('자기소개를 입력해 주세요.')
         }
       }
+    },
+    'MaxUploadImageSize' : {
+      check (val, reject) {
+        var file = val;
+        if(file === undefined || file === null) {
+          reject('선택된 파일이 없습니다.')
+        }
+
+        if(file.size > (1024 * 1024 * 15)) {
+          reject('파일이 너무 큽니다. 15mb 이하 크기만 업로드 할 수 있습니다.')
+        }
+      }
     }
   },
   validate(constraintKey, value, rejectCallback) {
