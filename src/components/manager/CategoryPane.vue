@@ -3,43 +3,52 @@
        v-show="isCategoryPaneShowing"
         @click.right="function(e){e.preventDefault()}"
         @click="markPass('CategoryPane')"><!--prevent leftClick-->
-    <div class="category-pane-info">
-      <div class="pane-header">
-        <span class="pane-header-title">카테고리</span>
-      </div>
-      <div class="tool-bar">
-        <div class="tool-bar-buttons">
+
+    <div class="col category-col">
+      <div class="category-info"><!-- todo -->
+        <div class="category-header">
+          <span class="category-header-title">카테고리</span>
+        </div>
+        <div class="tool-bar">
+          <div class="tool-bar-buttons">
           <span
             @click="openAllCategoryNodes"
             class="sort-controller-button psd-hover-cursor-pointer">펼치기</span>
-          <span
-            @click="closeAllCategoryNodes"
-            class="sort-controller-button psd-hover-cursor-pointer">접기</span>
+            <span
+              @click="closeAllCategoryNodes"
+              class="sort-controller-button psd-hover-cursor-pointer">접기</span>
+          </div>
         </div>
+      </div>
+
+      <div class="category-tree-container"
+          :style="categoryTreeContainerStyle">
+        <category-tree-comp
+          ref="$categoryTreeComp"
+          :onNodeNameRightClick="onNodeNameRightClick"
+          :onNodeNameClick="onNodeNameClick">
+        </category-tree-comp>
+      </div>
+
+      <c-node-right-click-menu
+        v-bind:is="rightClickMenu"
+        v-if="isRightClickMenuShowing"
+        @newCategoryCreated="setIsRightClickMenuShowing(false)"
+        :category-node="rightClickedCategoryNode"
+        :top="rightClickedTop"
+        :left="rightClickedLeft">
+      </c-node-right-click-menu>
+    </div>
+
+    <div class="col">
+      <div>
+        <article-list-pane :onArticleClick="onArticleClick"
+                           :onArticleDoubleClick="onArticleDoubleClick"></article-list-pane>
       </div>
     </div>
 
-    <div class="category-container">
-      <category-tree-comp
-        ref="$categoryTreeComp"
-        :onNodeNameRightClick="onNodeNameRightClick"
-        :onNodeNameClick="onNodeNameClick">
-      </category-tree-comp>
-    </div>
+    <div class="clearfix"></div>
 
-    <c-node-right-click-menu
-      v-bind:is="rightClickMenu"
-      v-if="isRightClickMenuShowing"
-      @newCategoryCreated="setIsRightClickMenuShowing(false)"
-      :category-node="rightClickedCategoryNode"
-      :top="rightClickedTop"
-      :left="rightClickedLeft">
-    </c-node-right-click-menu>
-
-    <div>
-      <article-list-pane :onArticleClick="onArticleClick"
-                         :onArticleDoubleClick="onArticleDoubleClick"></article-list-pane>
-    </div>
   </div>
 </template>
 
@@ -59,7 +68,9 @@ export default {
       rightClickMenu: '',
       rightClickedCategoryNode: '',
       rightClickedTop: '',
-      rightClickedLeft: ''
+      rightClickedLeft: '',
+
+      categoryTreeHeight: 0
     }
   },
   components: {
@@ -92,9 +103,6 @@ export default {
 
       var nodeId = clickedNodeNameSpan.parentElement.parentElement.id;
       var targetNode = this.getCategoryTree.find(nodeId);
-      console.log('%%%%%')
-      console.log('id '+ nodeId);
-      console.log(targetNode);
 
       this.rightClickedTop = clickEvent.pageY;
       this.rightClickedLeft = clickEvent.pageX - 70; // i don't know why this need to sub 70
@@ -112,8 +120,6 @@ export default {
           this.rightClickedTop -= (lack + 5 /*just little space*/);
         }
       }
-
-
 
       this.setIsRightClickMenuShowing(true)
     },
@@ -137,8 +143,27 @@ export default {
     },
     closeAllCategoryNodes () {
       this.$refs.$categoryTreeComp.closeAllCategoryNodes();
+    },
+    getManagerHeight () {
+      var $manager = window.document.querySelector('div.manager');
+      console.log($manager.clientHeight);
+      console.log($manager.offsetHeight);
+      console.log(window.innerHeight)
+      return $manager.offsetHeight;
+    },
+    getCategoryInfoHeight () {
+      var $categoryInfo = window.document.querySelector('div.category-info');
+      return $categoryInfo.offsetHeight;
+    },
+    setCategoryTreeHeight () {
+      console.log(this.getManagerHeight());
+      console.log(this.getCategoryInfoHeight());
+      this.categoryTreeHeight = ( this.getManagerHeight() - this.getCategoryInfoHeight() );
     }
 
+
+  },
+  mounted () {
 
   },
   computed: {
@@ -147,7 +172,12 @@ export default {
       'getCategoryTree',
       'getAccount',
       'isRightClickMenuShowing'
-    ])
+    ]),
+    categoryTreeContainerStyle () {
+      return {
+        'height': this.categoryTreeHeight + 'px'
+      }
+    }
   }
 }
 </script>
@@ -155,20 +185,28 @@ export default {
 <style scoped>
   div.category-pane {
     position: absolute; left: 60px; top: 0px; right: 0px; bottom: 0px;
-    width: 800px;
     height: 100%;
     border-right: 2px solid #eaeaea;
     border-left: 2px solid #ececec;
     background-color: white;
     z-index: 199;
   }
-  div.pane-header {
+
+  div.col {
+    float: left;
+  }
+
+  div.category-col {
+    min-width: 400px;
+  }
+
+  div.category-header {
     padding-top: 16px;
     padding-bottom: 8px;
     height: 40px;
     line-height: 40px;
   }
-  span.pane-header-title {
+  span.category-header-title {
     color: #6A6A6A;
     /*color: white;*/
     padding-left: 16px;
@@ -208,8 +246,6 @@ export default {
     border: 1px solid rgb(16,123,211);
   }
 
-  div.category-container {
-    margin-top: 16px;
-  }
+
 
 </style>

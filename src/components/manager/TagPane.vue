@@ -3,8 +3,8 @@
        v-show="isTagPaneShowing"
        @click.right="function(e){e.preventDefault()}"
        @click="('TagPane')">
-    <div class="pane-header">
-      <span class="pane-header-title">태그</span>
+    <div class="category-header">
+      <span class="category-header-title">태그</span>
     </div>
 
     <div class="close-icon psd-hover-cursor-pointer" @click="closeTagPane(false)">
@@ -170,10 +170,10 @@
 
   }
 
-  div.pane-header {
+  div.category-header {
     margin: 30px 0px 20px 20px;
   }
-  span.pane-header-title {
+  span.category-header-title {
     color: #6A6A6A;
     font-size: 1.3em;
   }

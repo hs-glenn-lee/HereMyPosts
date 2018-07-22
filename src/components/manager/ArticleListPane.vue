@@ -188,10 +188,9 @@ export default {
 
 <style scoped>
   div.article-list-pane {
-    position: absolute; left: 399px; /*400-1px*/ top: 0px; right: 0px; bottom: 0px;
+    /*position: absolute; left: 399px; !*400-1px*! top: 0px; right: 0px; bottom: 0px;*/
     width: 400px;
     border-right: 2px solid #eaeaea;
-    /*border-left: 2px solid #ececec;*/
     background-color: white;
     z-index: 199;
     height:100%;

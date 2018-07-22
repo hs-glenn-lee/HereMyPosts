@@ -65,7 +65,7 @@
   ul.tree-root > li:first-child{
     margin-left: 16px;
   }
-  category-tree-container {
-
+  div.category-tree-container {
+    margin-top: 16px;
   }
 </style>
