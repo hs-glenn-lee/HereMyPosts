@@ -8,8 +8,16 @@
     </div>
     <div class="not-list">
       <div class="article-list-pane-header" :class="{'has-border-bottom': (this.getListOf === 'recent')}">
-        <span class="article-list-pane-title" v-if="(this.getListOf === 'category') && (this.getSelectedNode)">{{this.getSelectedNode.name}} 글 목록</span>
-        <span class="article-list-pane-title" v-if="this.getListOf === 'recent'" >최근 글</span>
+        <div class="article-list-pane-title" v-if="(this.getListOf === 'category') && (this.getSelectedNode)">
+          <span class="nobreak" style="max-width: 300px; display:inline-block; font-weight:bold;">
+            {{this.getSelectedNode.name}}
+          </span>
+          <span class="nobreak" style="display:inline-block;"> 글 목록
+          </span>
+        </div>
+        <div class="article-list-pane-title" v-if="this.getListOf === 'recent'" >
+          최근 글
+        </div>
       </div>
 
       <div v-if="getListOf === 'category'" class="tool-bar">
@@ -125,6 +133,7 @@ export default {
     getLoadingImgStyle () {
       return {'padding-top': this.loadingImgPaddingTop + 'px'};
     }
+
   },
   methods: {
     ...mapMutations([
@@ -138,10 +147,7 @@ export default {
     ]),
     calcListHeight() {
       let notList = window.document.querySelector('div.not-list');
-
       let notListHeight = notList.offsetHeight;
-      console.log('notListHeight')
-      console.log(notListHeight)
 
       this.innerHeight = window.innerHeight;
       this.listHeight = 'height:' + (this.innerHeight - notListHeight - 2/*border px*/) + 'px;';
@@ -231,10 +237,20 @@ export default {
   div.article-list-pane-header.has-border-bottom {
     border-bottom: 1px solid #ececec;
   }
-  span.article-list-pane-title {
+  div.article-list-pane-title {
     color: #6A6A6A;
-    padding-left: 4px;
+    padding-left: 8px;
     font-size: 1.3em;
+    width: 100%;
+
+    vertical-align: middle;
+  }
+
+
+  span.nobreak {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow:hidden;
   }
 
   div.tool-bar {
@@ -244,11 +260,11 @@ export default {
   }
 
   div.tool-bar-buttons {
-    /*padding-left: 16px;*/
+
   }
 
   div.tool-buttons {
-    padding-left: 4px;
+    padding-left: 8px;
     line-height: 28px;
     height: 30px;
     vertical-align: middle;
@@ -277,7 +293,7 @@ export default {
   }
 
   div.tool-controllers {
-    padding-left: 4px;
+    padding-left: 8px;
     height: 28px;
     line-height: 28px;
     vertical-align: middle;
@@ -382,9 +398,5 @@ export default {
     padding: 5px 0px 10px 5px;
     color: #6A6A6A;
   }
-
-  /*ul > li.article-list-item:first-child {
-    border-top: 1px solid #cccccc;
-  }*/
 
 </style>

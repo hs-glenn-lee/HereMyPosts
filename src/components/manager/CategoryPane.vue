@@ -146,9 +146,6 @@ export default {
     },
     getManagerHeight () {
       var $manager = window.document.querySelector('div.manager');
-      console.log($manager.clientHeight);
-      console.log($manager.offsetHeight);
-      console.log(window.innerHeight)
       return $manager.offsetHeight;
     },
     getCategoryInfoHeight () {
@@ -156,8 +153,6 @@ export default {
       return $categoryInfo.offsetHeight;
     },
     setCategoryTreeHeight () {
-      console.log(this.getManagerHeight());
-      console.log(this.getCategoryInfoHeight());
       this.categoryTreeHeight = ( this.getManagerHeight() - this.getCategoryInfoHeight() );
     }
 
@@ -201,7 +196,7 @@ export default {
     border-right: 2px solid #eaeaea;
     border-left: 2px solid #ececec;
     background-color: white;
-    width: 852px;
+    width:862px;
     z-index: 199;
   }
 
@@ -216,6 +211,7 @@ export default {
   div.category-tree-container {
     overflow-y: scroll;
     overflow-x: scroll;
+    width: 460px;
   }
 
   div.category-header {
@@ -263,7 +259,4 @@ export default {
     background-color: #eaeaea;
     border: 1px solid rgb(16,123,211);
   }
-
-
-
 </style>

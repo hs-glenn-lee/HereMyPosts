@@ -37,8 +37,6 @@
 
     },
     openAllCategoryNodes () {
-      console.log('openAllCategoryNodes')
-      console.log(this.$refs.root)
       this.$refs.root.openMe();
       this.$refs.root.openChildren();
     },
@@ -66,4 +64,8 @@
   ul.tree-root {
     margin-top: 16px;
   }
+
+
+
+
 </style>
