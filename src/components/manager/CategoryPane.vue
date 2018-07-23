@@ -164,7 +164,10 @@ export default {
 
   },
   mounted () {
-
+    var vm = this;
+    window.addEventListener("resize", function() {
+      vm.setCategoryTreeHeight();
+    });
   },
   computed: {
     ...mapGetters([
@@ -178,6 +181,15 @@ export default {
         'height': this.categoryTreeHeight + 'px'
       }
     }
+  },
+  watch: {
+    isCategoryPaneShowing (val, oldVal) {
+      if(val) {
+        this.$nextTick(() => {
+          this.setCategoryTreeHeight();
+        })
+      }
+    }
   }
 }
 </script>
@@ -189,6 +201,7 @@ export default {
     border-right: 2px solid #eaeaea;
     border-left: 2px solid #ececec;
     background-color: white;
+    width: 852px;
     z-index: 199;
   }
 
@@ -198,6 +211,11 @@ export default {
 
   div.category-col {
     min-width: 400px;
+  }
+
+  div.category-tree-container {
+    overflow-y: scroll;
+    overflow-x: scroll;
   }
 
   div.category-header {

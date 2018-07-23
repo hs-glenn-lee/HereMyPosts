@@ -1,5 +1,4 @@
 <template>
-  <div class="category-tree-container">
     <ul class="tree-root">
       <category-node
         class="category-node"
@@ -9,7 +8,6 @@
         :onNodeNameRightClick="onNodeNameRightClick"
       ></category-node>
     </ul>
-  </div>
 </template>
 
 <script>
@@ -65,7 +63,7 @@
   ul.tree-root > li:first-child{
     margin-left: 16px;
   }
-  div.category-tree-container {
+  ul.tree-root {
     margin-top: 16px;
   }
 </style>

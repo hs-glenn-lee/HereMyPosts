@@ -92,11 +92,11 @@
       this.calcRightPaneWidth();
       this.calcEditorHeight();
       var vm = this;
-      window.onresize = function(event) {
-          console.log('onresize')
-          vm.calcRightPaneWidth();
-          vm.calcEditorHeight();
-      };
+      window.addEventListener("resize",function(event) {
+        console.log('onresize')
+        vm.calcRightPaneWidth();
+        vm.calcEditorHeight();
+      });
     },
     computed: {
       ...mapGetters([
