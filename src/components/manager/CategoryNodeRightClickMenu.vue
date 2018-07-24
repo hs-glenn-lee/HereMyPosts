@@ -2,26 +2,58 @@
   <div :style="menuPositionStyle"
        class="rc-click-menu"
        @click="markPass('CategoryNodeRightClickMenu')">
-    <div class="rc-clicked-node-name"><span >{{categoryNode.name}}</span></div>
-    <ul class="menu-list" v-if="operation === ''">
-      <li class="menu-list-item"
-          @click="showCreateCategoryNodeComp">아래에 새 카테고리 생성</li>
-      <li class="menu-list-item">이 카테고리 삭제</li>
 
-      <li v-if="categoryNode.isPublic" class="menu-list-item">비공개하기</li>
-      <li v-else class="menu-list-item">공개하기</li>
-    </ul>
+    <div class="main-menu">
+      <div class="rc-clicked-node-name"><span >{{categoryNode.name}}</span></div>
+      <ul class="menu-list" v-if="operation === ''">
+        <li class="menu-list-item"
+            @click="operate('create')">아래에 새 카테고리 생성</li>
+        <li
+          @click="operate('updateName')"
+          class="menu-list-item">이 카테고리 이름 변경</li>
+        <li v-if="categoryNode.isPublic" class="menu-list-item" @click="toggleIsPublic">비공개하기</li>
+        <li v-else class="menu-list-item" @click="toggleIsPublic">공개하기</li>
+        <!--<li class="menu-list-item" @click="removeCategory">이 카테고리 삭제</li>-->
+      </ul>
+    </div>
 
-    <create-category-node-comp
-      @newCategoryCreated="propagateVueEvent"
-      v-if="operation ==='createCategoryNode'"
-      :category-node="categoryNode"></create-category-node-comp>
+    <div class="menu-details">
+      <div v-show="operation === 'create'"
+           class="detail">
+        <div class="block-container"
+             :style="menuPositionStyle"
+             style="width:360px;">
+          <input v-model="newCategoryName"
+                 type="text"
+                 placeholder="카테고리 이름">
+          <button @click="addChildCategoryNode" type="button">생성</button>
+          <span class="validating-msg"
+                :class="{blink:isValid}">&nbsp{{errorMessage}}</span>
+        </div>
+      </div>
+      <div
+        v-show="operation === 'updateName'"
+        class="detail">
+        <div class="block-container" :style="menuPositionStyle" style="width:360px;">
+          <input v-model="newCategoryName"
+                 type="text"
+                 placeholder="카테고리 이름">
+          <button @click="updateCategoryName" type="button">변경</button>
+          <span class="validating-msg"
+                :class="{blink:isValid}">&nbsp{{errorMessage}}</span>
+        </div>
+      </div>
+    </div>
+
   </div>
 
 </template>
 
 <script>
 import CreateCategoryNodeComp from './CreateCategoryNodeComp'
+import Category from '@/model/Category'
+import CategoryNodeClass from '@/model/category-tree/category-node'
+
 import {mapActions} from 'vuex'
   export default {
     name: 'CNodeRightClickMenu',
@@ -32,20 +64,80 @@ import {mapActions} from 'vuex'
     ],
     data () {
       return {
-        operation: ''
+        operation: '',
+        newCategoryName: '',
+        errorMessage: ' ',
+
+
+        isValid: false
       }
     },
     methods: {
       ...mapActions([
-        'markPass'
+        'markPass',
+        'createCategoryNode',
+        'updateCategory'
       ]),
-      propagateVueEvent () {
-        this.$emit('newCategoryCreated')
+      operate(operation) {
+        this.operation = operation
       },
-      showCreateCategoryNodeComp() {
-        this.operation = 'createCategoryNode'
+      addChildCategoryNode() {
+        this.createCategoryNode({
+          newCategoryName: this.newCategoryName,
+          parentId: this.categoryNode.id
+        })
+          .then(() => {
+            this.$emit('operated');
+          })
+          .catch( err => {
+            this.errorMessage = err.message;
+          });
+      },
+      updateCategoryName () {
+        var tobeCategory = this.categoryNode.cloneAsCategory();
+        tobeCategory.name = this.newCategoryName;
+
+        this.updateCategory({
+          tobeCategory
+        })
+          .then(() => {
+            this.$emit('operated');
+          })
+          .catch( err => {
+            this.errorMessage = err.message;
+          });
+      },
+      toggleIsPublic () {
+        var tobeCategory = this.categoryNode.cloneAsCategory();
+        tobeCategory.isPublic = !tobeCategory.isPublic;
+
+        this.updateCategory({
+          tobeCategory
+        })
+          .then(() => {
+            this.$emit('operated');
+          })
+          .catch( err => {
+            this.errorMessage = err.message;
+          });
+      },
+      removeCategory () {
+        if(!window.confirm('카테고리를 삭제하시겠습니까? 카테고리를 삭제하면 하위의 카테고리와 포스트가 모두 삭제됩니다.')) {
+          return;
+        }
+        console.log('removeCategory')
+
+        this.removeCategory(this.categoryList.id)
+          .then(() => {
+            this.$emit('operated');
+          })
+          .catch( err => {
+            this.errorMessage = err.message;
+            console.error(err)
+          });
       }
     },
+
     computed: {
       menuPositionStyle() {
         return 'top:'+(this.top)+'px;'+'left:'+(this.left)+'px;';
@@ -94,4 +186,22 @@ import {mapActions} from 'vuex'
     font-weight: bold;
     margin-bottom: 10px;
   }
+
+
+
+  input {
+    display: inline-block;
+    background-color: white;
+    width: 280px;
+  }
+  button {
+    display: inline-block;
+  }
+
+  span.validating-msg {
+    display: block;
+    margin-top: 5px;
+    font-color: red;
+  }
+
 </style>

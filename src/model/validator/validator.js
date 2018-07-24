@@ -139,6 +139,62 @@ export default {
           reject('파일이 너무 큽니다. 15mb 이하 크기만 업로드 할 수 있습니다.')
         }
       }
+    },
+    'createCategory': {
+      check (val, reject) {
+        var newCategory = val.newCategory;
+        var parentCategoryNode = val.parentCategoryNode;
+
+        console.log('[createCategory] validator')
+        console.log(newCategory);
+        console.log(parentCategoryNode);
+        if( !(newCategory && parentCategoryNode) ) {
+          reject('invalid parameters')
+        }
+
+        if(newCategory.name === '') {
+          reject('이름을 입력해 주세요');
+        }
+
+        console.log(parentCategoryNode.validNewCategoryNameAsChild(this.newCategoryName));
+
+        if(!parentCategoryNode.validNewCategoryNameAsChild(newCategory.name)) {
+          reject('이미 하위에 있는 카테고리 이름입니다.');
+        }
+
+      }
+    },
+    'updateCategory' : {
+      check (val, reject) {
+        console.log('[validator] updateCategory');
+        var tobeCategory = val.tobeCategory;
+        var targetCategoryNode = val.targetCategoryNode;
+
+        if( !(targetCategoryNode && tobeCategory) ) {
+          reject('invalid parameters')
+        }
+
+        if(tobeCategory.seq !== targetCategoryNode.seq) {
+          reject('여기서는 순서를 변경할 수 없습니다.')
+        }
+        if(tobeCategory.parentId !== targetCategoryNode.parentId) {
+          reject('여기서는 부모 카테고리를 변경할 수 없습니다.')
+        }
+        if(tobeCategory.isDel !== targetCategoryNode.isDel) {
+          reject('여기서는 카테고리를 삭제 할 수 없습니다.')
+        }
+
+        if(tobeCategory.name === '') {
+          reject('변경할 이름을 입력해 주세요');
+        }
+
+        if(targetCategoryNode.parent) {//if not root
+          if(!targetCategoryNode.parent.validNewCategoryNameAsChild(tobeCategory.name)) {
+            reject('이미 있는 카테고리 이름입니다.');
+          }
+        }
+
+      }
     }
   },
   validate(constraintKey, value, rejectCallback) {

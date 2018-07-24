@@ -111,4 +111,11 @@ export default class CategoryTree {
     return null;
   }
 
+  removeCategoryNode (id) {
+    var target = this.find(id);
+    if(target) {
+      target.parent.removeChildById(id);
+    }
+  }
+
 }

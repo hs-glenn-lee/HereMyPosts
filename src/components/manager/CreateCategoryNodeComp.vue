@@ -1,7 +1,6 @@
 <template>
   <div class="block-container" :style="menuPositionStyle" style="width:360px;">
       <input v-model="newCategoryName"
-
              type="text"
              placeholder="카테고리 이름">
       <button @click="addChildCategoryNode" type="button">생성</button>
@@ -22,7 +21,7 @@
     data () {
       return {
         newCategoryName: '',
-        validatingMsg: ' ',
+        errorMessage: ' ',
         isValid: false
       }
     },
@@ -71,12 +70,6 @@
   button {
     display: inline-block;
   }
-
-/*  .blink {
-    background-color: red;
-    -webkit-transition: background-color 2s;
-    transition: background-color 2s;
-  }*/
 
   span.validating-msg {
     display: block;

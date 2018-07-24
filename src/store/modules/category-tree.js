@@ -1,5 +1,8 @@
 import CategoryTree from '@/model/category-tree/category-tree'
+import Category from '@/model/Category.js'
+import CategoryNode from '@/model/category-tree/category-node.js'
 import api from "@/api/api";
+import validator from '@/model/validator/validator.js'
 
 const state = {
   categoryTree: new CategoryTree(),
@@ -77,6 +80,52 @@ const actions = {
       .catch(err => {
         console.error(err)
         alert(err)
+      })
+  },
+  createCategoryNode: (context, payload) => {
+    var parentId = payload.parentId;
+    var newCategoryName = payload.newCategoryName;
+
+    var parentCategoryNode = context.state.categoryTree.find(parentId);
+    var newCategory = new Category(null, parentCategoryNode.id, newCategoryName, parentCategoryNode.children.length, false, false);
+
+    try {
+      validator.validate('createCategory', { newCategory, parentCategoryNode });
+    }catch (err) {
+      return Promise.reject(err);
+    }
+
+    return api.createCategory(newCategory)
+      .then( data => {
+        parentCategoryNode.addChild(new CategoryNode(data));
+      });
+  },
+  updateCategory: (context, payload) => {//name, isPublic ---- {isDel, parentId, seq} won't updated
+    var tobeCategory = payload.tobeCategory;
+    var targetCategoryNode = context.state.categoryTree.find(tobeCategory.id);
+    try {
+      validator.validate('updateCategory', { tobeCategory, targetCategoryNode })
+    }catch (err) {
+      return Promise.reject(err);
+    }
+    return api.updateCategory(tobeCategory)
+      .then( data => {
+        Object.assign(targetCategoryNode, data);// critical
+        console.log(targetCategoryNode);
+      })
+      .catch( err => {
+        return Promise.reject(err);
+      })
+  },
+  removeCategory: (context, payload) => {
+    var categoryId = payload;
+    return api.removeCategory(categoryId)
+      .then( data => {
+        var tree = context.state.categoryTree;
+        tree.removeCategoryNode(categoryId);
+      })
+      .catch( err => {
+        return Promise.reject(err);
       })
   }
 

@@ -70,6 +70,18 @@ export default {
       .catch( err => { throw err } )
   },
 
+  updateCategory (category) {
+    return axiosAppJson.put('/api/category/update', category)
+      .then( res => { return res.data } )
+      .catch( err => { throw err } )
+  },
+
+  removeCategory (categoryId) {
+    return axiosAppJson.put('/api/category/remove',categoryId)
+      .then( res => { return res.data } )
+      .catch( err => { throw err } )
+  },
+
 
   //---article
   saveArticle (compositeArticle) {

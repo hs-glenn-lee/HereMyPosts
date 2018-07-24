@@ -35,13 +35,20 @@ export default class CategoryNode extends  Category{
     this.children.push(categoryNode)
   }
 
+  removeChildById (id) {
+    var targetChildIndex = this.findChildIndex(id);
+    if(targetChildIndex) {
+      removeChild(targetChildIndex);
+    }
+  }
+
   removeChild (i) {
     var target = this.children[i]
     target.parentId = null;
     this.children.splice(i,1)
   }
 
-  findChild (id) {
+  findChildIndex (id) {
     this.children.find(el => {
       return el.id === id
     })
@@ -70,17 +77,16 @@ export default class CategoryNode extends  Category{
   }
 
   validNewCategoryNameAsChild (newName) { // if there's the same name in children return false
-    var isValid = true;
+    if(!newName) {
+      return false;
+    }
 
     for(var i in this.children) {
       if(this.children[i].name === newName) {
-        isValid = false;
+        return false;
       }
-
     }
-    return isValid;
+    return true;
   }
-
-
 
 }

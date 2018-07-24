@@ -33,7 +33,7 @@
       <c-node-right-click-menu
         v-bind:is="rightClickMenu"
         v-if="isRightClickMenuShowing"
-        @newCategoryCreated="setIsRightClickMenuShowing(false)"
+        @operated="setIsRightClickMenuShowing(false)"
         :category-node="rightClickedCategoryNode"
         :top="rightClickedTop"
         :left="rightClickedLeft">
