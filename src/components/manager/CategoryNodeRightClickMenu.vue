@@ -13,7 +13,7 @@
           class="menu-list-item">이 카테고리 이름 변경</li>
         <li v-if="categoryNode.isPublic" class="menu-list-item" @click="toggleIsPublic">비공개하기</li>
         <li v-else class="menu-list-item" @click="toggleIsPublic">공개하기</li>
-        <!--<li class="menu-list-item" @click="removeCategory">이 카테고리 삭제</li>-->
+        <li class="menu-list-item" @click="removeThisCategory">이 카테고리 삭제</li>
       </ul>
     </div>
 
@@ -76,12 +76,13 @@ import {mapActions} from 'vuex'
       ...mapActions([
         'markPass',
         'createCategoryNode',
-        'updateCategory'
+        'updateCategory',
+        'removeCategory'
       ]),
       operate(operation) {
         this.operation = operation
       },
-      addChildCategoryNode() {
+      addChildCategoryNode(evt) {
         this.createCategoryNode({
           newCategoryName: this.newCategoryName,
           parentId: this.categoryNode.id
@@ -93,7 +94,7 @@ import {mapActions} from 'vuex'
             this.errorMessage = err.message;
           });
       },
-      updateCategoryName () {
+      updateCategoryName (evt) {
         var tobeCategory = this.categoryNode.cloneAsCategory();
         tobeCategory.name = this.newCategoryName;
 
@@ -107,7 +108,7 @@ import {mapActions} from 'vuex'
             this.errorMessage = err.message;
           });
       },
-      toggleIsPublic () {
+      toggleIsPublic (evt) {
         var tobeCategory = this.categoryNode.cloneAsCategory();
         tobeCategory.isPublic = !tobeCategory.isPublic;
 
@@ -121,20 +122,19 @@ import {mapActions} from 'vuex'
             this.errorMessage = err.message;
           });
       },
-      removeCategory () {
-        if(!window.confirm('카테고리를 삭제하시겠습니까? 카테고리를 삭제하면 하위의 카테고리와 포스트가 모두 삭제됩니다.')) {
-          return;
+      removeThisCategory (evt) {
+        console.log('removeThisCategory')
+        var confirm = window.confirm('카테고리를 삭제하시겠습니까? 카테고리를 삭제하면 하위의 카테고리와 포스트가 모두 삭제됩니다.');
+        if(confirm) {
+          this.removeCategory(this.categoryNode.id)
+            .then(() => {
+              this.$emit('operated');
+            })
+            .catch( err => {
+              this.errorMessage = err.message;
+              console.error(err)
+            });
         }
-        console.log('removeCategory')
-
-        this.removeCategory(this.categoryList.id)
-          .then(() => {
-            this.$emit('operated');
-          })
-          .catch( err => {
-            this.errorMessage = err.message;
-            console.error(err)
-          });
       }
     },
 

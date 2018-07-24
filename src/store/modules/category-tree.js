@@ -119,14 +119,17 @@ const actions = {
   },
   removeCategory: (context, payload) => {
     var categoryId = payload;
-    return api.removeCategory(categoryId)
+    var targetCat = context.state.categoryTree.find(categoryId).cloneAsCategory();
+    return api.removeCategory(targetCat)
       .then( data => {
         var tree = context.state.categoryTree;
         tree.removeCategoryNode(categoryId);
+        return data;
       })
       .catch( err => {
         return Promise.reject(err);
       })
+
   }
 
 };

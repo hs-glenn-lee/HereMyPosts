@@ -37,8 +37,8 @@ export default class CategoryNode extends  Category{
 
   removeChildById (id) {
     var targetChildIndex = this.findChildIndex(id);
-    if(targetChildIndex) {
-      removeChild(targetChildIndex);
+    if(targetChildIndex > -1) {
+      this.removeChild(targetChildIndex);
     }
   }
 
@@ -49,7 +49,7 @@ export default class CategoryNode extends  Category{
   }
 
   findChildIndex (id) {
-    this.children.find(el => {
+    return this.children.findIndex(el => {
       return el.id === id
     })
   }

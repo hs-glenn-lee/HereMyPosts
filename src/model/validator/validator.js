@@ -156,8 +156,6 @@ export default {
           reject('이름을 입력해 주세요');
         }
 
-        console.log(parentCategoryNode.validNewCategoryNameAsChild(this.newCategoryName));
-
         if(!parentCategoryNode.validNewCategoryNameAsChild(newCategory.name)) {
           reject('이미 하위에 있는 카테고리 이름입니다.');
         }
