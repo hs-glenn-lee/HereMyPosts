@@ -23,8 +23,6 @@ const getters = {
     return state.oldSelectedNode;
   },
   needToSaveSelectedCategory: state => {
-    console.log('***needToSaveSelectedCategory')
-
     if(state.oldSelectedNode === null) {
       if(state.selectedNode === null) {
         return false;
@@ -35,7 +33,6 @@ const getters = {
       if(state.selectedNode === null) {
         return true
       }else {
-
         return !(state.oldSelectedNode.id === state.selectedNode.id);
       }
     }
@@ -85,6 +82,7 @@ const actions = {
   createCategoryNode: (context, payload) => {
     var parentId = payload.parentId;
     var newCategoryName = payload.newCategoryName;
+    var username = payload.username;
 
     var parentCategoryNode = context.state.categoryTree.find(parentId);
     var newCategory = new Category(null, parentCategoryNode.id, newCategoryName, parentCategoryNode.children.length, false, false);
@@ -95,32 +93,35 @@ const actions = {
       return Promise.reject(err);
     }
 
-    return api.createCategory(newCategory)
+    return api.createCategory(newCategory, username)
       .then( data => {
         parentCategoryNode.addChild(new CategoryNode(data));
       });
   },
   updateCategory: (context, payload) => {//name, isPublic ---- {isDel, parentId, seq} won't updated
     var tobeCategory = payload.tobeCategory;
+    var username = payload.username;
     var targetCategoryNode = context.state.categoryTree.find(tobeCategory.id);
+
     try {
       validator.validate('updateCategory', { tobeCategory, targetCategoryNode })
     }catch (err) {
       return Promise.reject(err);
     }
-    return api.updateCategory(tobeCategory)
+    return api.updateCategory(tobeCategory, username)
       .then( data => {
         Object.assign(targetCategoryNode, data);// critical
-        console.log(targetCategoryNode);
       })
       .catch( err => {
         return Promise.reject(err);
       })
   },
   removeCategory: (context, payload) => {
-    var categoryId = payload;
+    var categoryId = payload.categoryId;
+    var username = payload.username;
     var targetCat = context.state.categoryTree.find(categoryId).cloneAsCategory();
-    return api.removeCategory(targetCat)
+
+    return api.removeCategory(targetCat, username)
       .then( data => {
         var tree = context.state.categoryTree;
         tree.removeCategoryNode(categoryId);

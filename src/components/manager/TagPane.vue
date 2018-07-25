@@ -55,7 +55,7 @@
             {{tagname}}
           </span>
         </div>
-      </div>np
+      </div>
     </div>
   </div>
 </template>

@@ -64,20 +64,20 @@ export default {
       .catch( err => { throw err } ) //403 가능
   },
 
-  createCategory (category) {
-    return axiosAppJson.put('/api/category/create', category)
+  createCategory (category, username) {
+    return axiosAppJson.put('/api/'+username+'/category/create', category)
       .then( res => { return res.data } )
       .catch( err => { throw err } )
   },
 
-  updateCategory (category) {
-    return axiosAppJson.put('/api/category/update', category)
+  updateCategory (category, username) {
+    return axiosAppJson.put('/api/'+username+'/category/update', category)
       .then( res => { return res.data } )
       .catch( err => { throw err } )
   },
 
-  removeCategory (categoryId) {
-    return axiosAppJson.put('/api/category/remove',categoryId)
+  removeCategory (categoryId, username) {
+    return axiosAppJson.put('/api/'+username+'/category/remove',categoryId)
       .then( res => { return res.data } )
       .catch( err => { throw err } )
   },

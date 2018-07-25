@@ -54,7 +54,9 @@ import CreateCategoryNodeComp from './CreateCategoryNodeComp'
 import Category from '@/model/Category'
 import CategoryNodeClass from '@/model/category-tree/category-node'
 
-import {mapActions} from 'vuex'
+import _ from 'lodash'
+
+import {mapActions, mapGetters} from 'vuex'
   export default {
     name: 'CNodeRightClickMenu',
     props: [
@@ -82,63 +84,83 @@ import {mapActions} from 'vuex'
       operate(operation) {
         this.operation = operation
       },
-      addChildCategoryNode(evt) {
-        this.createCategoryNode({
-          newCategoryName: this.newCategoryName,
-          parentId: this.categoryNode.id
-        })
-          .then(() => {
-            this.$emit('operated');
+      addChildCategoryNode: _.throttle(
+        function () {
+          this.createCategoryNode({
+            newCategoryName: this.newCategoryName,
+            parentId: this.categoryNode.id,
+            username: this.getAccount.username
           })
-          .catch( err => {
-            this.errorMessage = err.message;
-          });
-      },
-      updateCategoryName (evt) {
-        var tobeCategory = this.categoryNode.cloneAsCategory();
-        tobeCategory.name = this.newCategoryName;
-
-        this.updateCategory({
-          tobeCategory
-        })
-          .then(() => {
-            this.$emit('operated');
-          })
-          .catch( err => {
-            this.errorMessage = err.message;
-          });
-      },
-      toggleIsPublic (evt) {
-        var tobeCategory = this.categoryNode.cloneAsCategory();
-        tobeCategory.isPublic = !tobeCategory.isPublic;
-
-        this.updateCategory({
-          tobeCategory
-        })
-          .then(() => {
-            this.$emit('operated');
-          })
-          .catch( err => {
-            this.errorMessage = err.message;
-          });
-      },
-      removeThisCategory (evt) {
-        console.log('removeThisCategory')
-        var confirm = window.confirm('카테고리를 삭제하시겠습니까? 카테고리를 삭제하면 하위의 카테고리와 포스트가 모두 삭제됩니다.');
-        if(confirm) {
-          this.removeCategory(this.categoryNode.id)
             .then(() => {
               this.$emit('operated');
             })
             .catch( err => {
               this.errorMessage = err.message;
-              console.error(err)
             });
-        }
-      }
+        },
+        200
+      ),
+      updateCategoryName: _.throttle(
+        function () {
+          var tobeCategory = this.categoryNode.cloneAsCategory();
+          tobeCategory.name = this.newCategoryName;
+
+          this.updateCategory({
+            tobeCategory,
+            username: this.getAccount.username
+          })
+            .then(() => {
+              this.$emit('operated');
+            })
+            .catch( err => {
+              this.errorMessage = err.message;
+            });
+        },
+        200
+      ),
+      toggleIsPublic: _.throttle(
+        function () {
+          var tobeCategory = this.categoryNode.cloneAsCategory();
+          tobeCategory.isPublic = !tobeCategory.isPublic;
+
+          this.updateCategory({
+            tobeCategory,
+            username: this.getAccount.username
+          })
+            .then(() => {
+              this.$emit('operated');
+            })
+            .catch( err => {
+              this.errorMessage = err.message;
+            });
+        },
+        200
+      ),
+      removeThisCategory: _.throttle(
+        function () {
+          var confirm = window.confirm('카테고리를 삭제하시겠습니까? 카테고리를 삭제하면 하위의 카테고리와 포스트가 모두 삭제됩니다.');
+          if(confirm) {
+            this.removeCategory({
+              categoryId:this.categoryNode.id,
+              username: this.getAccount.username
+            })
+              .then(() => {
+                this.$emit('operated');
+              })
+              .catch( err => {
+                this.errorMessage = err.message;
+                console.error(err)
+              });
+          }
+        },
+        200
+      )
     },
 
     computed: {
+      ...mapGetters([
+        'getAccount'
+      ]),
       menuPositionStyle() {
         return 'top:'+(this.top)+'px;'+'left:'+(this.left)+'px;';
       }

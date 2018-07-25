@@ -80,7 +80,11 @@
                  @click="onArticleClick"
                  @click.double="onArticleDoubleClick">
               <div class="article-title">
-              <span class="article-title">{{article.title}}</span>
+                <span class="article-title">{{article.title}}</span>
+              </div>
+              <div class="buttons">
+                <button type="button" @click="removeArticle(article.id)">삭</button>
+                <button type="button" @clikc="toggleArticlePublicity(article.id)">공</button>
               </div>
               <div class="article-create-timestamp">
                 <span v-if="(article.updateDateString)" class="article-create-timestamp">{{article.updateDateString}}</span>
@@ -100,6 +104,8 @@
 import { mapGetters } from 'vuex';
 import { mapMutations } from 'vuex';
 import { mapActions } from 'vuex';
+
+import _ from 'lodash';
 
 export default {
   name: 'CategorySubLeftPaneComp',
@@ -162,7 +168,13 @@ export default {
     },
     setSelectedListTool (payload) {
       this.selectedListTool = payload;
-    }
+    },
+    removeArticle (articleId) {
+      console.log(articleId)
+    },
+    toggleArticlePublicity (articleId) {
+      console.log(articleId)
+    },
 
   },
   watch: {
@@ -396,7 +408,8 @@ export default {
   }
   div.article-summary {
     padding: 5px 0px 10px 5px;
-    color: #6A6A6A;
+    color: #8A8A8A;
+    font-size: 12px;
   }
 
 </style>

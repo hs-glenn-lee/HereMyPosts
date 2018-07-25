@@ -44,7 +44,6 @@ const getters = {
       filtered = state.articleList
     }
 
-
     //sort
     filtered.sort( (a, b) => {
       var ret = (a[state.sortProperty] < b[state.sortProperty])? -1 : (a[state.sortProperty] === b[state.sortProperty]) ? 0 : 1;
@@ -82,7 +81,7 @@ const getters = {
     }
   },
   needToSaveArticle: state => {
-    console.log('needToSaveArticle%%%%%%%%%%%%%%');
+    /*console.log('needToSaveArticle%%%%%%%%%%%%%%');*/
 
     if(state.oldArticle) {
       if(state.article) {
@@ -164,6 +163,22 @@ const actions = {
 
     //validate
     validator.validate('saveArticle',state.article);
+    //extract summary
+    let summary;
+    var vSpan= document.createElement('span');
+    vSpan.innerHTML= state.article.content;
+
+    var children= vSpan.querySelectorAll('*');
+    for(var i = 0 ; i < children.length ; i++) {
+      if(children[i].textContent)
+        children[i].textContent+= ' ';
+      else
+        children[i].innerText+= ' ';
+    }
+    summary = [vSpan.textContent || vSpan.innerText].toString().replace(/ +/g,' ');
+    summary = (summary.length > 60)? summary.substring(0, 60) : summary;
+    summary += ' ...';
+    state.article.summary = summary;
 
     return api.saveArticle(state.article)
       .then( data => {
@@ -177,8 +192,6 @@ const actions = {
     return api.getArticlesOfCategory(payload)
       .then(data => {
         context.commit('setArticleList',data)
-        console.log('292929292929');
-        console.log(context.state.listOf)
         context.commit('setListOf','category')
         context.commit('sortArticleList');
       })
