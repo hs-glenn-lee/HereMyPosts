@@ -83,9 +83,15 @@
                 <span class="article-title">{{article.title}}</span>
               </div>
               <div class="buttons">
-                <button type="button" @click="removeArticle(article.id)">삭</button>
-                <button type="button" @clikc="toggleArticlePublicity(article.id)">공</button>
+                  <div class="button">
+                    <div class="button-image"></div>
+                  </div>
+                <!--<button type="button" @click="removeArticle(article.id)">
+                </button>-->
+                  <!--<img src="@/assets/images/article-list-pane/trash-24w24h.png">-->
+
               </div>
+
               <div class="article-create-timestamp">
                 <span v-if="(article.updateDateString)" class="article-create-timestamp">{{article.updateDateString}}</span>
               </div>
@@ -397,9 +403,28 @@ export default {
   }
 
   div.article-title {
+    display: inline-block;
     padding: 10px 0px 5px 5px;
     font-size: 20px;
+
   }
+
+  div.article-list-item-wrapper > div.buttons {
+    display: inline-block;
+  }
+  div.article-list-item-wrapper > div.buttons > div.button {
+    display: inline-block;
+  }
+  div.article-list-item-wrapper > div.buttons > div.button > div.button-image {
+    background-size: 14px 14px;
+    background-image: url(../../assets/images/article-list-pane/trash-24w24h.png);
+    width: 14px;
+    height: 14px;
+    cursor: pointer;
+    vertical-align: middle;
+    opacity: 0.6;
+  }
+
 
   div.article-create-timestamp {
     padding: 1px 0px 5px 5px;
