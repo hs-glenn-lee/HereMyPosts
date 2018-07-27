@@ -79,17 +79,16 @@
                  v-bind:id="article.id"
                  @click="onArticleClick"
                  @click.double="onArticleDoubleClick">
-              <div class="article-title">
-                <span class="article-title">{{article.title}}</span>
-              </div>
-              <div class="buttons">
-                  <div class="button">
-                    <div class="button-image"></div>
-                  </div>
-                <!--<button type="button" @click="removeArticle(article.id)">
-                </button>-->
-                  <!--<img src="@/assets/images/article-list-pane/trash-24w24h.png">-->
 
+              <div class="flex">
+                <div class="article-title">
+                  <span class="article-title">{{article.title}}</span>
+                </div>
+                <div class="buttons">
+                  <div class="button">
+                    <div class="button-image" @click="onClickTrashCan($event, article.id)"></div>
+                  </div>
+                </div>
               </div>
 
               <div class="article-create-timestamp">
@@ -175,7 +174,8 @@ export default {
     setSelectedListTool (payload) {
       this.selectedListTool = payload;
     },
-    removeArticle (articleId) {
+    onClickTrashCan (evt, articleId) {
+      evt.stopPropagation();
       console.log(articleId)
     },
     toggleArticlePublicity (articleId) {
@@ -395,6 +395,7 @@ export default {
     border-bottom: 1px solid #ececec;
   }
 
+
   div.article-list-item-wrapper {
     border: 4px solid white;
   }
@@ -402,27 +403,38 @@ export default {
     border: 4px solid #acacac;
   }
 
+  div.flex {
+    display: flex;
+    justify-content: space-between;
+  }
+
   div.article-title {
     display: inline-block;
     padding: 10px 0px 5px 5px;
     font-size: 20px;
-
   }
 
-  div.article-list-item-wrapper > div.buttons {
+  div.buttons {
     display: inline-block;
   }
-  div.article-list-item-wrapper > div.buttons > div.button {
+  div.buttons > div.button {
     display: inline-block;
+    margin-top: 8px;
+    margin-right: 8px;
   }
-  div.article-list-item-wrapper > div.buttons > div.button > div.button-image {
+  div.buttons > div.button > div.button-image {
     background-size: 14px 14px;
     background-image: url(../../assets/images/article-list-pane/trash-24w24h.png);
     width: 14px;
     height: 14px;
+
     cursor: pointer;
-    vertical-align: middle;
-    opacity: 0.6;
+
+    opacity: 0.5;
+  }
+  div.buttons > div.button > div.button-image:hover {
+    background-image: url(../../assets/images/article-list-pane/trash-on-hover-24w24h.png);
+    opacity: 0.7;
   }
 
 
