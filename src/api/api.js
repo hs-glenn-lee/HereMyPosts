@@ -124,11 +124,19 @@ export default {
         throw err;
       })
   },
+  deleteArticle (articleId) {
+    return axiosAppJson.delete('api/article/delete/' + articleId)
+      .then( res => {
+        return res.data;
+      })
+      .catch( err => {
+        console.error(err);
+        throw err;
+      })
+  },
 
   //---comment
   writeComment (comment) {
-    console.log('writeComment!')
-    console.log(comment)
     return axiosAppJson.put('api/comment/write', comment)
       .then(res => {
         console.log(res)

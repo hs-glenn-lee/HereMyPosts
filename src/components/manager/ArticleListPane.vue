@@ -136,7 +136,8 @@ export default {
       'isManagerLoading',
       'getListOf',
       'getSortDirection',
-      'getSortProperty'
+      'getSortProperty',
+      'getAccount'
     ]),
     getListHeight () {
       return this.listHeight;
@@ -176,7 +177,7 @@ export default {
     },
     onClickTrashCan (evt, articleId) {
       evt.stopPropagation();
-      console.log(articleId)
+
     },
     toggleArticlePublicity (articleId) {
       console.log(articleId)

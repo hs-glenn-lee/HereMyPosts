@@ -225,6 +225,23 @@ const actions = {
         context.commit('setOldArticle', copy);
         return data;
       })
+  },
+  deleteArticle: (context, payload) => {
+    var articleId = payload.articleId;
+    return api.deleteArticle(articleId)
+      .then( data => {
+        var aList = context.state.articleList
+        aList.forEach( (el, idx) => {
+          if(el.id === articleId) {
+            aList.splice(idx,1);
+            return
+          }
+        });
+        return data;
+      })
+      .catch( err => {
+        return Promise.reject(err);
+      })
   }
 };
 export default {
