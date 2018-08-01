@@ -124,6 +124,9 @@ const mutations = {
   setArticleList: (state, payload) => {
     state.articleList = payload;
   },
+  addToArticleList: (state, payload) => {
+    state.articleList.push(payload);
+  },
   setListOf: (state, payload) => {
     state.listOf = payload;
   },
@@ -176,12 +179,14 @@ const actions = {
         children[i].innerText+= ' ';
     }
     summary = [vSpan.textContent || vSpan.innerText].toString().replace(/ +/g,' ');
-    summary = (summary.length > 60)? summary.substring(0, 60) : summary;
-    summary += ' ...';
+    summary = (summary.length > 60)? (summary.substring(0, 60) + ' ...') : summary;
     state.article.summary = summary;
 
     return api.saveArticle(state.article)
       .then( data => {
+        console.log('@@@@@@')
+        console.log(data);
+        context.commit('addToArticleList', data);
         return data;
       })
       .catch( err => {
@@ -227,7 +232,7 @@ const actions = {
       })
   },
   deleteArticle: (context, payload) => {
-    var articleId = payload.articleId;
+    var articleId = payload;
     return api.deleteArticle(articleId)
       .then( data => {
         var aList = context.state.articleList
@@ -237,6 +242,11 @@ const actions = {
             return
           }
         });
+
+        if(context.state.article.id === articleId) {
+          context.dispatch('setNewArticleWithId');
+        }
+
         return data;
       })
       .catch( err => {

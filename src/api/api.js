@@ -85,8 +85,6 @@ export default {
 
   //---article
   saveArticle (compositeArticle) {
-    console.log( 'api.saveArticle')
-
     return axiosAppJson.post('/api/article/save', compositeArticle)
       .then( res => { return res.data })
       .catch( err => { throw err })

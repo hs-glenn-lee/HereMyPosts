@@ -1,63 +1,70 @@
 <template>
-  <div>
+  <div class="manager-left-pane">
+    <div class="global-logo-picto" style="margin-top:10px; margin-bottom: 30px; margin-top: 20px;">
+      <img src="@/assets/images/icon-picto-86w87h.png"/>
+    </div>
     <nav class="left-pane-menu">
-      <div class="global-logo-picto" style="margin-top:10px; margin-bottom: 30px; margin-top: 20px;">
-        <img src="@/assets/images/icon-picto-86w87h.png"/>
-      </div>
-      <div class="left-pane-menu-item"
-           @mouseover="onMenuItemMouserOver" @mouseleave="onMenuItemMouserLeave">
-        <img
-          id="new-document-icon"
-          @click="onClickNewDocumentMenu"
-          class="icon psd-hover-cursor-pointer"
-          src="@/assets/images/left-pane-icons/new-document-icon-40w40h.png"
-        />
-      </div>
-      <div class="left-pane-menu-item"
-           @mouseover="onMenuItemMouserOver" @mouseleave="onMenuItemMouserLeave">
-        <img
-          id="category-icon"
-          @click="onClickCategoryMenu"
-          class="icon psd-hover-cursor-pointer"
-          src="@/assets/images/left-pane-icons/category-icon-40w40h.png"/>
-      </div>
+      <div class="flex-menu">
+        <div class="flex-menu-group">
+          <div class="menu-group">
+            <div class="left-pane-menu-item"
+                 @mouseover="onMenuItemMouserOver" @mouseleave="onMenuItemMouserLeave">
+              <img
+                id="new-document-icon"
+                @click="onClickNewDocumentMenu"
+                class="icon psd-hover-cursor-pointer"
+                src="@/assets/images/left-pane-icons/new-document-icon-40w40h.png"
+              />
+            </div>
+            <div class="left-pane-menu-item"
+                 @mouseover="onMenuItemMouserOver" @mouseleave="onMenuItemMouserLeave">
+              <img
+                id="category-icon"
+                @click="onClickCategoryMenu"
+                class="icon psd-hover-cursor-pointer"
+                src="@/assets/images/left-pane-icons/category-icon-40w40h.png"/>
+            </div>
 
-      <div class="left-pane-menu-item"
-           @mouseover="onMenuItemMouserOver"
-           @mouseleave="onMenuItemMouserLeave">
-          <img
-            id="tag-icon"
-            class="icon psd-hover-cursor-pointer"
-            src="@/assets/images/left-pane-icons/tag-icon-40w40h.png"
-            @click="onClickTagMenu"
-            @mouseover="onMenuItemMouserOver"
-            @mouseleave="onMenuItemMouserLeave"/>
+            <div class="left-pane-menu-item"
+                 @mouseover="onMenuItemMouserOver"
+                 @mouseleave="onMenuItemMouserLeave">
+              <img
+                id="tag-icon"
+                class="icon psd-hover-cursor-pointer"
+                src="@/assets/images/left-pane-icons/tag-icon-40w40h.png"
+                @click="onClickTagMenu"
+                @mouseover="onMenuItemMouserOver"
+                @mouseleave="onMenuItemMouserLeave"/>
+            </div>
+            <div
+              id="save-icon"
+              class="left-pane-menu-item"
+              :class="{'need-to-save':needToSave}"
+              @click="onClickSaveMenu"
+              @mouseover="onMenuItemMouserOver"
+              @mouseleave="onMenuItemMouserLeave">
+              <img
+                class="icon psd-hover-cursor-pointer"
+                src="@/assets/images/left-pane-icons/save-icon-40w40h.png"/>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex-menu-group">
+          <div class="menu-group">
+            <div class="left-pane-menu-item user-menu-item flex-bottom"
+                 @click="goSettings"
+                 @mouseover="onMenuItemMouserOver"
+                 @mouseleave="onMenuItemMouserLeave">
+              <img
+                id="setting-icon"
+                class="icon psd-hover-cursor-pointer"
+                src="@/assets/images/left-pane-icons/settings-icon-40w40h.png"/>
+            </div>
+          </div>
+        </div>
+
       </div>
-      <div
-           id="save-icon"
-           class="left-pane-menu-item"
-           :class="{'need-to-save':needToSave}"
-           @click="onClickSaveMenu"
-           @mouseover="onMenuItemMouserOver"
-           @mouseleave="onMenuItemMouserLeave">
-        <img
-          class="icon psd-hover-cursor-pointer"
-          src="@/assets/images/left-pane-icons/save-icon-40w40h.png"/>
-      </div>
-
-
-      <div class="intended-blank-space"></div>
-
-      <div class="left-pane-menu-item user-menu-item"
-           @click="goSettings"
-           @mouseover="onMenuItemMouserOver"
-           @mouseleave="onMenuItemMouserLeave">
-        <img
-          id="setting-icon"
-          class="icon"
-          src="@/assets/images/left-pane-icons/settings-icon-40w40h.png"/>
-      </div>
-
     </nav>
     <div class="">
       <category-pane></category-pane>
@@ -96,7 +103,8 @@ export default {
       'initManager',
       'updateArticleTags',
       'newArticle',
-      'loadSavedArticle'
+      'loadSavedArticle',
+      'initManager'
     ]),
     onClickNewDocumentMenu (event) {
       this.newArticle();
@@ -175,30 +183,46 @@ export default {
 </script>
 
 <style scoped>
-  .left-pane-menu {
+  div.manager-left-pane {
     left: 0;
     width: 60px;
-
-    /**/
     border-right: 1px solid #ececec;
     height: 100%;
-    float: left;
     z-index: 200;
     position: absolute;
-
     background-color: #f8f8f8;
-
   }
+
+  nav.left-pane-menu {
+    height: 100%;
+  }
+
+  div.flex-menu {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    flex-wrap: wrap;
+    height: 80%; /*TODO set computed height*/
+  }
+
+  .flex-menu-group {
+    display:flex;
+  }
+  div.menu-group {
+    margin: auto;
+  }
+
   div.left-pane-menu-item {
+    display: block;
     text-align: center;
     margin-top: 10px;
     margin-bottom: 10px;
   }
+
   img.icon {
     height: 40px;
     width: 40px;
   }
-
 
   #save-icon.need-to-save img.icon{
     background-color: indianred;
@@ -213,11 +237,8 @@ export default {
     border-radius: 21px;
   }
 
-  div.intended-blank-space:after{
-    content:"";
-    display: block;
-    height: 200px;
-  }
+
+
 
 
 </style>

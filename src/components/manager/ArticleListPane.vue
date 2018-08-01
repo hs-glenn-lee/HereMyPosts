@@ -84,7 +84,7 @@
                 <div class="article-title">
                   <span class="article-title">{{article.title}}</span>
                 </div>
-                <div class="buttons">
+                <div v-show="getListOf === 'category'" class="buttons">
                   <div class="button">
                     <div class="button-image" @click="onClickTrashCan($event, article.id)"></div>
                   </div>
@@ -155,7 +155,8 @@ export default {
       'setSearchWord'
     ]),
     ...mapActions([
-      'getRecentArticles'
+      'getRecentArticles',
+      'deleteArticle'
     ]),
     calcListHeight() {
       let notList = window.document.querySelector('div.not-list');
@@ -177,7 +178,7 @@ export default {
     },
     onClickTrashCan (evt, articleId) {
       evt.stopPropagation();
-
+      this.deleteArticle(articleId);
     },
     toggleArticlePublicity (articleId) {
       console.log(articleId)
