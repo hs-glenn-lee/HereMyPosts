@@ -66,7 +66,8 @@ export default {
   name: 'Manage',
   data () {
     return {
-      tinymceEditor: null
+      tinymceEditor: null,
+      editorWidth: 1280+16
     }
   },
   props: ['editorHeight'],
@@ -81,7 +82,6 @@ export default {
   },
   watch: {
     getArticle () {
-      console.log(this);
       if(this.tinymceEditor) {
         tinyMCE.execCommand('mceRemoveEditor', false, 'editor');
         this.init();
@@ -100,7 +100,7 @@ export default {
         selector: '#editor',
         laguage: 'ko_KR',
         height: 822,
-        width: 1366,
+        width: vm.editorWidth,
         branding: false,
         theme: 'modern',
         menu: {
@@ -176,7 +176,7 @@ export default {
       if(this.tinymceEditor) {
         console.log('setEditorHeight!!!22222222222')
         console.log(this.editorHeight)
-        this.tinymceEditor.theme.resizeTo (1366, this.editorHeight);
+        this.tinymceEditor.theme.resizeTo (this.editorWidth, this.editorHeight);
       }
     }
   }

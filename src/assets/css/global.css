@@ -3,9 +3,9 @@ html, body {
   font-family: NanumGothic;
 }
 
-div.root-container {
+div.root-container {/*TODO refactoring: delete this*/
   margin: 0px auto 0px auto;
-  width: 1366px;
+  width: 1280px;
 }
 div.float-left {
   float: left;

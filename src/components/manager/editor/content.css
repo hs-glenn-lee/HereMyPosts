@@ -1,2 +1,12 @@
 @import url('../../../assets/css/fonts/nanumbrush/font-nanumbrush.css');
+@import url(../../../assets/css/reset.css);
 
+body.mce-content-body {
+  display: block;
+  margin: 8px; /*this margin is needed to set space between the body and frame of editor.
+                 Therefore, the "editorWidth" property of EditorPane need to add 16(px) to 1280(standard width)*/
+}
+
+p {
+  margin-bottom: 1em;
+}

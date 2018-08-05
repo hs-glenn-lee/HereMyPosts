@@ -19,6 +19,6 @@
 <style scoped>
   div.center-block {
     margin-left: auto;
-    width: 1366px;
+    width: 1280px;
   }
 </style>

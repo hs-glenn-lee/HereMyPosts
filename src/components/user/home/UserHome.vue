@@ -5,11 +5,6 @@
         <div class="flex-item">
           <div class="global-logo"><img src="@/assets/images/logo_height_30px.png"/></div>
         </div>
-        <!--<div class="flex-item">
-          <div class="header-menu-item">
-            <a href="/sign/sign-in">로그인</a>
-          </div>
-        </div>-->
       </header>
     </div>
 

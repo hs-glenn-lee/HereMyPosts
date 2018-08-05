@@ -159,7 +159,7 @@
 
   div.center-block {
     margin: auto;
-    width: 1366px;
+    width: 1280px;
   }
 
   div.article-meta-obj {

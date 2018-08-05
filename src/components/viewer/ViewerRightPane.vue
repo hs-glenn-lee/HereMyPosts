@@ -1,23 +1,20 @@
 <template>
   <div class="right-pane">
     <div class="center-block">
-      <div class="author-info">
-          <div class="author-profile-picture" :style="authorProfilePictureStyle"></div>
-          <div class="author-pen-name"><span>{{authorSetting.penName}}</span></div>
-          <div class="author-introduction">{{authorSetting.introduction}}</div>
-      </div>
-      <article v-if="getArticle">
+      <article class="article" v-if="getArticle">
         <h1 class="hidden">{{getTitle}}</h1>
         <div class="article-meta">
-          <div class="category-name">{{getArticle.category.name}}</div>
-          <div class="title">
-            <span>{{getTitle}}</span>
+          <div class="author-info">
+            <div class="author-profile-picture info-item" :style="authorProfilePictureStyle"></div>
+            <div class="author-pen-name info-item"><span>{{authorSetting.penName}}</span></div>
           </div>
+          <div class="category-name">{{getArticle.category.name}}</div>
+          <div class="title"><span>{{getTitle}}</span></div>
         </div>
 
-        <div v-html="getContent" class="content-container">
-          <!--{{getContent}}-->
-        </div>
+        <!--<div v-html="getContent" class="article-content"></div>-->
+        <article-content-comp v-if="getArticle" :content="getContent"></article-content-comp>
+
       </article>
 
       <viewer-comments
@@ -33,6 +30,8 @@
   import api from '@/api/api';
 
   import ViewerComments from './ViewerComments';
+  import ArticleContentComp from './ArticleContent';
+
   export default {
     name: "ViewerRightPane",
     data () {
@@ -52,8 +51,7 @@
       ]),
       authorProfilePictureStyle () {
         return {
-          'background-image': 'url("' + this.profilePictureUrl + '")',
-          'background-size': '100px 100px'
+          'background-image': 'url("' + this.profilePictureUrl + '")'
         }
       },
       profilePictureUrl () {
@@ -71,42 +69,59 @@
         })
     },
     components: {
-      'viewer-comments': ViewerComments
+      'viewer-comments': ViewerComments,
+      'article-content-comp': ArticleContentComp
     }
   }
 </script>
 
 <style scoped>
   div.right-pane {
+    display: block;
     margin-left: 60px;
     width: 100%;
     height: 100%;
     background-color: white;
+
+    overflow-y: scroll;
+    overflow-x: hidden;
   }
   div.center-block {
     margin: auto;
-    width: 1366px;
+    width: 1280px;
   }
   div.author-info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
 
+    margin-bottom: 16px;
+  }
+  div.author-info > .info-item {
+    margin: 0px 0px 0px 8px;
+    font-size: 1.2em;
   }
 
   div.author-info > div.author-profile-picture{
-    height: 100px;
-    width: 100px;
-    background-size: 100px 100px;
+    height: 45px;
+    width: 45px;
+    background-size: 45px 45px;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 50%;
   }
-
-
 
   div.article-meta {
     position: relative;
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding-top: 16px;
+    padding-bottom: 16px;
   }
 
   div.article-meta > div.category-name {
     margin-bottom: 8px;
+    font-size: 1.2em;
+    color: #8a8a8a;
   }
 
   div.article-meta > div.title {
@@ -114,10 +129,8 @@
     font-weight: bold;
   }
 
-
-  div.content-container {
-    height: 100%;
-    /**/
-    font: inherit;
+  article.article {
+    margin-bottom: 16px;
   }
+
 </style>
