@@ -53,7 +53,15 @@ export default {
       })
       .catch(err => console.log(err) );
   },
-
+  getPublicAccountSetting (username) {
+    return axiosAppJson.get('/api/public-account-setting/'+username)
+      .then(res => {
+        return res.data;
+      })
+      .catch(err => {
+        return Promise.reject(err)
+      });
+  },
 
   //---related to category
   getAllMyCategory () {

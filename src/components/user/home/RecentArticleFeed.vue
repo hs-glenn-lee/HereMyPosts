@@ -17,6 +17,7 @@
   import { mapMutations } from 'vuex'
   import { mapGetters } from 'vuex'
   import ArticleFeedItem from './ArticleFeedItem'
+  import PageParameter from '@/model/PageParameter.js'
   import api from '@/api/api'
 
   export default {
@@ -31,7 +32,7 @@
     },
     created() {
       console.log('feed!!');
-      this.getRecentArticles();
+      this.getRecentArticles(0);
     },
     methods: {
       ...mapActions([
@@ -40,13 +41,17 @@
       ...mapMutations([
 
       ]),
-      getRecentArticles() {
-        console.log(' com getRecentArticles ')
+      getRecentArticles(page) {
         var vm = this;
-        api.getRecentArticles(this.username)
-          .then(res => {
-            vm.recentArticleList = res;
+        var pageParameter = new PageParameter(page,10,'desc','updateTimestamp');
+        var username = this.username;
+
+        return api.getRecentArticles(username, pageParameter)
+          .then( data => {
+            vm.recentArticleList = data;
           })
+
+
       }
     },
     computed: {
