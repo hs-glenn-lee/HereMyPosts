@@ -1,8 +1,23 @@
 <template>
   <li class="article-feed-item">
-    <div class="title" @click="goArticleViewer(article.id)">{{article.title}}</div>
-    <div class="title">{{article.createTimestamp}}</div>
-
+    <div class="itemm psd-hover-cursor-pointer" @click="goArticleViewer(article.id)">
+      <div class="row">
+        <div class="title">{{article.title}}</div>
+      </div>
+      <div class="row">
+        <div class="flex-row">
+          <div class="update-time"><span v-if="(article.updateDateString)" class="article-create-timestamp">{{article.updateDateString}}</span></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="summary"><span>{{article.summary}}</span></div>
+      </div>
+      <div class="row">
+        <div class="flex-row">
+          <div class="comment-count">6 comments</div>
+        </div>
+      </div>
+    </div>
   </li>
 </template>
 
@@ -48,5 +63,44 @@
 </script>
 
 <style scoped>
+  div.itemm {
+    border: 1px solid #ececec;
+    border-radius: 4px;
+    margin: 10px 0px 10px 0px;
+    padding: 4px 8px 4px 8px;
+
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  }
+  div.row:first-child {
+    margin-top: 8px;
+  }
+  div.row {
+    margin-bottom: 8px;
+  }
+  div.flex-row {
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  div.title {
+    font-size: 1.5em;
+    font-weight: bold;
+  }
+  div.update-time {
+    display:flex;
+  }
+  div.update-time > span {
+    font-size: 0.8em;
+    color: #8A8A8A;
+  }
+  div.summary {
+    font-size: 1em;
+  }
+
+  div.comment-count {
+    font-size: 0.8em;
+    color: #8A8A8A;
+  }
 
 </style>

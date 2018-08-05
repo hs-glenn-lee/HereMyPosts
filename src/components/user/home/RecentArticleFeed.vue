@@ -1,5 +1,6 @@
 <template>
   <div class="recent-article-feed">
+    <div class="feed-name"><span>최근 글</span></div>
     <ul>
       <article-feed-item
         class="article-feed-item"
@@ -27,12 +28,15 @@
     },
     data() {
       return {
-        recentArticleList: []
+        recentArticleList: [],
+        page: 0,
+        size: 10,
+        maxPage: Number.MAX_SAFE_INTEGER
       }
     },
     created() {
       console.log('feed!!');
-      this.getRecentArticles(0);
+      this.getRecentArticles();
     },
     methods: {
       ...mapActions([
@@ -41,17 +45,15 @@
       ...mapMutations([
 
       ]),
-      getRecentArticles(page) {
-        var vm = this;
-        var pageParameter = new PageParameter(page,10,'desc','updateTimestamp');
+      getRecentArticles() {
+        var pageParameter = new PageParameter(this.page,this.size,'desc','updateTimestamp');
         var username = this.username;
 
         return api.getRecentArticles(username, pageParameter)
           .then( data => {
-            vm.recentArticleList = data;
+            this.recentArticleList = data;
+            this.page +=1;
           })
-
-
       }
     },
     computed: {
@@ -66,5 +68,7 @@
 </script>
 
 <style scoped>
-
+  div.feed-name {
+    font-weight: bold;
+  }
 </style>

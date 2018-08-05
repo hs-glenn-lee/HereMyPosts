@@ -95,7 +95,7 @@
                 <span v-if="(article.updateDateString)" class="article-create-timestamp">{{article.updateDateString}}</span>
               </div>
               <div class="article-summary">
-                <span class="article-summary">{{article.summary}}</span>
+                <span class="article-summary">{{ellipsedSummary(article.summary)}}</span>
               </div>
             </div>
           </li>
@@ -183,6 +183,14 @@ export default {
     toggleArticlePublicity (articleId) {
       console.log(articleId)
     },
+    ellipsedSummary (summary) {
+      var ret = summary;
+      if(ret) {
+        ret = (ret.length > 60)? ret.substring(0,60) + ' ...' : ret;
+        return ret;
+      }
+      return '';
+    }
 
   },
   watch: {

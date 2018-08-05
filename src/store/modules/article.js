@@ -179,12 +179,11 @@ const actions = {
         children[i].innerText+= ' ';
     }
     summary = [vSpan.textContent || vSpan.innerText].toString().replace(/ +/g,' ');
-    summary = (summary.length > 60)? (summary.substring(0, 60) + ' ...') : summary;
+    summary = (summary.length > 280)? (summary.substring(0, 280)) : summary;
     state.article.summary = summary;
 
     return api.saveArticle(state.article)
       .then( data => {
-        console.log('@@@@@@')
         console.log(data);
         context.commit('addToArticleList', data);
         return data;

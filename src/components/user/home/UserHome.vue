@@ -13,14 +13,21 @@
       </header>
     </div>
 
-    <div class="user-info">
-      <div class="user-pen-name">{{userSetting.penName}}</div>
-      <div class="user-introduction">{{userSetting.introduction}}</div>
-      <div class="user-name">{{username}}</div>
-    </div>
+    <div>
+      <article class="center">
+        <h2 style="display:none;">홈 내용</h2>
+        <div class="user-info">
+            <div class="user-profile-picture"><img style="width:100px; height: 100px; box-shadow: none; border-radius: 3px;"
+                                           :src="profilePictureUrl"></div>
+            <div class="user-pen-name"><span>{{accountSetting.penName}}</span></div>
+            <div class="user-introduction">{{accountSetting.introduction}}</div>
+        </div>
 
-    <div class="">
-      <recent-article-feed :username="username"></recent-article-feed>
+        <div class="recent-article-feed-container">
+          <recent-article-feed :username="username"></recent-article-feed>
+        </div>
+
+      </article>
     </div>
 
   </div>
@@ -40,7 +47,7 @@
     data() {
       return {
         username: this.$route.params.username,
-        userSetting: {}
+        accountSetting: {}
       }
     },
     methods: {
@@ -54,7 +61,14 @@
     computed: {
       ...mapGetters([
 
-      ])
+      ]),
+      profilePictureUrl () {
+        if(this.accountSetting.profilePictureFileId) {
+          return '/uploaded-image/' + this.accountSetting.profilePictureFileId
+        }else {
+          return ''
+        }
+      }
     },
     components: {
       'recent-article-feed': RecentArticleFeed
@@ -62,9 +76,7 @@
     created () {
       api.getPublicAccountSetting(this.username)
         .then( data => {
-          console.log('wwwwwwwwwwwwww')
-          console.log(data);
-          this.userSetting = data;
+          this.accountSetting = data;
         })
     }
   }
@@ -91,6 +103,31 @@
     line-height: 54px;
 
     padding: 0px 10px 0px 10px;
+  }
+
+  article.center {
+    width: 1080px;
+    margin: auto;
+  }
+
+  div.user-info {
+    width: 600px;
+    min-height: 110px;
+    margin: auto;
+    padding-bottom:16px;
+  }
+  div.user-pen-name{
+    font-size: 1.8em;
+    font-weight: bold;
+    padding-bottom: 8px;
+  }
+
+  div.user-introduction {
+    font-size: 1.2em;
+    padding-bottom: 1.4em;
+  }
+  div.user-profile-picture {
+    float: right;
   }
 
 </style>
