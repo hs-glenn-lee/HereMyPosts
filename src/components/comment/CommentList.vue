@@ -1,7 +1,9 @@
 <template>
   <div class="comment-list-container">
+
     <ul class="comment-list">
       <comment-list-item
+        v-if="comments.length > 0"
         v-for="comment in comments"
         :comment="comment"
         :key="comment.id"></comment-list-item>
@@ -14,18 +16,29 @@
 
   import { mapActions } from 'vuex'
   import { mapGetters } from 'vuex'
+  import api from '@/api/api'
+
   export default {
     name: "CommentList",
     props: {
-      comments: Array
+      article: Object
     },
     data () {
-      return {}
+      return {
+        comments: []
+      }
     },
     methods: {
       ...mapActions([
 
-      ])
+      ]),
+      getCommentsOfArticle () {
+        return api.getCommentsOfArticle(this.article.id)
+          .then(data => {
+            this.comments = data;
+          })
+          .catch(err => {console.error(err)})
+      },
     },
     computed: {
       ...mapGetters([
@@ -35,15 +48,16 @@
     components: {
         'comment-list-item': CommentListItem
     },
-    created() {
-
+    mounted() {
+      this.getCommentsOfArticle ()
     }
   }
 </script>
 
 <style scoped>
-  div.viewer {
-    position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px;
-    overflow: hidden;
+  div.comment-list-container {
+    min-height: 40px;
+    margin-bottom: 16px;
   }
+
 </style>

@@ -67,7 +67,7 @@ export default {
   data () {
     return {
       tinymceEditor: null,
-      editorWidth: 1280+16
+      editorWidth: 1280+33
     }
   },
   props: ['editorHeight'],

@@ -8,19 +8,28 @@
             <div class="author-profile-picture info-item" :style="authorProfilePictureStyle"></div>
             <div class="author-pen-name info-item"><span>{{authorSetting.penName}}</span></div>
           </div>
-          <div class="category-name">{{getArticle.category.name}}</div>
+          <div class="category-name">
+            <img src="@/assets/images/left-pane-icons/category-icon-40w40h.png" style="width:1em;height:1em; vertical-align:middle; opacity:0.8;">
+            {{getArticle.category.name}}
+          </div>
           <div class="title"><span>{{getTitle}}</span></div>
+          <div class="update-time">작성 {{getArticle.createDateString}}</div>
         </div>
 
         <!--<div v-html="getContent" class="article-content"></div>-->
         <article-content-comp v-if="getArticle" :content="getContent"></article-content-comp>
 
       </article>
-
-      <viewer-comments
-        v-if="getArticle"
-        :article="getArticle"></viewer-comments>
     </div>
+
+    <div class="other">
+      <div class="center-block">
+        <viewer-comments
+          v-if="getArticle"
+          :article="getArticle"></viewer-comments>
+      </div>
+    </div>
+
   </div>
 </template>
 
@@ -119,18 +128,30 @@
   }
 
   div.article-meta > div.category-name {
-    margin-bottom: 8px;
+    margin-bottom: 16px;
     font-size: 1.2em;
-    color: #8a8a8a;
+    color: #4a4a4a;
   }
 
   div.article-meta > div.title {
     font-size: 2em;
     font-weight: bold;
+    padding-bottom: 16px;
+  }
+
+  div.article-meta > div.update-time {
+    color: #aaaaaa;
+    font-size: 0.7em;
   }
 
   article.article {
     margin-bottom: 16px;
+  }
+
+  div.other {
+    padding-top: 16px;
+    padding-bottom: 16px;
+    background-color: #efefef;
   }
 
 </style>

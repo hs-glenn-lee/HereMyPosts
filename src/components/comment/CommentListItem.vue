@@ -1,6 +1,9 @@
 <template>
   <li class="comment-list-item">
-    <div class="authorName">{{comment.authorName}}</div>
+    <div class="comment-meta">
+      <div class="authorName">{{comment.authorName}}</div>
+      <div class="create-time">{{new Date(comment.createTimestamp).toLocaleDateString()}}</div>
+    </div>
     <div class="content">{{comment.content}}</div>
   </li>
 </template>
@@ -33,8 +36,28 @@
 </script>
 
 <style scoped>
-  div.viewer {
-    position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px;
-    overflow: hidden;
+  li.comment-list-item {
+    margin-bottom: 8px;
+
+    background-color: #fff;
+
+    /*border: 1px solid #4a4a4a;
+    border-radius: 4px;*/
+
+    padding: 8px;
+  }
+  div.comment-meta {
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+
+    margin-bottom: 8px;
+  }
+  div.comment-meta > div.authorName{
+    color: #000000;
+    margin-right: 8px;
+  }
+  div.comment-meta > div.create-time {
+    font-size: 0.7em;
   }
 </style>

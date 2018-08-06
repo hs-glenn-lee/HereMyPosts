@@ -6,7 +6,19 @@ body.mce-content-body {
   margin: 8px; /*this margin is needed to set space between the body and frame of editor.
                  Therefore, the "editorWidth" property of EditorPane need to add 16(px) to 1280(standard width)*/
 }
+/* .article-content >>> element */
 
+body {
+  line-height: 1.2;
+}
+.article-content {
+  line-height: 1.2;
+}
 p {
   margin-bottom: 1em;
 }
+.article-content >>> p {
+  margin-bottom: 1em;
+}
+
+
