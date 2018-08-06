@@ -1,52 +1,46 @@
 <template>
   <div class="comment-writer-comp">
-    <div class="comment-writer-title">
-      <span>댓글 쓰기</span>
-    </div>
+    <div @click="letsWriteComment">
+      <div class="comment-writer">
 
-    <div v-if="getIsSignedIn"
-         class="signed-up-user-comment-writer comment-writer">
-      <form class="comment-writer-form">
-        <div class="author-info">
-          <span class="author-name">작성자이름</span>
+        <span class="ready-to-write" v-if="!isGoingToWriteComment">댓글 쓰기 ...</span>
+
+        <div class="author-info invisible"
+             :class="{'visible-ease-in-1s':isGoingToWriteComment}">
+          <div v-if="getIsSignedIn"
+               class="signed-up-author-info">
+            <span class="author-name">작성자이름</span>
+          </div>
+          <div v-else
+               class="anonymous-author-info">
+            <input
+              v-model="authorName"
+              placeholder="작성자 이름"
+              class="anonymous-input anonymous-author-name"
+              type="text">
+            <input
+              v-model="anonymousPassword"
+              placeholder="비밀번호"
+              class="anonymous-input anonymous-password"
+              type="password">
+          </div>
         </div>
-        <textarea-autosize
-          placeholder="댓글 내용을 입력해주세요."
-          :min-height="120"
-          v-model="content"
-          class="content-input"
-        ></textarea-autosize>
-        <button
-          @click="writeComment"
-          class="write-comment-button"
-          type="button">쓰기</button>
-      </form>
-    </div>
 
-    <div
-      v-else
-      class="anonymous-user-comment-writer comment-writer">
-      <form class="comment-writer-form">
-        <input
-            v-model="authorName"
-            placeholder="작성자 이름"
-            class="anonymous-author-name"
-            type="text">
-        <input
-          v-model="anonymousPassword"
-          placeholder="비밀번호"
-          class="anonymous-password"
-          type="password">
-        <textarea-autosize
-          placeholder="댓글 내용을 입력해주세요."
-          :min-height="120"
-          v-model="content"
-          class="content-input"
-        ></textarea-autosize>
-        <button
-          @click="writeComment"
-          type="button">쓰기</button>
-      </form>
+        <div
+          :class="{'visible-ease-in-1s':isGoingToWriteComment}"
+          class="invisible">
+          <textarea-autosize
+            placeholder="댓글 내용을 입력해주세요."
+            :min-height="120"
+            v-model="content"
+            class="content-input"
+          ></textarea-autosize>
+          <button
+            @click="writeComment"
+            class="write-comment-button"
+            type="button">쓰기</button>
+        </div>
+      </div>
     </div>
 
   </div>
@@ -73,6 +67,7 @@
         authorName: '',
 
         anonymousPassword: '',
+        isGoingToWriteComment: false
       };
     },
     methods: {
@@ -110,6 +105,9 @@
 
           })
 
+      },
+      letsWriteComment () {
+        this.isGoingToWriteComment = true;
       }
     },
     computed: {
@@ -129,10 +127,15 @@
     background: #fff;
     padding: 8px;
     margin-bottom: 16px;
+
+    box-shadow: 0 1px 4px rgba(0,0,0,.03);
+
+    border-radius: 4px;
+    border: 2px solid #bcbcbc;
   }
-  div.comment-writer-title {
-    margin-bottom: 8px;
-    font-weight: bold;
+  span.ready-to-write {
+    padding-top: 8px;
+    padding-bottom: 8px;
     color: #4a4a4a;
   }
 
@@ -145,30 +148,48 @@
 
     font-family: NanumGothic;
 
-    width: 1264px;
+    width: 1260px;
     padding: 8px 0px 0px 0px;
   }
 
   button.write-comment-button {
     font-size: 1em;
     background-color: #fff;
-    color: #000;
-    border: 1px solid #4a4a4a;
+    color: #4a4a4a;
+    border: 1px solid #bcbcbc;
   }
   button.write-comment-button:hover {
     background-color: #ececec;
     transition: 0.5s;
   }
 
-  input.anonymous-author-name {
+  div.author-info {
+    margin-bottom: 8px;
+  }
+
+  input.anonymous-input {
     font-size: 1em;
     padding: 4px;
-    border-radius:0;
+    border-radius: 4px;
+  }
+  input.anonymous-author-name {
+
   }
 
   input.anonymous-password {
-    font-size: 1em;
-    padding: 4px;
-    border-radius:0;
+
   }
+
+  div.invisible {
+    visibility:hidden;
+    opacity: 0;
+    height:0;
+  }
+  div.invisible.visible-ease-in-1s {
+    visibility: visible;
+    opacity: 1;
+    height: auto;
+    transition: visibility 0s, height 1s, opacity 0.5s linear;
+  }
+
 </style>

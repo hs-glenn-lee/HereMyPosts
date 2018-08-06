@@ -18,18 +18,23 @@
 
         <!--<div v-html="getContent" class="article-content"></div>-->
         <article-content-comp v-if="getArticle" :content="getContent"></article-content-comp>
-
       </article>
+
+
     </div>
 
-    <div class="other">
+    <div class="other comment-comp-container">
       <div class="center-block">
         <viewer-comments
           v-if="getArticle"
           :article="getArticle"></viewer-comments>
       </div>
     </div>
-
+    <div class="other">
+      <div class="center-block">
+        <viewer-footer-comp></viewer-footer-comp>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -40,6 +45,7 @@
 
   import ViewerComments from './ViewerComments';
   import ArticleContentComp from './ArticleContent';
+  import ViewerFooterComp from "./ViewerFooter";
 
   export default {
     name: "ViewerRightPane",
@@ -78,6 +84,7 @@
         })
     },
     components: {
+      'viewer-footer-comp': ViewerFooterComp,
       'viewer-comments': ViewerComments,
       'article-content-comp': ArticleContentComp
     }
@@ -145,13 +152,22 @@
   }
 
   article.article {
-    margin-bottom: 16px;
+    margin-bottom: 32px;
+    min-height: 550px;
   }
+
+
+
 
   div.other {
     padding-top: 16px;
     padding-bottom: 16px;
-    background-color: #efefef;
+    background-color: #f8f8f8;
+
+  }
+  div.comment-comp-container {
+    min-height: 240px;
+    padding-bottom: 80px;
   }
 
 </style>
