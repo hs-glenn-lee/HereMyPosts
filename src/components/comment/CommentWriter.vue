@@ -14,7 +14,7 @@
           <div v-else
                class="anonymous-author-info">
             <input
-              v-model="authorName"
+              v-model="anonymousAuthorName"
               placeholder="작성자 이름"
               class="anonymous-input anonymous-author-name"
               type="text">
@@ -64,8 +64,7 @@
       return {
         commentToWrite: new Comment(),
         content: '',
-        authorName: '',
-
+        anonymousAuthorName: '',
         anonymousPassword: '',
         isGoingToWriteComment: false
       };
@@ -85,12 +84,10 @@
         console.log(comment.isAnonymous)
         if(comment.isAnonymous) {
           comment.anonymousPassword = this.anonymousPassword;
-          comment.authorName = this.authorName;
-          comment.authorId = null;
+          comment.anonymousAuthorName = this.anonymousAuthorName;
         }else {
           var signAccount = this.getAccount;
-          comment.authorId = signAccount.id;
-          comment.authorName = signAccount.username;
+          comment.author = signAccount;
         }
 
         validator.validate('writeComment', comment, exception => {
@@ -128,10 +125,9 @@
     padding: 8px;
     margin-bottom: 16px;
 
-    box-shadow: 0 1px 4px rgba(0,0,0,.03);
-
+    box-shadow: 0 1px 4px #FBF9D0;
     border-radius: 4px;
-    border: 2px solid #bcbcbc;
+    border: 1px solid #EFEB95;
   }
   span.ready-to-write {
     padding-top: 8px;

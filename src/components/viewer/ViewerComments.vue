@@ -82,7 +82,7 @@
   div.show-comment-button {
     background-color: #fff;
     color: #4a4a4a;
-    border: 2px solid #acacac;
+    border: 1px solid #EFEB95;
     border-radius: 4px;
 
     font-size: 1em;
@@ -93,7 +93,7 @@
     height: 64px;
     line-height: 64px;
 
-    box-shadow: 0 1px 4px rgba(0,0,0,.03);
+    box-shadow: 0 1px 4px #FBF9D0;
   }
 
 </style>

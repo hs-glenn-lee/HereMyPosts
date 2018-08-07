@@ -1,17 +1,19 @@
 export default class Comment {
-  constructor(id, authorName, content, authorId, isDel, isAnonymous, anonymousPassword, createTimestamp, updateTimestamp, article) {
+  constructor(id, anonymousAuthorName, content, author, isDel, isAnonymous, anonymousPassword, createTimestamp, updateTimestamp, article) {
     this.id = id;
-    this.authorName = authorName;
-    this.authorId = authorId;
+
     this.content = content;
-    this.isDel = false;
-    this.isDel = isDel;
+    this.author = author;
+
+    this.anonymousAuthorName = anonymousAuthorName;
+    this.anonymousPassword = anonymousPassword;
+
     this.isAnonymous = false;
     this.isAnonymous = isAnonymous;
-    this.anonymousPassword = anonymousPassword;
+    this.isDel = false;
+    this.isDel = isDel;
     this.createTimestamp = createTimestamp;
     this.updateTimestamp = updateTimestamp;
-
     this.article = article;
   }
 

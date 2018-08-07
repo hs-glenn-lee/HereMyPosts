@@ -67,7 +67,6 @@
       calcRightPaneWidth () {
         var $divRightPane = window.document.querySelector('div.right-pane')
         this.rightPaneWrapperWidth = $divRightPane.offsetWidth - 60 /*left-pane-width*/;
-
       },
       calcEditorHeight () {
         console.log('calcEditorHeight')

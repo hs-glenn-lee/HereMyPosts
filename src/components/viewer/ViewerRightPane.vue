@@ -1,38 +1,40 @@
 <template>
   <div class="right-pane">
-    <div class="center-block">
-      <article class="article" v-if="getArticle">
-        <h1 class="hidden">{{getTitle}}</h1>
-        <div class="article-meta">
-          <div class="author-info">
-            <div class="author-profile-picture info-item" :style="authorProfilePictureStyle"></div>
-            <div class="author-pen-name info-item"><span>{{authorSetting.penName}}</span></div>
-          </div>
-          <div class="category-name">
-            <img src="@/assets/images/left-pane-icons/category-icon-40w40h.png" style="width:1em;height:1em; vertical-align:middle; opacity:0.8;">
-            {{getArticle.category.name}}
-          </div>
-          <div class="title"><span>{{getTitle}}</span></div>
-          <div class="update-time">작성 {{getArticle.createDateString}}</div>
-        </div>
-
-        <!--<div v-html="getContent" class="article-content"></div>-->
-        <article-content-comp v-if="getArticle" :content="getContent"></article-content-comp>
-      </article>
-
-
-    </div>
-
-    <div class="other comment-comp-container">
+    <div class="right-pane-wrapper" :style="rightPaneWrapperStyle">
       <div class="center-block">
-        <viewer-comments
-          v-if="getArticle"
-          :article="getArticle"></viewer-comments>
+        <article class="article" v-if="getArticle">
+          <h1 class="hidden">{{getTitle}}</h1>
+          <div class="article-meta">
+            <div class="author-info">
+              <div class="author-profile-picture info-item" :style="authorProfilePictureStyle"></div>
+              <div class="author-pen-name info-item"><span>{{authorSetting.penName}}</span></div>
+            </div>
+            <div class="category-name">
+              <img src="@/assets/images/left-pane-icons/category-icon-40w40h.png" style="width:1em;height:1em; vertical-align:middle; opacity:0.8;">
+              {{getArticle.category.name}}
+            </div>
+            <div class="title"><span>{{getTitle}}</span></div>
+            <div class="update-time">작성 {{getArticle.createDateString}}</div>
+          </div>
+
+          <!--<div v-html="getContent" class="article-content"></div>-->
+          <article-content-comp v-if="getArticle" :content="getContent"></article-content-comp>
+        </article>
+
+
       </div>
-    </div>
-    <div class="other">
-      <div class="center-block">
-        <viewer-footer-comp></viewer-footer-comp>
+
+      <div class="other comment-comp-container">
+        <div class="center-block">
+          <viewer-comments
+            v-if="getArticle"
+            :article="getArticle"></viewer-comments>
+        </div>
+      </div>
+      <div class="other">
+        <div class="center-block">
+          <viewer-footer-comp></viewer-footer-comp>
+        </div>
       </div>
     </div>
   </div>
@@ -52,11 +54,16 @@
     data () {
       return {
         username: this.$route.params.username,
-        authorSetting: {}
+        authorSetting: {},
+
+        rightPaneWrapperWidth: 0
       }
     },
     methods: {
-
+      calcRightPaneWidth () {
+        var $divRightPane = window.document.querySelector('div.right-pane');
+        this.rightPaneWrapperWidth = $divRightPane.offsetWidth - 60 /*left-pane-width*/;
+      }
     },
     computed: {
       ...mapGetters([
@@ -75,6 +82,11 @@
         }else {
           return ''
         }
+      },
+      rightPaneWrapperStyle () {
+        return {
+          'width': this.rightPaneWrapperWidth + 'px'
+        }
       }
     },
     created() {
@@ -82,6 +94,9 @@
         .then( data => {
           this.authorSetting = data;
         })
+    },
+    mounted() {
+      this.calcRightPaneWidth();
     },
     components: {
       'viewer-footer-comp': ViewerFooterComp,
@@ -98,7 +113,9 @@
     width: 100%;
     height: 100%;
     background-color: white;
-
+  }
+  div.right-pane-wrapper {
+    height: 100%;
     overflow-y: scroll;
     overflow-x: hidden;
   }
@@ -131,7 +148,7 @@
   div.article-meta {
     position: relative;
     padding-top: 16px;
-    padding-bottom: 16px;
+    padding-bottom: 32px;
   }
 
   div.article-meta > div.category-name {
@@ -152,7 +169,7 @@
   }
 
   article.article {
-    margin-bottom: 32px;
+    margin-bottom: 80px;
     min-height: 550px;
   }
 

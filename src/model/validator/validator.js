@@ -33,7 +33,7 @@ export default {
           reject('작성된 댓글이 없습니다.')
 
         if(comment.isAnonymous) {
-          if(comment.authorName === undefined || comment.authorName == null || comment.authorName === '') {
+          if(comment.anonymousAuthorName === undefined || comment.anonymousAuthorName == null || comment.anonymousAuthorName === '') {
             reject('댓글작성자 이름을 입력해주세요.')
           }
           if(comment.anonymousPassword === undefined || comment.anonymousPassword === '' || comment.anonymousPassword === null) {
