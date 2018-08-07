@@ -97,6 +97,10 @@
     },
     mounted() {
       this.calcRightPaneWidth();
+      var vm = this;
+      window.addEventListener("resize",function(event) {
+        vm.calcRightPaneWidth();
+      });
     },
     components: {
       'viewer-footer-comp': ViewerFooterComp,

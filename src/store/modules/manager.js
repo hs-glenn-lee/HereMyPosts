@@ -108,7 +108,7 @@ const actions = {
         throw err; //todo error on getting article. this mean wrong articleId(not mine, or no matched article)
       })
       .then( () => {
-        context.dispatch('initCategoryTree', undefined, {root:true})
+        context.dispatch('initCategoryTree', {mode:'private'}, {root:true})
           .then( () => {
             context.commit('setSelectedNode', null, {root:true});
             onComplete('initCategoryTree')
@@ -148,7 +148,7 @@ const actions = {
 
     return context.dispatch('initArticle', articleId, {root:true})
       .then( articleData => {
-        context.dispatch('initCategoryTree', undefined, {root:true})
+        context.dispatch('initCategoryTree', {mode:'private'}, {root:true})
           .then( () => {
             context.commit('setSelectedNodeById', articleData.category.id);
             context.commit('setOldSelectedNodeById', articleData.category.id);
@@ -193,7 +193,6 @@ const actions = {
     }else {
       event.passes = [payload]
     }
-
   }
 };
 export default {

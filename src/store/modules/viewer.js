@@ -3,83 +3,121 @@ import validator from '@/model/validator/validator'
 
 const state = {
   viewerState: 'start',
-  /*passes: {
+  routeParam : {
+    username: '',
+    articleId: ''
+  },
+
+  passes: {
     'CategoryPane': {
       fail: function(context) {
         context.commit('setCategoryPaneIsShowing', false);
       }
-    },
-    'TagPane': {
-      fail: function(context) {
-        context.commit('setIsTagPaneShowing', false);
-      }
     }
-  },
-  isCategoryPaneShowing: true,
-  isArticleListPaneShowing: true,
-  isTagPaneShowing: true*/
+  }
 };
 const getters = {
-  /*isCategoryPaneShowing: state => {
-    return state.isCategoryPaneShowing;
-  },
-  isArticleListPaneShowing: state => {
-    return state.isArticleListPaneShowing;
-  },
-  isTagPaneShowing: state => {
-    return state.isTagPaneShowing;
-  }*/
+  getRouteParam (state) {
+    return state.routeParam;
+  }
 };
 const mutations = {
-  /*setCategoryPaneIsShowing: (state, payload) => {
-    state.isCategoryPaneShowing = payload;
+  setRouteParamUsername (state, payload) {
+    state.routeParam.username = state;
   },
-  setIsTagPaneShowing: (state, payload) => {
-    state.isTagPaneShowing = payload;
-  }*/
+  setRouteParamArticleId (state, payload) {
+    state.routeParam.articleId = payload;
+  }
 };
 const actions = {
   initViewer: (context, payload) => {
-    console.log('initViewer');
-    //context.state.viewerState = 'load';
-    const articleId = payload;
-    const isSavedArticle = (articleId !== undefined);
+    const route = payload;
+    var routeParamUsername = route.params.username;
+    var routeParamArticleId = route.params.articleId;
 
-    //summary sign => article => category, tag
-    context.dispatch('syncSign', undefined, {root:true})
-      .catch(err => {
-        console.log(err);//not signed-in
-
-      })
+    context.dispatch('loadViewerCategory', routeParamUsername)
       .then( () => {
-        console.log('after syncSign');
+        stopWait('loadViewerCategory');
+        context.commit('setRouteParamUsername',routeParamUsername);
+      });
 
-        if(isSavedArticle) {//저장된 글인 경우
-          context.dispatch('initArticle', articleId, {root:true})
-            .then( () => {
-                context.dispatch('initArticleTags', undefined, {root:true});
-              })
-        }else {
-          //article not found, then push to not found page
-        }
+    context.dispatch('loadViewerArticle', routeParamArticleId)
+      .then(() => {
+        stopWait('loadViewerArticle');
+        context.commit('setRouteParamArticleId', routeParamArticleId);
+      });
 
-        context.dispatch('initMyTags', undefined, {root:true});
-        
+
+    var waitingFor = {'initCategoryTree': false, 'loadViewerArticle': false};
+    var stopWait = function (actionName) {
+      waitingFor[actionName] = true;
+      var isAllComplete = true;
+      for(var actionNameKey in waitingFor) {
+        isAllComplete = isAllComplete && (waitingFor[actionNameKey]);
+      }
+
+      if(isAllComplete) {
+        setTimeout( () => {
+          /*context.commit('setIsManagerLoading',!isAllComplete);*/
+        }, 500)
+      }
+    };
+
+
+
+
+
+/*    context.dispatch('syncSign', undefined, {root:true})
+      .catch(err => {
+        return Promise.reject(err);
       })
-  },
- /* test: (context) => {
-    console.log('test')
-    validator.validate('test',undefined, function(exception) {
-      console.log('reject callback')
-      console.log(context.rootState.alert);
+      .then( data => {
+        if(username !== data.username) {
+          var appError = new Error('잘못된 요청입니다.');
+          appError.name = 'BadRequest';
+          return Promise.reject(appError);
+        }
+        if(initAsSavedArticle) {//저장된 글인 경우
+          return context.dispatch('loadSavedArticle', articleId, {root:true})
+        }else {//new article
+          return context.dispatch('newArticle', undefined, {root:true});
+        }
+      });*/
 
-      context.commit('setAlertMessage', exception.message);
-      context.commit('setAlertIsShowing', true);
-    });
-  },*/
+
+  },
+  onChangeRoute: (context, payload) => {
+    const newRouteData = payload.routeData;
+    const newUsername = newRouteData.route.params.username;
+    const newArticleId = newRouteData.route.params.articleId;
+
+    let viewerRouteParam = context.getters.getRouteParam;
+
+
+    if(newArticleId !== viewerRouteParam.articleId) {
+      return context.dispatch('loadViewerArticle', newArticleId)
+        .then( () => {
+
+        })
+    }
+
+
+  },
+  loadViewerCategory: (context, payload) => {
+    const username = payload;
+    context.dispatch('initCategoryTree', {//TODO
+      mode:'public',
+      username:username
+    })
+  },
+  loadViewerArticle: (context, payload) => {
+
+    /*context.dispatch*/
+  },
+
+
   checkPass: (context, payload) => {//to not showing if click other components
     const event = payload;
-
     const passes = context.state.passes;
     const markedPasses = event.passes;
 

@@ -15,9 +15,7 @@ const mutations = {
   }
 };
 const actions = {
-  /*initCategoryTree: context => {
-    console.log('initCategoryTree')
-  }*/
+
 };
 export default {
   state,

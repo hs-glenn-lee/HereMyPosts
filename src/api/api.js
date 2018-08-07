@@ -72,6 +72,15 @@ export default {
       .catch( err => { throw err } ) //403 가능
   },
 
+  getPublicCategories (username) {
+    return axiosAppJson.get('/api/'+username+'/category/public')
+      .then(res => {
+        return res.data
+      })
+      .catch( err => { throw err })
+  },
+
+
   createCategory (category, username) {
     return axiosAppJson.put('/api/'+username+'/category/create', category)
       .then( res => { return res.data } )

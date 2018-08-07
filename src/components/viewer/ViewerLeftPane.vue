@@ -22,8 +22,8 @@
   import { mapMutations } from 'vuex';
   import { mapGetters } from 'vuex';
   import { mapActions } from 'vuex';
-  import categoryTreeComp from '@/components/CategoryTree.vue'
-  import CategoryPane from '@/components/manager/CategoryPane.vue'
+
+  import CategoryPane from '@/components/viewer/CategoryPane.vue'
 
   export default {
     name: 'Manage',
@@ -59,7 +59,6 @@
       ])
     },
     components: {
-      'category-tree-comp': categoryTreeComp,
       'category-pane': CategoryPane
     }
   }

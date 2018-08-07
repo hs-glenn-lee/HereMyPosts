@@ -21,7 +21,7 @@
     onNodeNameRightClick: Function
   },
   mounted() {
-   // this.initCategoryTree()
+
   },
   data() {
     return {
@@ -53,6 +53,10 @@
   },
   components: {
     'category-node': CategoryNode
+  }
+  ,mounted () {
+    console.log('eeeee')
+    console.log(this.getCategoryTreeRoot)
   }
 }
 </script>

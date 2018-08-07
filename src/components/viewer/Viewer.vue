@@ -1,5 +1,5 @@
 <template>
-  <div class="viewer">
+  <div class="viewer" @click="checkPass">
     <left-pane></left-pane>
     <right-pane></right-pane>
     <alert-comp v-if="getIsAlertShowing" key="getAlertCount"></alert-comp>
@@ -12,12 +12,17 @@
   import alertComp from '@/components/Alert'
   import { mapActions } from 'vuex'
   import { mapGetters } from 'vuex'
+  import { mapMutations } from 'vuex'
   export default {
     name: "Viewer",
     methods: {
       ...mapActions([
         'setSavedArticle',
-        'initViewer'
+        'initViewer',
+        'checkPass'
+      ]),
+      ...mapMutations([
+
       ])
     },
     computed: {
@@ -34,9 +39,7 @@
         'alert-comp': alertComp
     },
     created() {
-      var currentPath = this.$route.path
-      var paths = currentPath.split("/");
-      this.initViewer(paths[3]);//
+      this.initViewer(this.$route);
     }
   }
 </script>

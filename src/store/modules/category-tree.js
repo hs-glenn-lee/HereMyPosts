@@ -60,24 +60,44 @@ const mutations = {
   }
 };
 const actions = {
-  initCategoryTree: context => {
+  initCategoryTree: (context, payload) => {
+    const mode = payload.mode;
+    const username = payload.username;
+
+
     //reset
     context.commit('setCategoryTree', new CategoryTree());
     context.commit('setSelectedNode', null);
     context.commit('setOldSelectedNode', null);
 
-    if(!context.state.categoryTree.isEmpty()){
-      return Promise.resolve(this.categoryTree);
+    if(mode === 'private') {
+      return api.getAllMyCategory()
+        .then( data => {
+          console.log(data);
+          context.commit('setCategoryList',data);
+          return this.categoryTree
+        })
+        .catch(err => {
+          console.error(err)
+          alert(err)
+        })
     }
-    return api.getAllMyCategory()
-      .then( data => {
-        context.commit('setCategoryList',data);
-        return this.categoryTree
-      })
-      .catch(err => {
-        console.error(err)
-        alert(err)
-      })
+
+    if(mode === 'public') {
+      return api.getPublicCategories(username)
+        .then( data => {
+          console.log(data);
+          context.commit('setCategoryList',data);
+          return this.categoryTree
+        })
+        .catch(err => {
+          console.error(err)
+          alert(err)
+        })
+    }
+
+
+
   },
   createCategoryNode: (context, payload) => {
     var parentId = payload.parentId;
