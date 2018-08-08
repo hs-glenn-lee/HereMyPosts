@@ -66,7 +66,7 @@
       }
     },
     computed: {
-      ...mapGetters([
+      ...mapGetters('viewer/article',[
         'getContent',
         'getTitle',
         'getArticle'

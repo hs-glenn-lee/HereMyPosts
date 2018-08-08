@@ -10,7 +10,6 @@
           src="@/assets/images/left-pane-icons/category-icon-40w40h.png"/>
       </div>
 
-      <!--<button type="button" @click="test">test</button>-->
     </nav>
     <div>
       <category-pane></category-pane>
@@ -37,8 +36,7 @@
         'setCategoryPaneIsShowing'
       ]),
       ...mapActions([
-        'test',
-        'saveArticle'
+
       ]),
       onClickCategoryMenu (event) {
         event.stopPropagation();// because of check/mark pass

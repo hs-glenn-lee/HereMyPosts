@@ -13,11 +13,11 @@
   import { mapActions } from 'vuex'
   import { mapGetters } from 'vuex'
   import { mapMutations } from 'vuex'
+
   export default {
     name: "Viewer",
     methods: {
-      ...mapActions([
-        'setSavedArticle',
+      ...mapActions('viewer',[
         'initViewer',
         'checkPass'
       ]),
@@ -27,10 +27,12 @@
     },
     computed: {
       ...mapGetters([
+        /*alert start*/
         'getAlertCount',
         'getAlertMessage',
         'getIsAlertShowing',
         'getAlert'
+        /*alert end*/
       ])
     },
     components: {

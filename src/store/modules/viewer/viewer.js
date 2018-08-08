@@ -1,6 +1,17 @@
 import Manager from '@/model/manager/Manager'
 import validator from '@/model/validator/validator'
 
+
+import article from './article.js'
+import articleList from './article-list.js'
+import categoryTree from './category-tree.js';
+
+const namespaced = true;
+const modules = {
+  article,
+  articleList,
+  categoryTree
+};
 const state = {
   viewerState: 'start',
   routeParam : {
@@ -11,7 +22,7 @@ const state = {
   passes: {
     'CategoryPane': {
       fail: function(context) {
-        context.commit('setCategoryPaneIsShowing', false);
+        context.commit('setCategoryPaneIsShowing', false, {root:true});
       }
     }
   }
@@ -35,7 +46,7 @@ const actions = {
     var routeParamUsername = route.params.username;
     var routeParamArticleId = route.params.articleId;
 
-    context.dispatch('loadViewerCategory', routeParamUsername)
+    context.dispatch('loadViewerCategory', routeParamUsername, {root:false})
       .then( () => {
         stopWait('loadViewerCategory');
         context.commit('setRouteParamUsername',routeParamUsername);
@@ -63,33 +74,11 @@ const actions = {
       }
     };
 
-
-
-
-
-/*    context.dispatch('syncSign', undefined, {root:true})
-      .catch(err => {
-        return Promise.reject(err);
-      })
-      .then( data => {
-        if(username !== data.username) {
-          var appError = new Error('잘못된 요청입니다.');
-          appError.name = 'BadRequest';
-          return Promise.reject(appError);
-        }
-        if(initAsSavedArticle) {//저장된 글인 경우
-          return context.dispatch('loadSavedArticle', articleId, {root:true})
-        }else {//new article
-          return context.dispatch('newArticle', undefined, {root:true});
-        }
-      });*/
-
-
   },
   onChangeRoute: (context, payload) => {
-    const newRouteData = payload.routeData;
-    const newUsername = newRouteData.route.params.username;
-    const newArticleId = newRouteData.route.params.articleId;
+    const route = payload;
+    const newUsername = route.route.params.username;
+    const newArticleId = route.route.params.articleId;
 
     let viewerRouteParam = context.getters.getRouteParam;
 
@@ -104,15 +93,15 @@ const actions = {
 
   },
   loadViewerCategory: (context, payload) => {
+    console.log(context);
     const username = payload;
-    context.dispatch('initCategoryTree', {//TODO
-      mode:'public',
+    context.dispatch('categoryTree/initCategoryTree', {//TODO
       username:username
-    })
+    }, {root:false})
   },
   loadViewerArticle: (context, payload) => {
-
-    /*context.dispatch*/
+    const articleId = payload;
+    return context.dispatch('article/loadPublicArticle', articleId);
   },
 
 
@@ -152,8 +141,10 @@ const actions = {
   }
 };
 export default {
+  namespaced,
   state,
   mutations,
   actions,
-  getters
+  getters,
+  modules
 }

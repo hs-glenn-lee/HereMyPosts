@@ -25,6 +25,8 @@
           :style="categoryTreeContainerStyle">
         <category-tree-comp
           ref="$categoryTreeComp"
+          :categoryTreeRoot="getCategoryTreeRoot"
+          :selectedNode="getSelectedNode"
           :onNodeNameRightClick="onNodeNameRightClick"
           :onNodeNameClick="onNodeNameClick">
         </category-tree-comp>
@@ -34,6 +36,7 @@
         v-bind:is="rightClickMenu"
         v-if="isRightClickMenuShowing"
         @operated="setIsRightClickMenuShowing(false)"
+        :selectedNode="getSelectedNode"
         :category-node="rightClickedCategoryNode"
         :top="rightClickedTop"
         :left="rightClickedLeft">
@@ -59,7 +62,7 @@ import { mapGetters } from 'vuex';
 import categoryTreeComp from '@/components/CategoryTree.vue'
 import CNodeRightClickMenu from "./CategoryNodeRightClickMenu";
 import emptyComp from '@/components/Empty.vue';
-import ArticleListPane from '@/components/manager/ArticleListPane';
+import ArticleListPane from './ArticleListPane';
 
 export default {
   name: 'CategoryPane',
@@ -168,8 +171,10 @@ export default {
     ...mapGetters([
       'isCategoryPaneShowing',
       'getCategoryTree',
+      'getSelectedNode',
       'getAccount',
-      'isRightClickMenuShowing'
+      'isRightClickMenuShowing',
+      'getCategoryTreeRoot'
     ]),
     categoryTreeContainerStyle () {
       return {

@@ -25,6 +25,8 @@
           :style="categoryTreeContainerStyle">
         <category-tree-comp
           ref="$categoryTreeComp"
+          :categoryTreeRoot="getCategoryTreeRoot"
+          :selectedNode="getSelectedNode"
           :onNodeNameRightClick="onNodeNameRightClick"
           :onNodeNameClick="onNodeNameClick">
         </category-tree-comp>
@@ -52,17 +54,12 @@ import { mapGetters } from 'vuex';
 
 import categoryTreeComp from '@/components/CategoryTree.vue'
 import emptyComp from '@/components/Empty.vue';
-import ArticleListPane from '@/components/manager/ArticleListPane';
+import ArticleListPane from './ArticleListPane';
 
 export default {
   name: 'CategoryPane',
   data () {
     return {
-      rightClickMenu: '',
-      rightClickedCategoryNode: '',
-      rightClickedTop: '',
-      rightClickedLeft: '',
-
       categoryTreeHeight: 0
     }
   },
@@ -74,15 +71,25 @@ export default {
   methods: {
     ...mapMutations([
       'setCategoryPaneIsShowing',
-      'setSelectedNodeById',
       'setArticleListPaneShowing',
-      'setIsRightClickMenuShowing',
     ]),
+
     ...mapActions([
-      'getArticlesOfCategory',
-      'markPass',
-      'loadSavedArticle'
+
     ]),
+    ...mapActions('viewer',[
+      'markPass'
+    ]),
+    ...mapMutations('viewer/categoryTree',[
+      'setSelectedNodeById',
+    ]),
+    ...mapActions('viewer/article',[
+      'loadPublicArticle'
+    ]),
+    ...mapActions('viewer/articleList',[
+      'getArticlesOfCategory',
+    ]),
+
     closeCSLP () {
       this.setCategoryPaneIsShowing(false)
     },
@@ -91,29 +98,8 @@ export default {
     onNodeNameRightClick (clickEvent) {
       clickEvent.preventDefault();
       clickEvent.stopPropagation();
-      var clickedNodeNameSpan = clickEvent.currentTarget;
 
-      var nodeId = clickedNodeNameSpan.parentElement.parentElement.id;
-      var targetNode = this.getCategoryTree.find(nodeId);
-
-      this.rightClickedTop = clickEvent.pageY;
-      this.rightClickedLeft = clickEvent.pageX - 70; // i don't know why this need to sub 70
-      this.rightClickedCategoryNode = targetNode;
-      this.rightClickMenu = 'c-node-right-click-menu';
-
-      //if menu position-y is to low(too big) to show whole menu.
-      var categoryPane = window.document.querySelector('div.category-pane');
-      if(categoryPane) {
-        var categoryPaneHeight = categoryPane.offsetHeight;
-        var menuHeight = 106; //set hard
-        var curTop = (this.rightClickedTop);
-        var lack = (curTop + menuHeight) - categoryPaneHeight;
-        if( lack > 0 ) {
-          this.rightClickedTop -= (lack + 5 /*just little space*/);
-        }
-      }
-
-      this.setIsRightClickMenuShowing(true)
+      return;
     },
     onNodeNameClick(clickEvent) {
       var clickedNodeNameSpan = clickEvent.currentTarget;
@@ -127,7 +113,7 @@ export default {
     },
     onArticleDoubleClick(event) {
       var articleId = event.currentTarget.id;
-      this.loadSavedArticle(articleId);
+      this.loadPublicArticle(articleId);
     },
 
     openAllCategoryNodes () {
@@ -159,9 +145,12 @@ export default {
   computed: {
     ...mapGetters([
       'isCategoryPaneShowing',
-      'getCategoryTree',
-      'getAccount',
       'isRightClickMenuShowing'
+    ]),
+    ...mapGetters('viewer/categoryTree',[
+      'getCategoryTree',
+      'getCategoryTreeRoot',
+      'getSelectedNode',
     ]),
     categoryTreeContainerStyle () {
       return {

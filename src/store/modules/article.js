@@ -5,8 +5,8 @@ import PageParameter from "../../model/PageParameter";
 
 
 const state = {
-  article: null/*new Article(null, '', '<!DOCTYPE html><html><head></head><body></body></html>', '', 0, false, 0, null, null)*/,
-  oldArticle: null, //to compare after modifiy article
+  article: null,
+  oldArticle: null,
   isSavedArticle: false,
 
   articleList: [],
@@ -251,6 +251,9 @@ const actions = {
       .catch( err => {
         return Promise.reject(err);
       })
+  },
+  setPublicArticle: (context, payload) => {
+
   }
 };
 export default {

@@ -3,7 +3,7 @@
       <category-node
         class="category-node"
         ref="root"
-        :categoryNode="getCategoryTreeRoot"
+        :categoryNode="categoryTreeRoot"
         :onNodeNameClick="onNodeNameClick"
         :onNodeNameRightClick="onNodeNameRightClick"
       ></category-node>
@@ -18,10 +18,9 @@
   name: 'CategoryTreeComp',
   props: {  //CategoryTree Must set these function before
     onNodeNameClick: Function,
-    onNodeNameRightClick: Function
-  },
-  mounted() {
-
+    onNodeNameRightClick: Function,
+    categoryTreeRoot: Object,
+    selectedNode: Object
   },
   data() {
     return {
@@ -43,20 +42,33 @@
     closeAllCategoryNodes () {
       this.$refs.root.closeMe();
       this.$refs.root.closeChildren();
-    }
+    },
+    markSelectedNode(newNode, oldNode) {
+      if(oldNode) {
+        const oldNodeQuery = '#'+oldNode.id;
+        var $oldNode = window.document.querySelector(oldNodeQuery);
+        if(oldNode) {
+          $oldNode.classList.remove('selected');
+        }
+      }
 
+      const newNodeQuery = '#'+newNode.id;
+      var $newNode = window.document.querySelector(newNodeQuery);
+      $newNode.classList.add('selected');
+    },
+  },
+  watch: {
+    selectedNode: function(val,oldVal) {
+      this.markSelectedNode(val,oldVal);
+    }
   },
   computed: {
     ...mapGetters([
-      'getCategoryTreeRoot'
+
     ]),
   },
   components: {
     'category-node': CategoryNode
-  }
-  ,mounted () {
-    console.log('eeeee')
-    console.log(this.getCategoryTreeRoot)
   }
 }
 </script>
@@ -68,8 +80,5 @@
   ul.tree-root {
     margin-top: 16px;
   }
-
-
-
 
 </style>

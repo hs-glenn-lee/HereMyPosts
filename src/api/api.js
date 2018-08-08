@@ -122,6 +122,15 @@ export default {
       .catch( err => {throw err})
   },
 
+  getPublicArticle(articleId) {
+    return axiosAppJson.get('api/article/public/'+articleId)
+      .then(res => {
+        console.log('getPublicArticle!')
+        console.log(res)
+        return res.data })
+      .catch( err => {throw err})
+  },
+
   getRecentArticles(username, pageParameter) {
     return axiosAppJson.post('api/'+username+'/recent-articles', pageParameter)
       .then(res => {

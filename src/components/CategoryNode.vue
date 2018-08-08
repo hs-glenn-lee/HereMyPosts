@@ -2,7 +2,7 @@
   <li
       :id="categoryNode.id"
       class="category-node"
-      :class="isSelected">
+      ><!--:class="isSelected"-->
     <div
       class="node-info">
       <span v-if="categoryNode.hasChild()" class="node-open-flag" @click="onNodeOpenFlagClick">
