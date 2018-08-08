@@ -1,7 +1,7 @@
 <template>
   <div class="article-list-pane"
       v-show="isArticleListPaneShowing">
-    <div class="loading" :class="{'showing': isManagerLoading }">
+    <div class="loading" :class="{'showing': isViewerLoading }">
       <img class="loading-img"
            :style="getLoadingImgStyle"
            src="@/assets/images/loading.gif">
@@ -65,7 +65,7 @@
 
     <div class="list-height" :style="getListHeight">
       <div class="article-list-wrapper">
-        <ul class="article-list">
+        <ul ref="$articleList" class="article-list">
           <li v-if="isArticleListEmpty">
             <div class="empty-list-item">
               <label class="empty-list-label">비어 있음</label>
@@ -74,20 +74,14 @@
           </li>
           <li v-for="article in getArticleList"
               :key="article.id"
+              v-bind:id="article.id"
+              @click="onArticleClick"
+              @click.double="onArticleDoubleClick"
               class="article-list-item">
-            <div class="article-list-item-wrapper psd-hover-cursor-pointer"
-                 v-bind:id="article.id"
-                 @click="onArticleClick"
-                 @click.double="onArticleDoubleClick">
-
+            <div class="article-list-item-wrapper psd-hover-cursor-pointer" :class="{'current-article':(article.id === getArticle.id)}">
               <div class="flex">
                 <div class="article-title">
                   <span class="article-title">{{article.title}}</span>
-                </div>
-                <div v-show="getListOf === 'category'" class="buttons">
-                  <div class="button">
-                    <div class="button-image" @click="onClickTrashCan($event, article.id)"></div>
-                  </div>
                 </div>
               </div>
 
@@ -130,9 +124,14 @@ export default {
   computed: {
     ...mapGetters([
       'isArticleListPaneShowing',
-      'isManagerLoading',//TODO
+
 
     ]),
+
+    ...mapGetters('viewer',[
+      'isViewerLoading'//TODO
+     ]),
+
     ...mapGetters('viewer/articleList',[
       'getArticleList',
       'isArticleListEmpty',
@@ -140,6 +139,11 @@ export default {
       'getSortDirection',
       'getSortProperty',
     ]),
+
+    ...mapGetters('viewer/article',[
+      'getArticle'
+    ]),
+
     ...mapGetters('viewer/categoryTree',[
       'getSelectedNode'
     ]),
@@ -180,13 +184,6 @@ export default {
     setSelectedListTool (payload) {
       this.selectedListTool = payload;
     },
-    onClickTrashCan (evt, articleId) {
-      evt.stopPropagation();
-      this.deleteArticle(articleId);
-    },
-    toggleArticlePublicity (articleId) {
-      console.log(articleId)
-    },
     ellipsedSummary (summary) {
       var ret = summary;
       if(ret) {
@@ -194,7 +191,22 @@ export default {
         return ret;
       }
       return '';
-    }
+    }/*,
+    markCurrentArticleOnArticleList () {
+      const article = this.getArticle;
+      const list = this.getArticleList;
+      if( (article) && (list) ) {
+        list.forEach( el => {
+          if(el.id === article.id) {
+            let $articleLi = this.$refs.$articleList.querySelector('li[id="'+article.id+'"');
+            if($articleLi)
+              $articleLi.querySelector('div.article-list-item-wrapper').classList.add('current-article');
+          }else {
+
+          }
+        })
+      }
+    }*/
 
   },
   watch: {
@@ -211,7 +223,10 @@ export default {
           this.calcListHeight();
         })
       }
-    }
+    }/*,
+    getArticle (val, oldVal) {
+      this.markCurrentArticleOnArticleList();
+    }*/
   },
   mounted() {
     this.calcListHeight();
@@ -414,6 +429,9 @@ export default {
     border: 4px solid white;
   }
   div.article-list-item-wrapper:hover {
+    border: 4px solid #acacac;
+  }
+  div.article-list-item-wrapper.current-article {
     border: 4px solid #acacac;
   }
 

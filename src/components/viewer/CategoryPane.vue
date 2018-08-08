@@ -98,7 +98,6 @@ export default {
     onNodeNameRightClick (clickEvent) {
       clickEvent.preventDefault();
       clickEvent.stopPropagation();
-
       return;
     },
     onNodeNameClick(clickEvent) {
@@ -113,7 +112,8 @@ export default {
     },
     onArticleDoubleClick(event) {
       var articleId = event.currentTarget.id;
-      this.loadPublicArticle(articleId);
+      this.loadPublicArticle(articleId)
+        .then( () => { this.setCategoryPaneIsShowing(false) });
     },
 
     openAllCategoryNodes () {
@@ -144,8 +144,7 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'isCategoryPaneShowing',
-      'isRightClickMenuShowing'
+      'isCategoryPaneShowing'
     ]),
     ...mapGetters('viewer/categoryTree',[
       'getCategoryTree',

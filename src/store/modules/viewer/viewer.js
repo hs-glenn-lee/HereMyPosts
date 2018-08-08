@@ -1,4 +1,3 @@
-import Manager from '@/model/manager/Manager'
 import validator from '@/model/validator/validator'
 
 
@@ -14,6 +13,7 @@ const modules = {
 };
 const state = {
   viewerState: 'start',
+  isViewerLoading:  false,
   routeParam : {
     username: '',
     articleId: ''
@@ -30,11 +30,14 @@ const state = {
 const getters = {
   getRouteParam (state) {
     return state.routeParam;
+  },
+  isViewerLoading (state) {
+    return state.isViewerLoading;
   }
 };
 const mutations = {
   setRouteParamUsername (state, payload) {
-    state.routeParam.username = state;
+    state.routeParam.username = payload;
   },
   setRouteParamArticleId (state, payload) {
     state.routeParam.articleId = payload;
@@ -50,7 +53,14 @@ const actions = {
       .then( () => {
         stopWait('loadViewerCategory');
         context.commit('setRouteParamUsername',routeParamUsername);
+      })
+      .then( () => {
+        context.dispatch('articleList/getRecentArticles', 0, {root:false})
+          .then( () => {
+            stopWait('articleList/getRecentArticles');
+          });
       });
+
 
     context.dispatch('loadViewerArticle', routeParamArticleId)
       .then(() => {
@@ -59,7 +69,7 @@ const actions = {
       });
 
 
-    var waitingFor = {'initCategoryTree': false, 'loadViewerArticle': false};
+    var waitingFor = {'initCategoryTree': false, 'loadViewerArticle': false, 'articleList/getRecentArticles': false};
     var stopWait = function (actionName) {
       waitingFor[actionName] = true;
       var isAllComplete = true;

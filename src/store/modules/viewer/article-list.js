@@ -93,10 +93,16 @@ const actions = {
       })
   },
   getRecentArticles: (context, payload) => {
+    console.log(context.rootGetters)
+    console.log(context.rootGetters['viewer/getRouteParam'])
+    console.log(context.rootState)
+
     var page = payload;
     var pageParameter = new PageParameter(page,10,'desc','updateTimestamp');
-    var username = context.getters.getAccount.username;
-
+    var username = context.rootGetters['viewer/getRouteParam'].username;
+    console.log(';;;;')
+    console.log(context.rootGetters['viewer/getRouteParam'].articleId);
+    console.log(username);
     return api.getRecentArticles(username, pageParameter)
       .then( data => {
         context.commit('setArticleList', data);

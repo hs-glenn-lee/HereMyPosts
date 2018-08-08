@@ -45,14 +45,14 @@
     },
     markSelectedNode(newNode, oldNode) {
       if(oldNode) {
-        const oldNodeQuery = '#'+oldNode.id;
+        const oldNodeQuery = 'ul.tree-root li[id="'+oldNode.id+'"]';
         var $oldNode = window.document.querySelector(oldNodeQuery);
         if(oldNode) {
           $oldNode.classList.remove('selected');
         }
       }
 
-      const newNodeQuery = '#'+newNode.id;
+      const newNodeQuery = 'ul.tree-root li[id="'+newNode.id+'"]';
       var $newNode = window.document.querySelector(newNodeQuery);
       $newNode.classList.add('selected');
     },
