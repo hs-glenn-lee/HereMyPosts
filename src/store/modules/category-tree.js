@@ -84,7 +84,7 @@ const actions = {
     }
 
     if(mode === 'public') {
-      return api.getPublicCategories(username)
+      return api.getAllCategories(username)
         .then( data => {
           console.log(data);
           context.commit('setCategoryList',data);

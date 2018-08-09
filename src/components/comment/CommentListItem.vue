@@ -1,5 +1,5 @@
 <template>
-  <li class="comment-list-item">
+  <li class="comment-list-item" v-bind:id="comment.id" :class="{'focused': isFocused }">
     <div class="comment-meta">
       <div class="author-profile-picture" :style="authorProfilePictureStyle"></div>
       <div>
@@ -17,7 +17,8 @@
   export default {
     name: "CommentListItem",
     props: {
-      comment: Object
+      comment: Object,
+      focusingComment: Object
     },
     methods: {
       ...mapActions([
@@ -37,6 +38,13 @@
           return '/uploaded-image/' + this.comment.profilePictureFileId
         }else {
           return ''
+        }
+      },
+      isFocused () {
+        if(this.focusingComment) {
+          this.focusingComment.id === this.comment.id;
+        }else {
+          return false;
         }
       }
     },
@@ -58,6 +66,10 @@
   }
   li.comment-list-item:first-child {
     border-top: 1px solid #EFEB95;
+  }
+  li.comment-list-item.focused {
+    background-color: #EFEB95;
+    transition: 1s;
   }
   div.comment-meta {
     display:flex;

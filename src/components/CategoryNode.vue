@@ -2,7 +2,7 @@
   <li
       :id="categoryNode.id"
       class="category-node"
-      ><!--:class="isSelected"-->
+      :class="{'public-node':categoryNode.isPublic, 'private-node':!categoryNode.isPublic}">
     <div
       class="node-info">
       <span v-if="categoryNode.hasChild()" class="node-open-flag" @click="onNodeOpenFlagClick">
@@ -162,5 +162,13 @@ export default {
     width: 15px;
     height: 15px;
     opacity: 0.6;
+  }
+
+  li.category-node.private-node span.node-name {
+    color: #ccc;
+  }
+
+  span.node-name:hover {
+    background-color: #eee;
   }
 </style>

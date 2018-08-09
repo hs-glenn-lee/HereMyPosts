@@ -264,4 +264,7 @@ export default {
     background-color: #eaeaea;
     border: 1px solid rgb(16,123,211);
   }
+
+
+
 </style>

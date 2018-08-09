@@ -3,7 +3,7 @@
     <div @click="letsWriteComment">
       <div class="comment-writer">
 
-        <span class="ready-to-write" v-if="!isGoingToWriteComment">댓글 쓰기 ...</span>
+        <div class="ready-to-write" v-if="!isGoingToWriteComment"><span>댓글 쓰기 ...</span></div>
 
         <div class="author-info invisible"
              :class="{'visible-ease-in-1s':isGoingToWriteComment}">
@@ -58,7 +58,8 @@
   export default {
     name: "Viewer",
     props: {
-      article: Object
+      article: Object,
+      onCommentWritten: Function
     },
     data() {
       return {
@@ -99,7 +100,12 @@
 
         api.writeComment(comment)
           .then(data => {
+            this.onCommentWritten(data);
 
+            //reset data
+            this.isGoingToWriteComment = false;
+            this.commentToWrite = new Comment();
+            this.content = ''
           })
 
       },
@@ -129,10 +135,12 @@
     border-radius: 4px;
     border: 1px solid #EFEB95;
   }
-  span.ready-to-write {
+  div.ready-to-write {
     padding-top: 8px;
     padding-bottom: 8px;
     color: #4a4a4a;
+    height:100%;
+    vertical-align: middle;
   }
 
   textarea {
@@ -146,6 +154,7 @@
 
     width: 1260px;
     padding: 8px 0px 0px 0px;
+    margin-top: 8px;
   }
 
   button.write-comment-button {
@@ -159,9 +168,7 @@
     transition: 0.5s;
   }
 
-  div.author-info {
-    margin-bottom: 8px;
-  }
+
 
   input.anonymous-input {
     font-size: 1em;

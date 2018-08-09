@@ -43,7 +43,7 @@ const actions = {
     context.commit('setCategoryTree', new CategoryTree());
     context.commit('setSelectedNode', null);
 
-    return api.getPublicCategories(username)
+    return api.getAllCategories(username)
       .then( data => {
         console.log(data);
         context.commit('setCategoryList',data);

@@ -72,8 +72,8 @@ export default {
       .catch( err => { throw err } ) //403 가능
   },
 
-  getPublicCategories (username) {
-    return axiosAppJson.get('/api/'+username+'/category/public')
+  getAllCategories (username) {
+    return axiosAppJson.get('/api/'+username+'/category/all')
       .then(res => {
         return res.data
       })
@@ -176,6 +176,14 @@ export default {
       })
       .catch( err => {throw err});
 
+
+  },
+  getCountCommentsOfArticle (articleId) {
+    return axiosAppJson.get('api/article/' + articleId + '/comments/count')
+      .then(res=> {
+        return res.data;
+      })
+      .catch( err => {throw err});
 
   },
 
