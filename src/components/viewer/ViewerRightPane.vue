@@ -21,6 +21,8 @@
           <article-content-comp v-if="getArticle" :content="getContent"></article-content-comp>
         </article>
 
+        <div class="context-switch-short"></div>
+        <article-tags :article="getArticle"></article-tags>
 
       </div>
 
@@ -48,6 +50,7 @@
   import ViewerComments from './ViewerComments';
   import ArticleContentComp from './ArticleContent';
   import ViewerFooterComp from "./ViewerFooter";
+  import ArticleTagComp from './ArticleTags';
 
   export default {
     name: "ViewerRightPane",
@@ -105,7 +108,8 @@
     components: {
       'viewer-footer-comp': ViewerFooterComp,
       'viewer-comments': ViewerComments,
-      'article-content-comp': ArticleContentComp
+      'article-content-comp': ArticleContentComp,
+      'article-tags': ArticleTagComp
     }
   }
 </script>
@@ -178,10 +182,8 @@
   }
 
 
-
-
   div.other {
-    padding-top: 16px;
+    padding-top: 32px;
     padding-bottom: 16px;
     background-color: #f8f8f8;
 
@@ -189,6 +191,15 @@
   div.comment-comp-container {
     min-height: 240px;
     padding-bottom: 80px;
+  }
+
+
+  div.context-switch-short {
+    border-bottom: 1px solid #ccc;
+    width: 30%;
+    margin-top: 16px;
+    margin-bottom: 16px;
+
   }
 
 </style>
