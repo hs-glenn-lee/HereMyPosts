@@ -86,7 +86,11 @@
               </div>
 
               <div class="article-create-timestamp">
-                <span v-if="(article.updateDateString)" class="article-create-timestamp">{{article.updateDateString}}</span>
+                <span v-if="(article.updateTimestamp)" class="article-create-timestamp">{{new Date(article.updateTimestamp).toLocaleDateString()}}</span>
+                <span v-if="(article.updateTimestamp) && (getSortDirection === 'desc' && getSortProperty === 'updateTimestamp')" class="article-create-timestamp">
+                  <span class="middotDivider"></span>
+                  {{article.updateTimestamp | timestampToPastTimeString}}
+                </span>
               </div>
               <div class="article-summary">
                 <span class="article-summary">{{ellipsedSummary(article.summary)}}</span>
@@ -191,22 +195,7 @@ export default {
         return ret;
       }
       return '';
-    }/*,
-    markCurrentArticleOnArticleList () {
-      const article = this.getArticle;
-      const list = this.getArticleList;
-      if( (article) && (list) ) {
-        list.forEach( el => {
-          if(el.id === article.id) {
-            let $articleLi = this.$refs.$articleList.querySelector('li[id="'+article.id+'"');
-            if($articleLi)
-              $articleLi.querySelector('div.article-list-item-wrapper').classList.add('current-article');
-          }else {
-
-          }
-        })
-      }
-    }*/
+    }
 
   },
   watch: {
@@ -223,10 +212,7 @@ export default {
           this.calcListHeight();
         })
       }
-    }/*,
-    getArticle (val, oldVal) {
-      this.markCurrentArticleOnArticleList();
-    }*/
+    }
   },
   mounted() {
     this.calcListHeight();

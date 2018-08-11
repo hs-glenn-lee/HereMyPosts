@@ -18,6 +18,44 @@ import './assets/prism/prism.js'
 import VueTextareaAutosize from 'vue-textarea-autosize'
 Vue.use(VueTextareaAutosize);
 
+Vue.filter('timestampToPastTimeString', function (timestamp) {
+  let date = new Date(timestamp);
+  const currentDate = new Date();
+
+  const diffYear = currentDate.getFullYear() - date.getFullYear();
+  if(diffYear > 0) {
+    return diffYear + ' 년 전';
+  }
+
+  const diffMonth = currentDate.getMonth() - date.getMonth();
+  if(diffMonth > 0) {
+    return diffMonth + ' 개월 전';
+  }
+
+  const diffDate = currentDate.getDate() - date.getDate();
+  if(diffDate > 0) {
+    return diffDate + ' 일 전';
+  }
+  const diffHours = currentDate.getHours() - date.getHours();
+  if(diffDate > 0) {
+    return diffDate + ' 시간 전';
+  }
+
+  const diffMinute = currentDate.getMinutes() - date.getMinutes();
+  if(diffDate > 0) {
+    return diffDate + ' 분 전';
+  }
+
+  return '방금 전';
+});
+
+Vue.filter('toLocalDateString', function (timestamp) {
+
+
+});
+
+
+
 //import './assets/lang'
 Vue.config.productionTip = false
 /*

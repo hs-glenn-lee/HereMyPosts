@@ -97,7 +97,7 @@ const actions = {
               var dataArticle = el.article;
               var article = new Article(dataArticle.id, dataArticle.title, dataArticle.content, dataArticle.summary, dataArticle.readCount,
                 dataArticle.isDel, dataArticle.isPublic, dataArticle.category, dataArticle.author, dataArticle.createTimestamp,
-                dataArticle.updateTimestamp, dataArticle.createDateString, dataArticle.updateDateString);
+                dataArticle.updateTimestamp);
               var tag = new Tag(el.tag.name);
               var tagArticle = new TagArticle(el.id, article, tag);
               tagsArticles.push(tagArticle)

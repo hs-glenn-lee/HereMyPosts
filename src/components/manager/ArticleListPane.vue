@@ -92,7 +92,11 @@
               </div>
 
               <div class="article-create-timestamp">
-                <span v-if="(article.updateDateString)" class="article-create-timestamp">{{article.updateDateString}}</span>
+                <span v-if="(article.updateTimestamp)" class="article-create-timestamp">{{new Date(article.updateTimestamp).toLocaleDateString()}}</span>
+                <span v-if="(article.updateTimestamp) && (getSortDirection === 'desc' && getSortProperty === 'updateTimestamp')" class="article-create-timestamp">
+                  <span class="middotDivider"></span>
+                  {{article.updateTimestamp | timestampToPastTimeString}}
+                </span>
               </div>
               <div class="article-summary">
                 <span class="article-summary">{{ellipsedSummary(article.summary)}}</span>

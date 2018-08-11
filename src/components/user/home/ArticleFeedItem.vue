@@ -6,7 +6,7 @@
       </div>
       <div class="row">
         <div class="flex-row">
-          <div class="update-time"><span v-if="(article.updateDateString)" class="article-create-timestamp">{{article.updateDateString}}</span></div>
+          <div class="update-time"><span v-if="(article.updateTimestamp)" class="article-create-timestamp">{{new Date(article.updateTimestamp).toLocaleDateString()}}</span></div>
         </div>
       </div>
       <div class="row">

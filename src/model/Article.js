@@ -1,6 +1,6 @@
 export default class Article {
 
-  constructor(id, title, content, summary, readCount, isDel, isPublic, category, author, createTimestamp, updateTimestamp, createDateString, updateDateString) {
+  constructor(id, title, content, summary, readCount, isDel, isPublic, category, author, createTimestamp, updateTimestamp) {
     this.id = id;
     this.title = title;
 
@@ -21,8 +21,6 @@ export default class Article {
     this.createTimestamp = createTimestamp;
     this.updateTimestamp = updateTimestamp;
 
-    this.createDateString = createDateString;
-    this.updateDateString = updateDateString;
   }
 
 }

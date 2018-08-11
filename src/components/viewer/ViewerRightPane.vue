@@ -14,10 +14,18 @@
               {{getArticle.category.name}}
             </div>
             <div class="title"><span>{{getTitle}}</span></div>
-            <div class="update-time">작성 {{getArticle.createDateString}}</div>
+            <div v-if="getArticle.createTimestamp" class="create-time">
+              <span class="middotDivider">
+                {{new Date(getArticle.createTimestamp).toLocaleDateString()}}
+              </span>
+              <span >
+                {{new Date(getArticle.createTimestamp) | timestampToPastTimeString}}에 작성
+              </span>
+            </div>
+
+
           </div>
 
-          <!--<div v-html="getContent" class="article-content"></div>-->
           <article-content-comp v-if="getArticle" :content="getContent"></article-content-comp>
         </article>
 
@@ -51,6 +59,7 @@
   import ArticleContentComp from './ArticleContent';
   import ViewerFooterComp from "./ViewerFooter";
   import ArticleTagComp from './ArticleTags';
+
 
   export default {
     name: "ViewerRightPane",
@@ -171,8 +180,8 @@
     padding-bottom: 16px;
   }
 
-  div.article-meta > div.update-time {
-    color: #aaaaaa;
+  div.article-meta > div.create-time {
+    color: #8a8a8a;
     font-size: 0.7em;
   }
 
@@ -201,5 +210,6 @@
     margin-bottom: 16px;
 
   }
+
 
 </style>

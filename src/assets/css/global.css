@@ -89,3 +89,12 @@ span.underline-link:hover {
 .psd-hover-cursor-pointer:hover {
   cursor: pointer;
 }
+
+
+.middotDivider {
+  padding-right: .3em;
+  padding-left: .3em;
+}
+.middotDivider:after{
+  content: '\00B7';
+}
