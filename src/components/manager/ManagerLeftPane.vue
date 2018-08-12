@@ -1,12 +1,12 @@
 <template>
   <div class="manager-left-pane">
-    <div class="global-logo-picto" style="margin-top:10px; margin-bottom: 30px; margin-top: 20px;">
-      <img src="@/assets/images/icon-picto-86w87h.png"/>
-    </div>
     <nav class="left-pane-menu">
       <div class="flex-menu">
         <div class="flex-menu-group">
           <div class="menu-group">
+            <div class="global-logo-picto" style="margin-top:8px; margin-bottom: 16px;">
+              <img src="@/assets/images/logo-initial-55w55h.png"/>
+            </div>
             <div class="left-pane-menu-item"
                  @mouseover="onMenuItemMouserOver" @mouseleave="onMenuItemMouserLeave">
               <img
@@ -202,7 +202,7 @@ export default {
     justify-content: space-between;
     flex-direction: column;
     flex-wrap: wrap;
-    height: 80%; /*TODO set computed height*/
+    height: 100%; /*TODO set computed height*/
   }
 
   .flex-menu-group {
@@ -231,14 +231,9 @@ export default {
   }
 
   div.left-pane-menu-item.up-here img.icon{
-    background-color: #e6ffcc;
+    background-color: #fff;
     transition: 0.5s;
-
     border-radius: 21px;
   }
-
-
-
-
 
 </style>

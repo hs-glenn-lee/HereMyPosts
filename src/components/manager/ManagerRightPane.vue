@@ -75,6 +75,13 @@
         var articleMetaHeight = Math.max( $articleMetaDiv.scrollHeight, $articleMetaDiv.offsetHeight );
         var rightPaneHeight = Math.max( $divRightPane.scrollHeight, $divRightPane.offsetHeight );
         var editorHeight = rightPaneHeight - articleMetaHeight-50 /*editor tool bar height and just a little space*/;
+
+
+        console.log(editorHeight)
+        console.log(rightPaneHeight)
+        console.log($divRightPane.scrollHeight)
+        console.log($divRightPane.offsetHeight)
+        console.log(articleMetaHeight)
         this.editorHeight = (editorHeight < 0)? 50 : editorHeight;
       },
       onClickCategoryMeta(evt) {
@@ -144,6 +151,9 @@
     width: 100%;
     height: 100%;
     background-color: white;
+  }
+  div.right-pane-wrapper {
+    height:100%;
   }
   div.editor-container {
     height: 100%;

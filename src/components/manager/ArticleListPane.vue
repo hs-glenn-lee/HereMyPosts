@@ -1,5 +1,7 @@
 <template>
-  <div class="article-list-pane"
+  <div
+      ref="$articleListPane"
+      class="article-list-pane"
       v-show="isArticleListPaneShowing">
     <div class="loading" :class="{'showing': isManagerLoading }">
       <img class="loading-img"
@@ -127,6 +129,7 @@ export default {
       listHeight: '',
       notListHeight: 0,
       windowInnerHeight: 0,
+      articleListPaneHeight: 0,
       loadingImgPaddingTop: 0,
       selectedListTool: 'search'
     }
@@ -141,7 +144,8 @@ export default {
       'getListOf',
       'getSortDirection',
       'getSortProperty',
-      'getAccount'
+      'getAccount',
+      'isCategoryPaneShowing'
     ]),
     getListHeight () {
       return this.listHeight;
@@ -211,11 +215,19 @@ export default {
           this.calcListHeight();
         })
       }
+    },
+    isCategoryPaneShowing (val, oldVal) {
+      if(val) {
+        this.$nextTick(() => {
+          this.calcListHeight();
+        });
+      }
     }
   },
   mounted() {
     this.calcListHeight();
     this.calcLoadingImgPaddingTop();
+
     var vm = this;
     window.onresize = function(event) {
       vm.windowInnerHeight = window.innerHeight;

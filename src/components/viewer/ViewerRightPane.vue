@@ -101,6 +101,12 @@
         }
       }
     },
+    watch: {
+      getArticle() {
+        let container = window.document.querySelector("div.right-pane-wrapper");
+        container.scrollTop = 0;
+      }
+    },
     created() {
       api.getPublicAccountSetting(this.username)
         .then( data => {

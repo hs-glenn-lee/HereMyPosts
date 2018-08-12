@@ -128,7 +128,7 @@ export default {
   computed: {
     ...mapGetters([
       'isArticleListPaneShowing',
-
+      'isCategoryPaneShowing'
 
     ]),
 
@@ -162,7 +162,7 @@ export default {
 
   },
   methods: {
-    ...mapMutations([
+    ...mapMutations('viewer/articleList',[
       'setSortProperty',
       'setSortDirection',
       'setSearchWord'
@@ -211,6 +211,13 @@ export default {
         this.$nextTick(() => {
           this.calcListHeight();
         })
+      }
+    },
+    isCategoryPaneShowing (val, oldVal) {
+      if(val) {
+        this.$nextTick(() => {
+          this.calcListHeight();
+        });
       }
     }
   },

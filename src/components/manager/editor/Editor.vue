@@ -99,7 +99,7 @@ export default {
       tinymce.init({
         selector: '#editor',
         laguage: 'ko_KR',
-        height: 822,
+        height: 300,
         width: vm.editorWidth,
         branding: false,
         theme: 'modern',

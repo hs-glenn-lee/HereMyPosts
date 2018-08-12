@@ -1,8 +1,9 @@
 <template>
   <div class="article-tags">
-    <div class="title">태그</div>
     <div
+      v-if="tagsArticles > 0"
       class="tags">
+      <span class="title">태그</span>
         <span
           v-for="ta in tagsArticles"
           class="tag"
@@ -53,7 +54,7 @@
   div.article-tags {
     margin-bottom: 32px;
   }
-  div.title {
+  span.title {
     margin-bottom: 8px;
     font-weight: bold;
     color: #4a4a4a;

@@ -1,16 +1,21 @@
 <template>
   <div>
     <nav class="left-pane-menu">
-      <div class="global-logo-picto" ><img src="@/assets/images/icon-picto-86w87h.png" style="width:50px;"/></div>
+      <div class="global-logo-picto" style="margin-top:8px; margin-bottom: 16px;">
+        <img src="@/assets/images/logo-initial-55w55h.png"/>
+      </div>
+
       <div class="left-pane-menu-item"
            @mouseover="onMenuItemMouserOver" @mouseleave="onMenuItemMouserLeave">
         <img
+          tool-tip="카테고리"
           @click="onClickCategoryMenu"
           class="icon psd-hover-cursor-pointer"
           src="@/assets/images/left-pane-icons/category-icon-40w40h.png"/>
+        <!--<span class="r-tool-tip">카테고리</span>-->
       </div>
-
     </nav>
+
     <div>
       <category-pane></category-pane>
     </div>
@@ -46,9 +51,11 @@
       },
       onMenuItemMouserOver (event ) {
         event.currentTarget.classList.add('up-here')
+        /*event.currentTarget.querySelector('span.r-tool-tip').classList.add('active')*/
       },
       onMenuItemMouserLeave (event ) {
         event.currentTarget.classList.remove('up-here')
+        /*event.currentTarget.querySelector('span.r-tool-tip').classList.remove('active')*/
       }
     },
     computed: {
@@ -77,18 +84,55 @@
     background-color: #f8f8f8;
 
   }
+  nav.left-pane-menu {
+    height: 100%;
+  }
   div.left-pane-menu-item {
     text-align: center;
     margin-top: 10px;
     margin-bottom: 10px;
   }
+
+  div.left-pane-menu-item img.icon{
+    border-radius: 50%;
+  }
+
+  div.left-pane-menu-item.up-here > img.icon{
+    background-color: #fff;
+    transition: 0.5s;
+    border-radius: 50%;
+  }
+
+  /*span.r-tool-tip {
+    display:none;
+    position: absolute;
+    left: 92%;
+    width: 100px;
+    height: 1em;
+
+    background-color: black;
+    color: #fff;
+
+    padding: 5px 0;
+    border-radius: 6px;
+    text-align: center;
+
+    margin-top: 6px;
+    opacity: 0.5;
+    visibility: hidden;
+  }
+
+  div.left-pane-menu-item > span.r-tool-tip.active {
+    visibility: visible;
+    display: inline;
+    opacity:1;
+    transition: visibility 0s, opacity 0.5s linear;
+  }*/
+
+
   img.icon {
-    height:auto;
+    height: 40px;
     width: 40px;
   }
 
-  div.left-pane-menu-item.up-here {
-    background-color: #e6ffcc;
-    transition: 0.5s;
-  }
 </style>
