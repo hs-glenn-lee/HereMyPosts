@@ -2,7 +2,7 @@
   <div class="me-settings" v-if="getIsSignedIn">
     <header class="top-header">
       <div class="left-block">
-        <div class="global-logo-inline"><img src="@/assets/images/logo_height_52px_white.png" /></div>
+        <div class="global-logo-inline"><img src="@/assets/images/logo-200w30h-white.png" /></div>
       </div>
 
       <div class="right-block">

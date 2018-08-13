@@ -35,7 +35,6 @@
       }
     },
     created() {
-      console.log('feed!!');
       this.getRecentArticles();
     },
     methods: {
@@ -49,7 +48,7 @@
         var pageParameter = new PageParameter(this.page,this.size,'desc','updateTimestamp');
         var username = this.username;
 
-        return api.getRecentArticles(username, pageParameter)
+        return api.getRecentPublicArticles(username, pageParameter)
           .then( data => {
             this.recentArticleList = data;
             this.page +=1;

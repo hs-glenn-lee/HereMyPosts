@@ -26,7 +26,7 @@
             <span class="tool-button psd-hover-cursor-pointer"><img @click="setSelectedListTool('sort')" class="tool-button-img" src="@/assets/images/article-list-pane/sort-arrows-16w16h.png"></span>
             <span class="tool-button psd-hover-cursor-pointer"><img @click="setSelectedListTool('search')" class="tool-button-img" src="@/assets/images/article-list-pane/mag-icon-16w16h.png"></span>
             <span class="tool-button psd-hover-cursor-pointer go-recent-button"
-                  @click="getRecentArticles(0)">최근 글</span>
+                  @click="getRecentPublicArticles(0)">최근 글</span>
           </div>
           <div class="tool-controllers">
             <div class="tool-controller">
@@ -168,7 +168,7 @@ export default {
       'setSearchWord'
     ]),
     ...mapActions('viewer/articleList',[
-      'getRecentArticles'
+      'getRecentPublicArticles'
     ]),
     calcListHeight() {
       let notList = window.document.querySelector('div.not-list');

@@ -222,17 +222,21 @@ export default {
   img.icon {
     height: 40px;
     width: 40px;
+    opacity: 0.6;
   }
 
   #save-icon.need-to-save img.icon{
     background-color: indianred;
     transition: 0.5s;
+    opacity:0.9;
     border-radius: 18px;
+
   }
 
   div.left-pane-menu-item.up-here img.icon{
     background-color: #fff;
     transition: 0.5s;
+    opacity: 1;
     border-radius: 21px;
   }
 

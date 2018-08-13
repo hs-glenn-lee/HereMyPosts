@@ -3,7 +3,7 @@
     <div>
       <header class="home-header">
         <div class="flex-item">
-          <div class="global-logo"><img src="@/assets/images/logo_height_30px.png"/></div>
+          <div class="global-logo"><img src="@/assets/images/logo-200w30h.png"/></div>
         </div>
       </header>
     </div>
@@ -17,7 +17,6 @@
             <div class="user-pen-name"><span>{{accountSetting.penName}}</span></div>
             <div class="user-introduction">{{accountSetting.introduction}}</div>
         </div>
-
         <div class="recent-article-feed-container">
           <recent-article-feed :username="username"></recent-article-feed>
         </div>

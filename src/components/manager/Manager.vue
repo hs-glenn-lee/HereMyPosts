@@ -1,5 +1,5 @@
 <template>
-  <div class="manager"
+  <div class="manager user-select-none"
     @click="checkPass">
     <left-pane ref="leftPane"></left-pane>
     <right-pane

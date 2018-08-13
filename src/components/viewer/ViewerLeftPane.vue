@@ -101,6 +101,7 @@
     background-color: #fff;
     transition: 0.5s;
     border-radius: 50%;
+    opacity: 1;
   }
 
   /*span.r-tool-tip {
@@ -133,6 +134,7 @@
   img.icon {
     height: 40px;
     width: 40px;
+    opacity: 0.6;
   }
 
 </style>

@@ -1,12 +1,12 @@
 <template>
-  <div v-if="getArticle" class="right-pane" >
+  <div v-if="getArticle" class="right-pane">
     <div class="right-pane-wrapper" :style="rightPaneWrapperStyle">
       <div class="center-block">
         <div class="article-meta">
 
           <div class="article-meta-obj psd-hover-cursor-pointer" @click="onClickCategoryMeta">
               <label class="article-meta-label psd-hover-cursor-pointer">카테고리</label>
-              <span class="selected-category-name psd-hover-cursor-pointer"
+              <span class="selected-category-name psd-hover-cursor-pointer user-select-text"
                     v-if="getSelectedNode">{{getSelectedNode.name}}
               </span>
           </div>
@@ -15,7 +15,7 @@
               <label class="article-meta-label psd-hover-cursor-pointer">태그</label>
               <span
                 v-if="(getArticleTagCollection) && getArticleTagCollection.tagsArticles.length > 0"
-                class="tag-list psd-hover-cursor-pointer">
+                class="tag-list psd-hover-cursor-pointer user-select-text">
                 <span
                   v-for="ta in getArticleTagCollection.tagsArticles.slice(0,4)"
                   class="tag tagged psd-hover-cursor-pointer"

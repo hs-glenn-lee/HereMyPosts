@@ -55,9 +55,9 @@ const actions = {
         context.commit('setRouteParamUsername',routeParamUsername);
       })
       .then( () => {
-        context.dispatch('articleList/getRecentArticles', 0, {root:false})
+        context.dispatch('articleList/getRecentPublicArticles', 0, {root:false})
           .then( () => {
-            stopWait('articleList/getRecentArticles');
+            stopWait('articleList/getRecentPublicArticles');
           });
       });
 
@@ -69,7 +69,7 @@ const actions = {
       });
 
 
-    var waitingFor = {'initCategoryTree': false, 'loadViewerArticle': false, 'articleList/getRecentArticles': false};
+    var waitingFor = {'initCategoryTree': false, 'loadViewerArticle': false, 'articleList/getRecentPublicArticles': false};
     var stopWait = function (actionName) {
       waitingFor[actionName] = true;
       var isAllComplete = true;

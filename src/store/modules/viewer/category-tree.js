@@ -19,6 +19,9 @@ const getters = {
   },
   getSelectedNode: state => {
     return state.selectedNode;
+  },
+  findCategoryNode: (state) => (id) => {
+    return state.categoryTree.find(id)
   }
 };
 const mutations = {

@@ -61,7 +61,7 @@ export default new Router({
     },
     {
       name:'TermsOfService',
-      path: '/aggrements/terms-of-service',
+      path: '/agreements/terms-of-service',
       component: TermsOfService
     },
     {

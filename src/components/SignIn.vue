@@ -2,7 +2,7 @@
   <div class="root-container center-block">
     <main>
       <div class="heading">
-        <div class="global-logo"><img src="@/assets/images/logo_height_52px.png"/></div>
+        <div class="global-logo"><img src="@/assets/images/logo-467w55h.png"/></div>
         <h2>로그인 하기</h2>
       </div>
       <form>

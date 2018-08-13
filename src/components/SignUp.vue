@@ -2,7 +2,7 @@
   <div class="root-container center-block">
     <main>
       <div class="heading">
-        <div class="global-logo"><i><img src="@/assets/images/logo_height_52px.png"/></i></div>
+        <div class="global-logo"><i><img src="@/assets/images/logo-467w55h.png/"></i></div>
         <h2>계정 만들기</h2>
       </div>
 
@@ -48,9 +48,9 @@
           <input type="checkbox"
                  v-model="isCheckedOnAgreement">
           <span class="underline-link"
-                @click="openNewTabTermsOfService">사용 약관</span>과
+                @click="openNewTabTermsOfService">이용 약관</span>과
           <span class="underline-link"
-                @click="openNewTabPrivacyPolicy">개인정보 취급방침</span>에 동의합니다.
+                @click="openNewTabPrivacyPolicy">개인정보 처리방침</span>에 동의합니다.
         </label>
         <div class="button-wrapper">
           <button type="button" v-on:click="signUpAndInAndGoToManage">계정 생성</button>

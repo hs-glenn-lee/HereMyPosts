@@ -19,6 +19,7 @@
               class="sort-controller-button psd-hover-cursor-pointer">접기</span>
           </div>
         </div>
+
       </div>
 
       <div class="category-tree-container"
@@ -87,7 +88,7 @@ export default {
       'loadPublicArticle'
     ]),
     ...mapActions('viewer/articleList',[
-      'getArticlesOfCategory',
+      'getPublicArticlesOfCategory',
     ]),
 
     closeCSLP () {
@@ -102,8 +103,15 @@ export default {
     },
     onNodeNameClick(clickEvent) {
       var clickedNodeNameSpan = clickEvent.currentTarget;
+
+      let nodeFound = this.findCategoryNode(clickedNodeNameSpan.parentElement.parentElement.id);
+      console.log(nodeFound)
+      if(!nodeFound.isPublic) {
+        return;
+      }
+      let username = this.$router.currentRoute.params.username;
       this.setSelectedNodeById(clickedNodeNameSpan.parentElement.parentElement.id)
-      this.getArticlesOfCategory(clickedNodeNameSpan.parentElement.parentElement.id)
+      this.getPublicArticlesOfCategory({username: username, categoryId: clickedNodeNameSpan.parentElement.parentElement.id});
       this.setArticleListPaneShowing(true);
     },
 
@@ -150,6 +158,7 @@ export default {
       'getCategoryTree',
       'getCategoryTreeRoot',
       'getSelectedNode',
+      'findCategoryNode'
     ]),
     categoryTreeContainerStyle () {
       return {
@@ -239,4 +248,5 @@ export default {
     background-color: #eaeaea;
     border: 1px solid rgb(16,123,211);
   }
+
 </style>

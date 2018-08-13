@@ -2,7 +2,7 @@
   <div class="root-container">
     <header class="home-header clearfix">
       <div class="float-left">
-        <div class="global-logo"><img src="@/assets/images/logo_height_30px.png"/></div>
+        <div class="global-logo"><img src="@/assets/images/logo-200w30h.png"/></div>
       </div>
       <div class="float-right">
         <div class="link">

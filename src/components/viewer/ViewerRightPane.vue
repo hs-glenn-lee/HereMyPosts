@@ -7,18 +7,18 @@
           <div class="article-meta">
             <div class="author-info">
               <div class="author-profile-picture info-item" :style="authorProfilePictureStyle"></div>
-              <div class="author-pen-name info-item"><span>{{authorSetting.penName}}</span></div>
+              <div class="author-pen-name info-item psd-hover-cursor-pointer" @click="goUserHome"><span>{{authorSetting.penName}}</span></div>
             </div>
-            <div class="category-name">
+            <div class="category-name ">
               <img src="@/assets/images/left-pane-icons/category-icon-40w40h.png" style="width:1em;height:1em; vertical-align:middle; opacity:0.8;">
-              {{getArticle.category.name}}
+              <span class="user-select-text ">{{getArticle.category.name}}</span>
             </div>
-            <div class="title"><span>{{getTitle}}</span></div>
+            <div class="title"><span class="user-select-text">{{getTitle}}</span></div>
             <div v-if="getArticle.createTimestamp" class="create-time">
               <span class="middotDivider">
                 {{new Date(getArticle.createTimestamp).toLocaleDateString()}}
               </span>
-              <span >
+              <span>
                 {{new Date(getArticle.createTimestamp) | timestampToPastTimeString}}에 작성
               </span>
             </div>
@@ -75,6 +75,11 @@
       calcRightPaneWidth () {
         var $divRightPane = window.document.querySelector('div.right-pane');
         this.rightPaneWrapperWidth = $divRightPane.offsetWidth - 60 /*left-pane-width*/;
+      },
+      goUserHome () {
+        let currentRoute = this.$router.currentRoute;
+        let routeData = this.$router.resolve({ name:'UserHome', params: { username: currentRoute.params.username }})
+        window.open(routeData.href, '_self');
       }
     },
     computed: {

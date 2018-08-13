@@ -98,3 +98,11 @@ span.underline-link:hover {
 .middotDivider:after{
   content: '\00B7';
 }
+
+.user-select-none {
+  user-select: none;
+}
+
+.user-select-text {
+  user-select: text;
+}

@@ -81,9 +81,11 @@ const mutations = {
   }
 };
 const actions = {
-  getArticlesOfCategory : (context, payload) => {
-    console.log('viewer/articleList/getArticlesOFCategory')
-    return api.getArticlesOfCategory(payload)
+  getPublicArticlesOfCategory : (context, payload) => {
+    let username = payload.username;
+    let categoryId = payload.categoryId;
+
+    return api.getPublicArticlesOfCategory(username, categoryId)
       .then(data => {
         console.log(data);
         context.commit('setArticleList',data, {root:false})
@@ -92,18 +94,12 @@ const actions = {
 
       })
   },
-  getRecentArticles: (context, payload) => {
-    console.log(context.rootGetters)
-    console.log(context.rootGetters['viewer/getRouteParam'])
-    console.log(context.rootState)
-
+  getRecentPublicArticles: (context, payload) => {
     var page = payload;
     var pageParameter = new PageParameter(page,10,'desc','updateTimestamp');
     var username = context.rootGetters['viewer/getRouteParam'].username;
-    console.log(';;;;')
-    console.log(context.rootGetters['viewer/getRouteParam'].articleId);
-    console.log(username);
-    return api.getRecentArticles(username, pageParameter)
+
+    return api.getRecentPublicArticles(username, pageParameter)
       .then( data => {
         context.commit('setArticleList', data);
         context.commit('setListOf','recent');

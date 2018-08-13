@@ -13,7 +13,7 @@
         <img class="category-node-flag" src="@/assets/images/category/blank-icon.png"/>
       </span>
 
-      <span class="node-name"
+      <span class="node-name psd-hover-cursor-pointer"
             v-on:click="onNodeNameClick"
             @click.right="onNodeNameRightClick">{{categoryNode.name}}</span>
 
@@ -167,8 +167,8 @@ export default {
   li.category-node.private-node span.node-name {
     color: #ccc;
   }
-
-  span.node-name:hover {
+  span.node-name:hover{
     background-color: #eee;
   }
+
 </style>

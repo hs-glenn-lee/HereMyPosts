@@ -113,11 +113,15 @@ export default {
       .catch( err => {throw err})
   },
 
+  getPublicArticlesOfCategory (username, categoryId) {
+    return axiosAppJson.get('api/'+username+'/category/'+categoryId+'/public-articles')
+      .then(res => { return res.data })
+      .catch( err => {throw err})
+  },
+
   getArticle(articleId) {
     return axiosAppJson.get('api/article/'+articleId)
       .then(res => {
-        console.log('getArticle!')
-        console.log(res)
         return res.data })
       .catch( err => {throw err})
   },
@@ -138,6 +142,15 @@ export default {
         return res.data })
       .catch( err => {throw err})
   },
+
+  getRecentPublicArticles(username, pageParameter) {
+    return axiosAppJson.post('api/'+username+'/recent-public-articles', pageParameter)
+      .then(res => {
+        console.log(res)
+        return res.data })
+      .catch( err => {throw err})
+  },
+
   uploadArticleImage(formData, articleId) {
     return axiosMultipart.post('api/article/' + articleId + '/image', formData)
       .then( res => {

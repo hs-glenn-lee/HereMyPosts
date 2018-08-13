@@ -1,5 +1,5 @@
 <template>
-  <div v-html="content" class="article-content"></div>
+  <div v-html="content" class="article-content user-select-text"></div>
 </template>
 
 <script>
@@ -16,4 +16,5 @@
 
 <style scoped>
   @import url(../../components/manager/editor/content.css);
+
 </style>

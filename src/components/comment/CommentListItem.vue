@@ -3,11 +3,11 @@
     <div class="comment-meta">
       <div class="author-profile-picture" :style="authorProfilePictureStyle"></div>
       <div>
-        <div class="author-name">{{comment.authorName}}</div>
+        <div class="author-name user-select-text">{{comment.authorName}}</div>
         <div class="create-time">{{new Date(comment.createTimestamp).toLocaleDateString()}}</div>
       </div>
     </div>
-    <div class="content">{{comment.content}}</div>
+    <div class="content user-select-text">{{comment.content}}</div>
   </li>
 </template>
 

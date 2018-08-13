@@ -1,5 +1,5 @@
 <template>
-  <div class="viewer" @click="checkPass">
+  <div class="viewer user-select-none" @click="checkPass">
     <left-pane></left-pane>
     <right-pane></right-pane>
     <alert-comp v-if="getIsAlertShowing" key="getAlertCount"></alert-comp>
