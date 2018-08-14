@@ -1,7 +1,8 @@
 import api from '@/api/api'
 const namespaced = true;
 const state = {
-  article: null
+  article: null,
+  error: null
 };
 const getters = {
   getArticle: state => {
@@ -15,11 +16,18 @@ const getters = {
   },
   getAuthor: state => {
     return state.article.author
+  },
+  getError: state => {
+    return state.error;
   }
+
 };
 const mutations = {
   setArticle: (state, payload) => {
     state.article = payload;
+  },
+  setError: (state, payload) => {
+    state.error = payload;
   }
 };
 const actions = {
@@ -28,6 +36,9 @@ const actions = {
       .then(data => {
         context.commit('setArticle',data);
         return data;
+      })
+      .catch( err => {
+        context.commit('setError',err);
       })
   }
 };

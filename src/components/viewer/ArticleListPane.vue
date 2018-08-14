@@ -78,7 +78,7 @@
               @click="onArticleClick"
               @click.double="onArticleDoubleClick"
               class="article-list-item">
-            <div class="article-list-item-wrapper psd-hover-cursor-pointer" :class="{'current-article':(article.id === getArticle.id)}">
+            <div class="article-list-item-wrapper psd-hover-cursor-pointer" :class="{'current-article': (getArticle) && (article.id === getArticle.id)}">
               <div class="flex">
                 <div class="article-title">
                   <span class="article-title">{{article.title}}</span>

@@ -1,8 +1,8 @@
 <template>
   <div class="right-pane">
-    <div class="right-pane-wrapper" :style="rightPaneWrapperStyle">
+    <div v-if="getArticle" class="right-pane-wrapper" :style="rightPaneWrapperStyle">
       <div class="center-block">
-        <article class="article" v-if="getArticle">
+        <article class="article">
           <h1 class="hidden">{{getTitle}}</h1>
           <div class="article-meta">
             <div class="author-info">
@@ -22,8 +22,6 @@
                 {{new Date(getArticle.createTimestamp) | timestampToPastTimeString}}에 작성
               </span>
             </div>
-
-
           </div>
 
           <article-content-comp v-if="getArticle" :content="getContent"></article-content-comp>
@@ -31,7 +29,6 @@
 
         <div class="context-switch-short"></div>
         <article-tags :article="getArticle"></article-tags>
-
       </div>
 
       <div class="other comment-comp-container">
@@ -45,6 +42,16 @@
         <div class="center-block">
           <viewer-footer-comp></viewer-footer-comp>
         </div>
+      </div>
+    </div>
+    <div v-else class="right-pane-wrapper">
+      <div v-if="getError" class="article-error">
+        <div class="center-block">
+          <div class="error-message"><span>{{getError.message}}</span></div>
+        </div>
+      </div>
+      <div class="article-false">
+
       </div>
     </div>
   </div>
@@ -86,7 +93,8 @@
       ...mapGetters('viewer/article',[
         'getContent',
         'getTitle',
-        'getArticle'
+        'getArticle',
+        'getError'
       ]),
       authorProfilePictureStyle () {
         return {
@@ -222,5 +230,12 @@
 
   }
 
+  div.error-message {
+    margin-top:64px;
+    margin-bottom: 64px;
+    font-size: 1.5em;
+    font-weight: bold;
+    text-align: center;
+  }
 
 </style>

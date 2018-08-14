@@ -39,7 +39,7 @@ const actions = {
           return data;
         })
         .catch( errMsg => {
-          throw errMsg;
+          return Promise.reject(errMsg);
         });
     }else {
       return Promise.resolve(this.account)

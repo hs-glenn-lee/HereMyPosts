@@ -132,7 +132,10 @@ export default {
         console.log('getPublicArticle!')
         console.log(res)
         return res.data })
-      .catch( err => {throw err})
+      .catch( err => {
+        console.log(err);
+        return Promise.reject(err);
+      })
   },
 
   getRecentArticles(username, pageParameter) {
@@ -225,7 +228,10 @@ export default {
         console.log(res.data) // data is supposed to be tagArticle
         return res.data;
       })
-      .catch( err => {throw err})
+      .catch( err => {
+        console.log(err);
+        return Promise.reject(err)
+      })
   },
 
   //---settings

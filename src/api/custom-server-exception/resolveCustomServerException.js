@@ -9,6 +9,13 @@ export default function (axiosError) {
         return error;
       }
     }
+
+    if(axiosError.response.data) {
+      if(axiosError.response.data.exception === 'web.exceptions.PrivateArticleException') {
+        var error = new NotSignedInError(axiosError.response.data.message)
+        return error;
+      }
+    }
   }
 
   return axiosError;

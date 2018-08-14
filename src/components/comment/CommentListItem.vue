@@ -6,6 +6,20 @@
         <div class="author-name user-select-text">{{comment.authorName}}</div>
         <div class="create-time">{{new Date(comment.createTimestamp).toLocaleDateString()}}</div>
       </div>
+      <div class="buttons">
+        <div v-if="!isDeleteFormActive" @click="setIsDeleteFormActive(true)"
+             class="delete-button button"></div>
+      </div>
+      <div v-if="isDeleteFormActive" class="delete-form">
+        <div v-if="comment.isAnonymous">
+          <input class="password-for-deletion" type="password" placeholder="비밀번호" >
+          <button class="delete-button" type="button">삭제</button>
+        </div>
+        <div v-else>
+          <span>댓글을 삭제하시겠습니까?</span>
+          <button class="delete-button" type="button">삭제</button>
+        </div>
+      </div>
     </div>
     <div class="content user-select-text">{{comment.content}}</div>
   </li>
@@ -16,6 +30,11 @@
   import { mapGetters } from 'vuex'
   export default {
     name: "CommentListItem",
+    data() {
+      return {
+        isDeleteFormActive: false
+      }
+    },
     props: {
       comment: Object,
       focusingComment: Object
@@ -23,7 +42,10 @@
     methods: {
       ...mapActions([
 
-      ])
+      ]),
+      setIsDeleteFormActive(bool) {
+        this.isDeleteFormActive = bool;
+      }
     },
     computed: {
       ...mapGetters([
@@ -52,7 +74,7 @@
 
     },
     created() {
-
+      console.log(this.comment)
     }
   }
 </script>
@@ -101,4 +123,38 @@
     font-size: 0.7em;
     color: #8a8a8a;
   }
+
+  div.buttons {
+    margin-left: 16px;
+  }
+
+  div.delete-button {
+    background-size: 14px 14px;
+    background-image: url(../../assets/images/article-list-pane/trash-24w24h.png);
+    width: 14px;
+    height: 14px;
+
+    cursor: pointer;
+
+    opacity: 0.5;
+  }
+  div.delete-button:hover {
+    background-image: url(../../assets/images/article-list-pane/trash-on-hover-24w24h.png);
+    opacity: 0.7;
+  }
+  input.password-for-deletion {
+    font-size: 1em;
+    padding: 4px;
+    border-radius: 4px;
+  }
+
+
+
+  button.delete-button {
+    font-size: 1em;
+    background-color: #fff;
+    color: #4a4a4a;
+    border: 1px solid #bcbcbc;
+  }
+
 </style>

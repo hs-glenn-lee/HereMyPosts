@@ -49,6 +49,8 @@ const actions = {
     var routeParamUsername = route.params.username;
     var routeParamArticleId = route.params.articleId;
 
+    context.dispatch('syncSign',{},{root:true});
+
     context.dispatch('loadViewerCategory', routeParamUsername, {root:false})
       .then( () => {
         stopWait('loadViewerCategory');
