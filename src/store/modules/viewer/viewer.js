@@ -49,7 +49,10 @@ const actions = {
     var routeParamUsername = route.params.username;
     var routeParamArticleId = route.params.articleId;
 
-    context.dispatch('syncSign',{},{root:true});
+    context.dispatch('syncSign',{},{root:true})
+      .catch( err => {
+        console.log('비로그인 사용자.')
+      })
 
     context.dispatch('loadViewerCategory', routeParamUsername, {root:false})
       .then( () => {
@@ -88,9 +91,11 @@ const actions = {
 
   },
   onChangeRoute: (context, payload) => {
+    console.log('wefwefweffwfwef')
+
     const route = payload;
-    const newUsername = route.route.params.username;
-    const newArticleId = route.route.params.articleId;
+    const newUsername = route.params.username;
+    const newArticleId = route.params.articleId;
 
     let viewerRouteParam = context.getters.getRouteParam;
 
@@ -98,14 +103,13 @@ const actions = {
     if(newArticleId !== viewerRouteParam.articleId) {
       return context.dispatch('loadViewerArticle', newArticleId)
         .then( () => {
-
+          console.log('endendend')
         })
     }
 
 
   },
   loadViewerCategory: (context, payload) => {
-    console.log(context);
     const username = payload;
     context.dispatch('categoryTree/initCategoryTree', {//TODO
       username:username

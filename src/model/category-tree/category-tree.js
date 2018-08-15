@@ -31,7 +31,6 @@ export default class CategoryTree {
   }
 
   convListToTree () {
-    console.log('conv')
     //conv Category list to CategoryNode map,
     var catList = this.categoryList
 

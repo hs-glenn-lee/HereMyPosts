@@ -9,7 +9,7 @@
              :class="{'visible-ease-in-1s':isGoingToWriteComment}">
           <div v-if="getIsSignedIn"
                class="signed-up-author-info">
-            <span class="author-name">작성자이름</span>
+            <span v-if="authorSetting" class="author-name">{{authorSetting.penName}}</span>
           </div>
           <div v-else
                class="anonymous-author-info">
@@ -67,7 +67,9 @@
         content: '',
         anonymousAuthorName: '',
         anonymousPassword: '',
-        isGoingToWriteComment: false
+        isGoingToWriteComment: false,
+
+        authorSetting: null
       };
     },
     methods: {
@@ -121,6 +123,12 @@
     },
     components: {
 
+    },
+    created () {
+      api.getMySettings()
+        .then( data => {
+          this.authorSetting = data;
+        })
     }
   }
 </script>
@@ -168,6 +176,10 @@
     transition: 0.5s;
   }
 
+  div.signed-up-author-info {
+    padding-top: 8px;
+    font-weight: bold;
+  }
 
 
   input.anonymous-input {

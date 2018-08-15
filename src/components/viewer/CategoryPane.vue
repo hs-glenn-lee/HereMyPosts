@@ -116,12 +116,18 @@ export default {
     },
 
     onArticleClick(event) {
-
+      var articleId = event.currentTarget.id;
+      var $route = this.$route;
+      this.$router.push({name:'Viewer', params: {username:$route.params.username, articleId: articleId}});
+      this.setCategoryPaneIsShowing(false)
     },
     onArticleDoubleClick(event) {
       var articleId = event.currentTarget.id;
-      this.loadPublicArticle(articleId)
-        .then( () => { this.setCategoryPaneIsShowing(false) });
+      var $route = this.$route;
+      this.$router.push({name:'Viewer', params: {username:$route.params.username, articleId: articleId}});
+      this.setCategoryPaneIsShowing(false)
+
+
     },
 
     openAllCategoryNodes () {

@@ -1,38 +1,48 @@
 <template>
   <li class="comment-list-item" v-bind:id="comment.id" :class="{'focused': isFocused }">
-    <div class="comment-meta">
-      <div class="author-profile-picture" :style="authorProfilePictureStyle"></div>
-      <div>
-        <div class="author-name user-select-text">{{comment.authorName}}</div>
-        <div class="create-time">{{new Date(comment.createTimestamp).toLocaleDateString()}}</div>
-      </div>
-      <div class="buttons">
-        <div v-if="!isDeleteFormActive" @click="setIsDeleteFormActive(true)"
-             class="delete-button button"></div>
-      </div>
-      <div v-if="isDeleteFormActive" class="delete-form">
-        <div v-if="comment.isAnonymous">
-          <input class="password-for-deletion" type="password" placeholder="비밀번호" >
-          <button class="delete-button" type="button">삭제</button>
-        </div>
-        <div v-else>
-          <span>댓글을 삭제하시겠습니까?</span>
-          <button class="delete-button" type="button">삭제</button>
-        </div>
-      </div>
+    <div v-if="deleted" class="deleted-comment">
+      <span>댓글이 삭제되었습니다.</span>
     </div>
-    <div class="content user-select-text">{{comment.content}}</div>
+    <div v-else class="comment">
+      <div class="comment-meta">
+        <div class="author-profile-picture" :style="authorProfilePictureStyle"></div>
+        <div>
+          <div class="author-name user-select-text">{{comment.authorName}}</div>
+          <div class="create-time">{{new Date(comment.createTimestamp).toLocaleDateString()}}</div>
+        </div>
+        <div class="buttons">
+          <div v-if="!isDeleteFormActive" @click="setIsDeleteFormActive(true)"
+               class="delete-button button"></div>
+        </div>
+        <div v-if="isDeleteFormActive" class="delete-form">
+          <div v-if="comment.isAnonymous">
+            <input v-model="passwordToDelete" class="password-for-deletion" type="password" placeholder="비밀번호" >
+            <button class="delete-button" type="button" @click="deleteAnonymousComment">삭제</button>
+          </div>
+          <div v-else>
+            <span>댓글을 삭제하시겠습니까?</span>
+            <button class="delete-button" type="button" @click="deleteMyComment">삭제</button>
+          </div>
+        </div>
+      </div>
+      <div class="content user-select-text">{{comment.content}}</div>
+    </div>
   </li>
 </template>
 
 <script>
   import { mapActions } from 'vuex'
   import { mapGetters } from 'vuex'
+  import api from '@/api/api.js';
+  import Comment from '@/model/Comment.js'
+
   export default {
     name: "CommentListItem",
     data() {
       return {
-        isDeleteFormActive: false
+        isDeleteFormActive: false,
+        passwordToDelete: '',
+        deleted: false
       }
     },
     props: {
@@ -45,14 +55,48 @@
       ]),
       setIsDeleteFormActive(bool) {
         this.isDeleteFormActive = bool;
+      },
+      deleteMyComment() {
+        let cmt = new Comment();
+        cmt.id = this.comment.id;
+        cmt.isAnonymous = false;
+        console.log(cmt)
+
+        return api.deleteComment(cmt)
+          .then(() => {
+            this.deleted = true;
+          })
+          .catch( err => {
+            console.error(err);
+          })
+      },
+      deleteAnonymousComment() {
+        let cmt = new Comment();
+        cmt.id = this.comment.id;
+        cmt.isAnonymous = true;
+        cmt.anonymousPassword = this.passwordToDelete;
+        console.log(cmt)
+        return api.deleteComment(cmt)
+          .then(() => {
+            this.deleted = true;
+          })
+          .catch( err => {
+            console.error(err);
+          })
       }
     },
     computed: {
       ...mapGetters([
       ]),
       authorProfilePictureStyle () {
-        return {
-          'background-image': 'url("' + this.profilePictureUrl + '")'
+        if(this.profilePictureUrl === '') {
+          return {
+            'background-size': '32px'
+          }
+        }else {
+          return {
+            'background-image': 'url("' + this.profilePictureUrl + '")'
+          }
         }
       },
       profilePictureUrl () {
@@ -74,7 +118,7 @@
 
     },
     created() {
-      console.log(this.comment)
+
     }
   }
 </script>
@@ -93,6 +137,13 @@
     background-color: #EFEB95;
     transition: 1s;
   }
+
+  div.deleted-comment {
+    text-align: center;
+  }
+
+
+
   div.comment-meta {
     display:flex;
     flex-direction: row;
@@ -102,7 +153,7 @@
   }
 
   div.comment-meta > div.author-profile-picture{
-    background: #9e9e9e no-repeat center;
+    background: url(../../assets/images/anonymous_profile_pic.png) no-repeat center;
     background-size: 40px;
     border-radius: 50%;
     height: 40px;

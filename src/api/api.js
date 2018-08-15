@@ -3,7 +3,7 @@ export default {
   getMyAccount () {
     return axiosAppJson.get('/api/getMyAccount')
       .then(res => { return res.data })
-      .catch(err=>{ throw err })
+      .catch(err=>{ return Promise.reject(err) })
   },
   signIn (payload) {
     return axiosAppJson.post('/api/sign-in', payload)
@@ -202,7 +202,13 @@ export default {
       .catch( err => {throw err});
 
   },
-
+  deleteComment (comment) {
+    return axiosAppJson.post('api/comment/delete',comment)
+      .then(res=> {
+        return res.data;
+      })
+      .catch( err => { return Promise.reject(err) })
+  },
 
   //---tag
   getMyTags () {

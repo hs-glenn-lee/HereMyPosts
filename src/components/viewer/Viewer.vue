@@ -19,7 +19,8 @@
     methods: {
       ...mapActions('viewer',[
         'initViewer',
-        'checkPass'
+        'checkPass',
+        'onChangeRoute'
       ]),
       ...mapMutations([
 
@@ -34,6 +35,11 @@
         'getAlert'
         /*alert end*/
       ])
+    },
+    watch : {
+      '$route' (to, from) {
+        this.onChangeRoute(to);
+      }
     },
     components: {
         'left-pane': ViewerLeftPaneComp,

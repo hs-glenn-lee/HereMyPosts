@@ -42,6 +42,7 @@ export default new Router({
       component: ManagerComp
     },
     {
+      name: 'Viewer',
       path: '/:username/article/:articleId',
       component: Viewer
     },
