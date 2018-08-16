@@ -13,7 +13,7 @@ const modules = {
 };
 const state = {
   viewerState: 'start',
-  isViewerLoading:  false,
+  isLoading:  false,
   routeParam : {
     username: '',
     articleId: ''
@@ -31,8 +31,8 @@ const getters = {
   getRouteParam (state) {
     return state.routeParam;
   },
-  isViewerLoading (state) {
-    return state.isViewerLoading;
+  isLoading (state) {
+    return state.isLoading;
   }
 };
 const mutations = {
@@ -41,10 +41,16 @@ const mutations = {
   },
   setRouteParamArticleId (state, payload) {
     state.routeParam.articleId = payload;
+  },
+  setIsLoading (state, payload) {
+    state.isLoading = payload;
   }
 };
 const actions = {
   initViewer: (context, payload) => {
+    console.log('initViewer')
+    context.commit('setIsLoading', true);
+
     const route = payload;
     var routeParamUsername = route.params.username;
     var routeParamArticleId = route.params.articleId;
@@ -74,7 +80,7 @@ const actions = {
       });
 
 
-    var waitingFor = {'initCategoryTree': false, 'loadViewerArticle': false, 'articleList/getRecentPublicArticles': false};
+    var waitingFor = {'loadViewerArticle': false, 'articleList/getRecentPublicArticles': false};
     var stopWait = function (actionName) {
       waitingFor[actionName] = true;
       var isAllComplete = true;
@@ -84,14 +90,14 @@ const actions = {
 
       if(isAllComplete) {
         setTimeout( () => {
-          /*context.commit('setIsManagerLoading',!isAllComplete);*/
-        }, 500)
+          context.commit('setIsLoading', false);
+        }, 600)
       }
     };
 
   },
   onChangeRoute: (context, payload) => {
-    console.log('wefwefweffwfwef')
+
 
     const route = payload;
     const newUsername = route.params.username;
@@ -101,9 +107,12 @@ const actions = {
 
 
     if(newArticleId !== viewerRouteParam.articleId) {
+      context.commit('setIsLoading', true);
       return context.dispatch('loadViewerArticle', newArticleId)
         .then( () => {
-          console.log('endendend')
+          setTimeout( () => {
+            context.commit('setIsLoading', false);
+          }, 600)
         })
     }
 
@@ -111,7 +120,7 @@ const actions = {
   },
   loadViewerCategory: (context, payload) => {
     const username = payload;
-    context.dispatch('categoryTree/initCategoryTree', {//TODO
+    return context.dispatch('categoryTree/initCategoryTree', {//TODO
       username:username
     }, {root:false})
   },
@@ -127,7 +136,7 @@ const actions = {
     const markedPasses = event.passes;
 
     if(markedPasses) {
-      console.log('markedPasses exits')
+
       var markedPassMap = {};
       for(var k in markedPasses) {
         var markedPassKey = markedPasses[k];

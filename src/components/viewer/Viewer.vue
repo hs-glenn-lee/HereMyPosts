@@ -3,6 +3,8 @@
     <left-pane></left-pane>
     <right-pane></right-pane>
     <alert-comp v-if="getIsAlertShowing" key="getAlertCount"></alert-comp>
+    <loading-comp :isLoading="isLoading"></loading-comp>
+
   </div>
 </template>
 
@@ -10,6 +12,8 @@
   import ViewerLeftPaneComp from './ViewerLeftPane'
   import ViewerRightPaneComp from './ViewerRightPane'
   import alertComp from '@/components/Alert'
+  import loadingComp from '@/components/Loading'
+
   import { mapActions } from 'vuex'
   import { mapGetters } from 'vuex'
   import { mapMutations } from 'vuex'
@@ -34,6 +38,9 @@
         'getIsAlertShowing',
         'getAlert'
         /*alert end*/
+      ]),
+      ...mapGetters('viewer',[
+        'isLoading'
       ])
     },
     watch : {
@@ -42,9 +49,10 @@
       }
     },
     components: {
-        'left-pane': ViewerLeftPaneComp,
-        'right-pane': ViewerRightPaneComp,
-        'alert-comp': alertComp
+      'left-pane': ViewerLeftPaneComp,
+      'right-pane': ViewerRightPaneComp,
+      'alert-comp': alertComp,
+      'loading-comp': loadingComp
     },
     created() {
       this.initViewer(this.$route);

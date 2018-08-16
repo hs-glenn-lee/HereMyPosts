@@ -1,7 +1,7 @@
 <template>
   <div class="article-list-pane"
       v-show="isArticleListPaneShowing">
-    <div class="loading" :class="{'showing': isViewerLoading }">
+    <div class="loading" :class="{'showing': isLoading }">
       <img class="loading-img"
            :style="getLoadingImgStyle"
            src="@/assets/images/loading.gif">
@@ -133,7 +133,7 @@ export default {
     ]),
 
     ...mapGetters('viewer',[
-      'isViewerLoading'//TODO
+      'isLoading'
      ]),
 
     ...mapGetters('viewer/articleList',[

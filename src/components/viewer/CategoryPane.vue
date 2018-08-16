@@ -126,8 +126,6 @@ export default {
       var $route = this.$route;
       this.$router.push({name:'Viewer', params: {username:$route.params.username, articleId: articleId}});
       this.setCategoryPaneIsShowing(false)
-
-
     },
 
     openAllCategoryNodes () {

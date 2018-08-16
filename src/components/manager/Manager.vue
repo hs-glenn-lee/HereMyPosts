@@ -7,7 +7,7 @@
       @clickTagMeta="onClickTagMeta"
       v-if="getArticle"></right-pane>
     <alert-comp v-if="getIsAlertShowing"></alert-comp>
-    <loading-comp></loading-comp>
+    <loading-comp :isLoading="isManagerLoading"></loading-comp>
   </div>
 </template>
 

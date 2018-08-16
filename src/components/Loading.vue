@@ -1,6 +1,6 @@
 <template>
   <div class="loading"
-        :class="{'showing':isManagerLoading}">
+        :class="{'showing':isLoading}">
 
     <div class="loading-img-wrapper"
           :style="wrapperDivStyle">
@@ -16,6 +16,9 @@
 
   export default {
     name: 'Alert',
+    props: {
+      isLoading: Boolean
+    },
     data () {
       return {
         imgWrapperPaddingTop: ''
@@ -41,6 +44,12 @@
     },
     created () {
       this.calcWrapperPaddingTop()
+    },
+    watch : {
+      isLoading (to,from) {
+        console.log(to);
+        console.log(from);
+      }
     }
   }
 </script>
