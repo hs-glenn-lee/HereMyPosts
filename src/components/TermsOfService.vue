@@ -1,7 +1,7 @@
 <template>
   <div>
     <header class="top-header flex-con">
-      <div class="flex-item">
+      <div @click="goHome" class="flex-item psd-hover-cursor-pointer">
         <img class="logo" src="@/assets/images/logo-200w30h-white.png" />
       </div>
     </header>
@@ -169,7 +169,12 @@
 
 <script>
   export default {
-      name: "TermsOfService"
+    name: "TermsOfService",
+    methods: {
+        goHome() {
+          window.location.href = '/'
+        }
+    }
   }
 </script>
 

@@ -114,19 +114,26 @@ export default {
       this.getPublicArticlesOfCategory({username: username, categoryId: clickedNodeNameSpan.parentElement.parentElement.id});
       this.setArticleListPaneShowing(true);
     },
-
-    onArticleClick(event) {
-      var articleId = event.currentTarget.id;
-      var $route = this.$route;
-      this.$router.push({name:'Viewer', params: {username:$route.params.username, articleId: articleId}});
-      this.setCategoryPaneIsShowing(false)
-    },
-    onArticleDoubleClick(event) {
-      var articleId = event.currentTarget.id;
-      var $route = this.$route;
-      this.$router.push({name:'Viewer', params: {username:$route.params.username, articleId: articleId}});
-      this.setCategoryPaneIsShowing(false)
-    },
+    onArticleClick: _.throttle(
+      function (event) {
+        var articleId = event.currentTarget.id;
+        console.log('onArticleClick')
+        console.log(articleId);
+        var $route = this.$route;
+        this.$router.push({name:'Viewer', params: {username:$route.params.username, articleId: articleId}});
+        this.setCategoryPaneIsShowing(false)
+      },
+      200
+    ),
+    onArticleDoubleClick: _.throttle(
+      function (event) {
+        var articleId = event.currentTarget.id;
+        var $route = this.$route;
+        this.$router.push({name:'Viewer', params: {username:$route.params.username, articleId: articleId}});
+        this.setCategoryPaneIsShowing(false)
+      },
+      200
+    ),
 
     openAllCategoryNodes () {
       this.$refs.$categoryTreeComp.openAllCategoryNodes();

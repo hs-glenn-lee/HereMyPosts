@@ -10,9 +10,14 @@
           <div class="author-name user-select-text">{{comment.authorName}}</div>
           <div class="create-time">{{new Date(comment.createTimestamp).toLocaleDateString()}}</div>
         </div>
-        <div class="buttons">
-          <div v-if="!isDeleteFormActive" @click="setIsDeleteFormActive(true)"
+        <div v-if="!isDeleteFormActive" class="buttons">
+          <div v-if="comment.isAnonymous"
+               @click="setIsDeleteFormActive(true)"
                class="delete-button button"></div>
+          <div v-else-if="(getAccount) && comment.authorId === getAccount.id"
+               @click="setIsDeleteFormActive(true)"
+               class="delete-button button"></div>
+
         </div>
         <div v-if="isDeleteFormActive" class="delete-form">
           <div v-if="comment.isAnonymous">
@@ -87,6 +92,7 @@
     },
     computed: {
       ...mapGetters([
+        'getAccount'
       ]),
       authorProfilePictureStyle () {
         if(this.profilePictureUrl === '') {

@@ -97,7 +97,7 @@ const actions = {
 
   },
   onChangeRoute: (context, payload) => {
-
+    console.log('onChangeRoute')
 
     const route = payload;
     const newUsername = route.params.username;
@@ -105,11 +105,15 @@ const actions = {
 
     let viewerRouteParam = context.getters.getRouteParam;
 
+    console.log(newArticleId)
+    console.log(viewerRouteParam.articleId)
 
     if(newArticleId !== viewerRouteParam.articleId) {
       context.commit('setIsLoading', true);
       return context.dispatch('loadViewerArticle', newArticleId)
         .then( () => {
+          context.commit('setRouteParamUsername', newUsername);
+          context.commit('setRouteParamArticleId', newArticleId);
           setTimeout( () => {
             context.commit('setIsLoading', false);
           }, 600)

@@ -4,7 +4,7 @@
       <div class="flex-menu">
         <div class="flex-menu-group">
           <div class="menu-group">
-            <div class="global-logo-picto" style="margin-top:8px; margin-bottom: 16px;">
+            <div @click="goHome"class="global-logo-picto psd-hover-cursor-pointer" style="margin-top:8px; margin-bottom: 16px;">
               <img src="@/assets/images/logo-initial-55w55h.png"/>
             </div>
             <div class="left-pane-menu-item"
@@ -142,6 +142,9 @@ export default {
     goSettings () {
       let routeData = this.$router.resolve({ name: "MySetting" })
       window.open(routeData.href, '_self');
+    },
+    goHome () {
+      window.location.href = '/'
     },
     showTagPaneExc (evt) {
       evt.stopPropagation();

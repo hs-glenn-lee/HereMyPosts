@@ -3,12 +3,12 @@
     <div>
       <header class="home-header">
         <div class="flex-item">
-          <div class="global-logo"><img src="@/assets/images/logo-200w30h.png"/></div>
+          <div @click="goHome" class="global-logo psd-hover-cursor-pointer"><img src="@/assets/images/logo-200w30h.png"/></div>
         </div>
       </header>
     </div>
 
-    <div>
+    <main>
       <article class="center">
         <h2 style="display:none;">홈 내용</h2>
         <div class="user-info">
@@ -20,10 +20,8 @@
         <div class="recent-article-feed-container">
           <recent-article-feed :username="username"></recent-article-feed>
         </div>
-
       </article>
-    </div>
-
+    </main>
   </div>
 </template>
 
@@ -50,7 +48,10 @@
       ]),
       ...mapMutations([
 
-      ])
+      ]),
+      goHome () {
+        window.location.href = "/";
+      }
     },
     computed: {
       ...mapGetters([
@@ -77,6 +78,9 @@
 </script>
 
 <style scoped>
+  main {
+    margin-bottom: 48px;
+  }
   header.home-header {
     display: flex;
     justify-content: space-between;
@@ -114,6 +118,7 @@
     font-size: 1.8em;
     font-weight: bold;
     padding-bottom: 8px;
+    color: #333;
   }
 
   div.user-introduction {

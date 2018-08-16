@@ -6,17 +6,21 @@
       </div>
       <div class="row">
         <div class="flex-row">
-          <div class="update-time"><span v-if="(article.updateTimestamp)" class="article-create-timestamp">{{new Date(article.updateTimestamp).toLocaleDateString()}}</span></div>
+          <div class="update-time">
+            <span v-if="(article.updateTimestamp)" class="article-create-timestamp">{{new Date(article.updateTimestamp).toLocaleDateString()}}</span>
+            <span class="middotDivider"></span>
+            <span>{{article.updateTimestamp | timestampToPastTimeString}}</span>
+          </div>
         </div>
       </div>
       <div class="row">
         <div class="summary"><span>{{article.summary}}</span></div>
       </div>
-      <div class="row">
+      <!--<div class="row">
         <div class="flex-row">
           <div class="comment-count">6 comments</div>
         </div>
-      </div>
+      </div>-->
     </div>
   </li>
 </template>
@@ -67,15 +71,16 @@
     border: 1px solid #ececec;
     border-radius: 4px;
     margin: 10px 0px 10px 0px;
-    padding: 4px 8px 4px 8px;
+    padding: 8px 16px 8px 16px;
 
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    background-color: #fdfdfd;
   }
   div.row:first-child {
     margin-top: 8px;
   }
   div.row {
-    margin-bottom: 8px;
+    margin: 8px 0px 8px 0px;
   }
   div.flex-row {
     display:flex;
@@ -86,6 +91,7 @@
   div.title {
     font-size: 1.5em;
     font-weight: bold;
+    color: #333;
   }
   div.update-time {
     display:flex;
@@ -96,11 +102,8 @@
   }
   div.summary {
     font-size: 1em;
+    color: #4a4a4a;
   }
 
-  div.comment-count {
-    font-size: 0.8em;
-    color: #8A8A8A;
-  }
 
 </style>

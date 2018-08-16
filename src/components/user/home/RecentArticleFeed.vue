@@ -8,8 +8,6 @@
         :article="article">
       </article-feed-item>
     </ul>
-
-
   </div>
 </template>
 
@@ -69,5 +67,6 @@
 <style scoped>
   div.feed-name {
     font-weight: bold;
+    color: #333;
   }
 </style>

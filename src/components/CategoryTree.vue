@@ -59,7 +59,9 @@
   },
   watch: {
     selectedNode: function(val,oldVal) {
-      this.markSelectedNode(val,oldVal);
+      if(val) {
+        this.markSelectedNode(val,oldVal);
+      }
     }
   },
   computed: {

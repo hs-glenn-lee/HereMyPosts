@@ -1,19 +1,39 @@
 <template>
   <div>
     <nav class="left-pane-menu">
-      <div class="global-logo-picto" style="margin-top:8px; margin-bottom: 16px;">
-        <img src="@/assets/images/logo-initial-55w55h.png"/>
+      <div class="flex-col">
+        <div class="flex-col">
+          <div @click="goHome" class="global-logo-picto psd-hover-cursor-pointer" style="margin-top:8px; margin-bottom: 16px;">
+            <img src="@/assets/images/logo-initial-55w55h.png"/>
+          </div>
+
+          <div class="left-pane-menu-item"
+               @mouseover="onMenuItemMouserOver" @mouseleave="onMenuItemMouserLeave">
+            <img
+              tool-tip="카테고리"
+              @click="onClickCategoryMenu"
+              class="icon psd-hover-cursor-pointer"
+              src="@/assets/images/left-pane-icons/category-icon-40w40h.png"/>
+            <!--<span class="r-tool-tip">카테고리</span>-->
+          </div>
+        </div>
+
+        <div v-if="getIsSignedIn" class="flex-col">
+          <div class="left-pane-menu-item"
+               @click="goManager"
+               @mouseover="onMenuItemMouserOver" @mouseleave="onMenuItemMouserLeave">
+
+            <img
+              class="icon psd-hover-cursor-pointer"
+              src="@/assets/images/left-pane-icons/manager-icon-50w50h.png"/>
+            <!--<span class="r-tool-tip">카테고리</span>-->
+          </div>
+        </div>
       </div>
 
-      <div class="left-pane-menu-item"
-           @mouseover="onMenuItemMouserOver" @mouseleave="onMenuItemMouserLeave">
-        <img
-          tool-tip="카테고리"
-          @click="onClickCategoryMenu"
-          class="icon psd-hover-cursor-pointer"
-          src="@/assets/images/left-pane-icons/category-icon-40w40h.png"/>
-        <!--<span class="r-tool-tip">카테고리</span>-->
-      </div>
+
+
+
     </nav>
 
     <div>
@@ -56,12 +76,25 @@
       onMenuItemMouserLeave (event ) {
         event.currentTarget.classList.remove('up-here')
         /*event.currentTarget.querySelector('span.r-tool-tip').classList.remove('active')*/
+      },
+      goManager () {
+        let username = this.$route.params.username;
+        let articleId = this.$route.params.articleId;
+        console.log(articleId)
+        let routeData = this.$router.resolve({ name:'ManagerSavedArticle', params: {username, articleId}})
+        window.open(routeData.href, '_self');
+      },
+      goHome () {
+        window.location.href = '/'
       }
     },
     computed: {
       ...mapGetters([
         'isCategoryPaneShowing'
-      ])
+      ]),
+      ...mapGetters([
+        'getIsSignedIn'
+      ]),
     },
     components: {
       'category-pane': CategoryPane
@@ -84,9 +117,21 @@
     background-color: #f8f8f8;
 
   }
+  .left-pane-menu > div {
+    height: 100%;
+  }
   nav.left-pane-menu {
     height: 100%;
   }
+
+  .flex-col {
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    justify-content: space-between;
+  }
+
+
   div.left-pane-menu-item {
     text-align: center;
     margin-top: 10px;

@@ -2,7 +2,7 @@
   <div class="me-settings" v-if="getIsSignedIn">
     <header class="top-header">
       <div class="left-block">
-        <div class="global-logo-inline"><img src="@/assets/images/logo-200w30h-white.png" /></div>
+        <div @click="goHome" class="global-logo-inline psd-hover-cursor-pointer"><img src="@/assets/images/logo-200w30h-white.png" /></div>
       </div>
 
       <div class="right-block">
@@ -135,6 +135,9 @@
       ...mapMutations([
           'getIsSignedIn'
       ]),
+      goHome() {
+        window.location.href = '/';
+      },
       goManager () {
         let routeData = this.$router.resolve({ name: "Manager", params: { username: this.getAccount.username }})
         window.open(routeData.href, '_self');
