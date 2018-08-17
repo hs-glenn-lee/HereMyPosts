@@ -40,7 +40,8 @@ export default {
       'getAlertMessage',
       'getIsAlertShowing',
       'getArticle',
-      'isManagerLoading'
+      'isManagerLoading',
+      'needToSave'
     ])
   },
   created () {
@@ -69,7 +70,17 @@ export default {
         }else {
           throw error;
         }
-      })
+      });
+
+    window.addEventListener('beforeunload', evt => {
+      if(this.needToSave) {
+        var confirmationMessage = '변경된 사항이 저장되지 않을 수 있습니다. 페이지를 나가시겠습니까?';
+        (evt || window.event).returnValue = confirmationMessage; //Gecko + IE
+        return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
+      }else {
+        return null;
+      }
+    });
 
   },
   components: {

@@ -11,6 +11,7 @@
         <div v-else class="link">
           <a @click="goManager" class="psd-hover-cursor-pointer">글 관리</a>
           <a @click="goUserHome" class="psd-hover-cursor-pointer">사용자 홈</a>
+          <a @click="signOut" class="psd-hover-cursor-pointer">로그아웃</a>
         </div>
       </div>
     </header>
@@ -27,6 +28,7 @@
 <script>
 
   import FooterComp from '@/components/viewer/ViewerFooter.vue'
+  import api from '@/api/api'
   import {mapGetters} from 'vuex'
   import {mapActions} from 'vuex'
 
@@ -62,6 +64,11 @@
         let username = this.getAccount.username;
         let routeData = this.$router.resolve({name:'Manager', params: {username}})
         window.open(routeData.href, '_self');
+      },
+      signOut () {
+        api.signOut().then( () => {
+          window.location.href = "/";
+        })
       }
     },
     created () {

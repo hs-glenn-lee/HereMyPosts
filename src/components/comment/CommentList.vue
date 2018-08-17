@@ -57,6 +57,9 @@
         return api.getCommentsOfArticle(this.article.id)
           .then(data => {
             this.comments = data;
+            this.comments.sort( (a, b) => {
+              return (a.createTimestamp > b.createTimestamp) ? 1 : ((a.createTimestamp === b.createTimestamp)) ? 0 : -1;
+            });
           })
           .catch(err => {console.error(err)})
       },

@@ -22,6 +22,24 @@ export default {
         }
       })
   },
+  signOut () {
+   return axiosAppJson.post('/api/sign-out', {})
+     .then(res => {
+       return res.data
+     })
+     .catch( err => {
+       return Promise.reject(err);
+     })
+     .then( data => {
+       if(data.status === 'success') {
+         return data.data;
+       }else {
+         return Promise.reject(data.message);
+       }
+     })
+
+  },
+
   signUp (account) {
     console.log('sign-up');
     console.log(account)

@@ -116,7 +116,7 @@ export default {
       var categoryPane = window.document.querySelector('div.category-pane');
       if(categoryPane) {
         var categoryPaneHeight = categoryPane.offsetHeight;
-        var menuHeight = 106; //set hard
+        var menuHeight = 149; //set hard
         var curTop = (this.rightClickedTop);
         var lack = (curTop + menuHeight) - categoryPaneHeight;
         if( lack > 0 ) {
@@ -138,6 +138,14 @@ export default {
     },
     onArticleDoubleClick(event) {
       var articleId = event.currentTarget.id;
+      if(this.needToSave) {
+        var justGo = confirm('변경된 사항이 저장되지 않을 수 있습니다. 다른 글로 나가시겠습니까?');
+        if(justGo) {
+          this.loadSavedArticle(articleId);
+        }else {
+          return
+        }
+      }
       this.loadSavedArticle(articleId);
     },
 
@@ -174,7 +182,8 @@ export default {
       'getSelectedNode',
       'getAccount',
       'isRightClickMenuShowing',
-      'getCategoryTreeRoot'
+      'getCategoryTreeRoot',
+      'needToSave'
     ]),
     categoryTreeContainerStyle () {
       return {

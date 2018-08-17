@@ -6,14 +6,14 @@
     <div class="main-menu">
       <div class="rc-clicked-node-name"><span >{{categoryNode.name}}</span></div>
       <ul class="menu-list" v-if="operation === ''">
-        <li class="menu-list-item"
+        <li class="menu-list-item psd-hover-cursor-pointer"
             @click="operate('create')">아래에 새 카테고리 생성</li>
         <li
           @click="operate('updateName')"
-          class="menu-list-item">이 카테고리 이름 변경</li>
-        <li v-if="categoryNode.isPublic" class="menu-list-item" @click="toggleIsPublic">비공개하기</li>
-        <li v-else class="menu-list-item" @click="toggleIsPublic">공개하기</li>
-        <li class="menu-list-item" @click="removeThisCategory">이 카테고리 삭제</li>
+          class="menu-list-item psd-hover-cursor-pointer">이 카테고리 이름 변경</li>
+        <li v-if="categoryNode.isPublic" class="menu-list-item psd-hover-cursor-pointer" @click="toggleIsPublic">비공개하기</li>
+        <li v-else class="menu-list-item psd-hover-cursor-pointer" @click="toggleIsPublic">공개하기</li>
+        <li class="menu-list-item psd-hover-cursor-pointer" @click="removeThisCategory">이 카테고리 삭제</li>
       </ul>
     </div>
 
@@ -182,15 +182,14 @@ import {mapActions, mapGetters} from 'vuex'
 <style scoped>
   div.rc-click-menu {
     background-color: #f8f8f8;
-    border: 1px solid #ececec;
-
+    border: 2px solid #ececec;
+    border-radius: 3px;
     z-index: 201;
     position: absolute;
-
   }
 
   div.rc-click-menu{
-    padding: 10px 10px 5px 10px;
+    padding: 8px;
   }
 
   li.menu-list-item {
@@ -199,10 +198,15 @@ import {mapActions, mapGetters} from 'vuex'
     height: 0.9em;
     vertical-align: middle;
 
-    margin-bottom:7px;
-    margin-top: 7px;
-  }
+    padding-bottom: 4px;
+    padding-top: 4px;
 
+    margin-bottom:4px;
+    margin-top: 4px;
+  }
+  li.menu-list-item:hover {
+    background-color: #ececec;
+  }
   div.rc-clicked-node-name {
     font-size: 1.2em;
     font-weight: bold;

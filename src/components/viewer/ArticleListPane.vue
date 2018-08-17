@@ -72,11 +72,12 @@
             </div>
 
           </li>
+          <!--@dblclick="onArticleDoubleClick"-->
           <li v-for="article in getArticleList"
               :key="article.id"
               v-bind:id="article.id"
               @click="onArticleClick"
-              v-on:dblclick.native="onArticleDoubleClick"
+
               class="article-list-item">
             <div class="article-list-item-wrapper psd-hover-cursor-pointer" :class="{'current-article': (getArticle) && (article.id === getArticle.id)}">
               <div class="flex">

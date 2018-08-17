@@ -80,7 +80,7 @@
             <div class="article-list-item-wrapper psd-hover-cursor-pointer"
                  v-bind:id="article.id"
                  @click="onArticleClick"
-                 @click.double="onArticleDoubleClick">
+                 @dblclick="onArticleDoubleClick">
 
               <div class="flex">
                 <div class="article-title">
