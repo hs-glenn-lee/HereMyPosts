@@ -40,10 +40,8 @@ export default {
 
   },
 
-  signUp (account) {
-    console.log('sign-up');
-    console.log(account)
-    return axiosAppJson.put('/api/sign-up', account)
+  signUp (accountSetting) {
+    return axiosAppJson.put('/api/sign-up', accountSetting)
       .then(res => { return res })
       .catch(err=>{
         console.log(err)

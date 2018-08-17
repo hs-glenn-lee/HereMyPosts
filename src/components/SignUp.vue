@@ -13,8 +13,19 @@
                  type="text"
                  placeholder="사용자명"/>
           <div class="guide-message"
-                :class="{'false-color': !isUserNameValidate, 'true-color': isUserNameValidate}">
+                :class="{'false-color': !isPenNameValidate, 'true-color': isPenNameValidate}">
             {{userNameDescription}}
+          </div>
+        </div>
+
+        <div class="input-component">
+          <input v-model="accountSetting.penName"
+                 name="username"
+                 type="text"
+                 placeholder="펜네임"/>
+          <div class="guide-message"
+               :class="{'false-color': !isUserNameValidate, 'true-color': isUserNameValidate}">
+            {{penNameDescription}}
           </div>
         </div>
 
@@ -66,6 +77,7 @@
 
 <script>
 import Account from '@/model/account';
+import AccountSetting from '@/model/AccountSetting'
 import api from '@/api/api';
 import validator from '@/model/validator/validator'
 import _ from 'lodash'
@@ -77,8 +89,14 @@ export default {
   data () {
     return {
       account: new Account(),
+      accountSetting: new AccountSetting(),
+
       userNameDescription: '',
       isUserNameValidate: false,
+
+      penNameDescription: '',
+      isPenNameValidate: false,
+
       emailDescription: '',
       isEmailValidate: false,
       passwordDescription: '',
@@ -152,14 +170,18 @@ export default {
     },
     signUpAndInAndGoToManage() {
       if(this.isFormValidate()) {
-        console.log(this.account)
-        api.signUp(this.account)
+
+        var acntSet = Object.assign(new AccountSetting(), this.accountSetting);
+        var acnt = Object.assign(new Account, this.account);
+        acntSet.account = acnt;
+
+        api.signUp(acntSet)
           .then( () => {
             api.signIn({
               username: this.account.username,
               password: this.account.password
             })
-              .then(data => {
+              .then( () => {
                 let routeData = this.$router.resolve({ name: "UserHome", params: { username: this.account.username }})
                 window.open(routeData.href, '_self');
               })
