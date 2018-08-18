@@ -19,10 +19,12 @@
       </div>
 
 
-      <div class="profile-picture setting-item center-800">
+      <div class="profile-picture-item setting-item center-800">
         <div class="profile-picture-display">
-          <img style="width:100px; height: 100px; box-shadow: none; border-radius: 3px;"
-          :src="profilePictureUrl">
+          <div class="profile-picture-wrapper">
+            <div v-if="accountSetting.profilePictureFileId" class="profile-picture"> </div>
+            <div v-else class="profile-picture default-profile-picture"></div>
+          </div>
 
           <input type="file" id="profile-picture-input"
                  ref="file"
@@ -59,20 +61,6 @@
         </table>
       </div>
 
-<!--      <div class="introduction setting-item">
-        <div class="setting-item-name">
-          <span>자기소개</span>
-          <button @click="saveIntroduction" type="button">저장</button>
-        </div>
-
-        <div class="input-wrapper">
-          <textarea-autosize
-            placeholder="자기소개를 입력해주세요."
-            :min-height="10"
-            v-model="accountSetting.introduction"
-          ></textarea-autosize>
-        </div>
-      </div>-->
 
       <div class="introduction setting-item center-800">
         <table>
@@ -209,6 +197,12 @@
       ]),
       profilePictureUrl () {
         return '/uploaded-image/' + this.accountSetting.profilePictureFileId
+      },
+      profilePictureStyle () {
+
+      },
+      defaultProfilePictureStyle () {
+
       }
     },
     components: {
@@ -288,7 +282,7 @@
     width: 1280px;
   }
 
-  div.setting-item.profile-picture {
+  div.setting-item.profile-picture-item {
     padding-bottom: 15px;
     padding-top: 25px;
     height: 140px;
@@ -358,7 +352,7 @@
     width:100%;
   }
 
-  div.profile-picture-display img{
+  div.profile-picture-display div.profile-picture-wrapper{
     display: block;
     margin-left:auto;
     margin-right: auto;
@@ -372,5 +366,10 @@
     bottom: 18px;
   }
 
+  div.profile-picture {
+    height: 100px;
+    width: 100px;
+    background-size: 100px;
+  }
 
 </style>

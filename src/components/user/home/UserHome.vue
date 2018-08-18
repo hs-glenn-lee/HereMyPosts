@@ -11,9 +11,11 @@
     <main>
       <article class="center">
         <h2 style="display:none;">홈 내용</h2>
-        <div class="user-info">
-            <div class="user-profile-picture"><img style="width:100px; height: 100px; box-shadow: none; border-radius: 3px;"
-                                           :src="profilePictureUrl"></div>
+        <div v-if="accountSetting" class="user-info">
+            <div class="user-profile-picture">
+              <div v-if="accountSetting.profilePictureFileId" class="profile-picture" :style="profilePictureStyle"></div>
+              <div v-else class="default-profile-picture profile-picture" :style="defaultProfilePictureStyle">{{accountSetting.penName.substr(0,1)}}</div>
+            </div>
             <div class="user-pen-name"><span>{{accountSetting.penName}}</span></div>
             <div class="user-introduction">{{accountSetting.introduction}}</div>
         </div>
@@ -31,6 +33,7 @@
   import { mapGetters } from 'vuex'
   import RecentArticleFeed from "@/components/user/home/RecentArticleFeed.vue";
   import api from '@/api/api';
+  import nameToColor from '@/components/nameToColor.js'
   export default {
     name: 'UserHome',
     props: {
@@ -39,7 +42,7 @@
     data() {
       return {
         username: this.$route.params.username,
-        accountSetting: {}
+        accountSetting: null
       }
     },
     methods: {
@@ -57,11 +60,20 @@
       ...mapGetters([
 
       ]),
-      profilePictureUrl () {
+      profilePictureStyle () {
         if(this.accountSetting.profilePictureFileId) {
-          return '/uploaded-image/' + this.accountSetting.profilePictureFileId
-        }else {
-          return ''
+          let profilePictureUrl = '/uploaded-image/' + this.accountSetting.profilePictureFileId;
+          return {
+            'background' : 'url("' + profilePictureUrl + '")' + ' norepeat center'
+          }
+        }
+      },
+      defaultProfilePictureStyle () {
+        var s= nameToColor(this.accountSetting.penName);
+        console.log('#$#$#$#')
+        console.log(s);
+        return {
+          'background-color': '#'+nameToColor(this.accountSetting.penName)
         }
       }
     },
@@ -128,5 +140,15 @@
   div.user-profile-picture {
     float: right;
   }
-
+  div.profile-picture {
+    width: 100px;
+    height: 100px;
+    background-size: 50px;
+  }
+  div.default-profile-picture{
+    font-size: 86px;
+    line-height: 100px;
+    text-align: center;
+    color: #2a2a2a;
+  }
 </style>

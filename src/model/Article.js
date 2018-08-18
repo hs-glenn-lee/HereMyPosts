@@ -12,8 +12,8 @@ export default class Article {
     this.isDel = false;
     this.isDel = isDel;
 
-    this.isPublic = false;
-    this.isDel = isDel
+    this.isPublic = true;
+    this.isDel = isDel;
 
     this.category = category;
     this.author = author;
