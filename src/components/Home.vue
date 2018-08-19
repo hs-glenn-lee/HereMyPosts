@@ -10,7 +10,7 @@
         </div>
         <div v-else class="link">
           <a @click="goManager" class="psd-hover-cursor-pointer">글 관리</a>
-          <a @click="goUserHome" class="psd-hover-cursor-pointer">사용자 홈</a>
+          <a @click="goUserHome" class="psd-hover-cursor-pointer">내 홈</a>
           <a @click="signOut" class="psd-hover-cursor-pointer">로그아웃</a>
         </div>
       </div>

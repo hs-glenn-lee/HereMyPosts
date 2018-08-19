@@ -8,7 +8,7 @@ export default class Category {
     this.isDel = false;
     this.isDel = isDel;
 
-    this.isPublic = false;
+    this.isPublic = true;
     this.isPublic = isPublic;
   }
 

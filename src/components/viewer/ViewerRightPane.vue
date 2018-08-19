@@ -6,7 +6,7 @@
           <h1 class="hidden">{{getTitle}}</h1>
           <div class="article-meta">
             <div class="author-info">
-              <div class="author-profile-picture info-item" :style="authorProfilePictureStyle"></div>
+              <div class="author-profile-picture info-item" :style="authorProfilePictureStyle"><span v-if="!authorSetting.profilePictureFileId">{{authorSetting.penName.substr(0,1)}}</span></div>
               <div class="author-pen-name info-item psd-hover-cursor-pointer" @click="goUserHome"><span>{{authorSetting.penName}}</span></div>
             </div>
             <div class="category-name ">
@@ -66,7 +66,7 @@
   import ArticleContentComp from './ArticleContent';
   import ViewerFooterComp from "./ViewerFooter";
   import ArticleTagComp from './ArticleTags';
-
+  import nameToColor from '@/components/nameToColor.js'
 
   export default {
     name: "ViewerRightPane",
@@ -97,8 +97,15 @@
         'getError'
       ]),
       authorProfilePictureStyle () {
-        return {
-          'background-image': 'url("' + this.profilePictureUrl + '")'
+        if(this.authorSetting.profilePictureFileId) {
+          return {
+            'background-image': 'url("' + this.profilePictureUrl + '")'
+          }
+        }else {
+          if(this.authorSetting.penName)
+            return {
+              'background-color': '#'+nameToColor(this.authorSetting.penName)
+            }
         }
       },
       profilePictureUrl () {
@@ -175,7 +182,12 @@
   div.author-info > div.author-profile-picture{
     height: 45px;
     width: 45px;
-    background-size: 45px 45px;
+
+    line-height: 49px;
+    font-size: 30px;
+    text-align: center;
+
+    background-size: 45px;
     background-repeat: no-repeat;
     background-position: center;
     border-radius: 50%;

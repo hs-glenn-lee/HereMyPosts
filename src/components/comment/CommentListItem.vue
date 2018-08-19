@@ -5,7 +5,8 @@
     </div>
     <div v-else class="comment">
       <div class="comment-meta">
-        <div class="author-profile-picture" :style="authorProfilePictureStyle"></div>
+        <div v-if="comment.profilePictureFileId" class="author-profile-picture" :style="authorProfilePictureStyle"></div>
+        <div v-else class="author-profile-picture" :style="authorProfilePictureStyle">{{comment.authorName.substr(0,1)}}</div>
         <div>
           <div class="author-name user-select-text">{{comment.authorName}}</div>
           <div class="create-time">{{new Date(comment.createTimestamp).toLocaleDateString()}}</div>
@@ -40,6 +41,7 @@
   import { mapGetters } from 'vuex'
   import api from '@/api/api.js';
   import Comment from '@/model/Comment.js'
+  import nameToColor from '@/components/nameToColor.js'
 
   export default {
     name: "CommentListItem",
@@ -80,7 +82,7 @@
         cmt.id = this.comment.id;
         cmt.isAnonymous = true;
         cmt.anonymousPassword = this.passwordToDelete;
-        console.log(cmt)
+
         return api.deleteComment(cmt)
           .then(() => {
             this.deleted = true;
@@ -97,7 +99,7 @@
       authorProfilePictureStyle () {
         if(this.profilePictureUrl === '') {
           return {
-            'background-size': '32px'
+            'background-color': '#'+nameToColor(this.comment.authorName)
           }
         }else {
           return {
@@ -159,7 +161,7 @@
   }
 
   div.comment-meta > div.author-profile-picture{
-    background: url(../../assets/images/anonymous_profile_pic.png) no-repeat center;
+    /*background: url(../../assets/images/anonymous_profile_pic.png) no-repeat center;*/
     background-size: 40px;
     border-radius: 50%;
     height: 40px;
@@ -168,6 +170,13 @@
     margin-right: 8px;
 
     display: inline-block;
+
+
+    font-size: 28px;
+    line-height: 44px;
+    text-align: center;
+    color: #2a2a2a;
+
   }
 
   div.comment-meta  div.author-name{

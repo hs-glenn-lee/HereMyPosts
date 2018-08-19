@@ -24,6 +24,9 @@ export default {
         if(article.title.length === 0) {
           reject('제목을 입력해 주세요.')
         }
+        if(article.title.length > 150) {
+          reject('제목이 너무 깁니다. 150자 이하로 입력해주세요.')
+        }
       }
     },
     'writeComment': {
@@ -44,8 +47,13 @@ export default {
         }
 
         if(comment.content) {
-          if(comment.content === '')
+          if(comment.content === '') {
             reject('댓글 내용을 입력해주세요.')
+          }
+
+          if(comment.content.length > 2000) {
+            reject('댓글 내용 2000자 이내로 써주세요.')
+          }
         }else {
           reject('댓글 내용을 입력해주세요.')
         }
@@ -60,6 +68,8 @@ export default {
 
         if(val.length < 3) {
           return Promise.reject('사용자명은 세글자 이상되어야합니다.');
+        }else if(val.length < 30) {
+          return Promise.reject('사용자명은 30자 이하여야 합니다.');
         }
 
         //policy white list : alphanumeric . - _
@@ -101,7 +111,11 @@ export default {
     'validatePassword': {
       promisedCheck (password) {
         if(password.length < 5 ) {
-          return Promise.reject('비멀번호는 5글자 이상이어야합니다.');
+          return Promise.reject('비멀번호는 5글자 이상 이어야합니다.');
+
+        }else if(password.length < 30) {
+          return Promise.reject('비멀번호는 30자 이하 이어야합니다.');
+
         }else {
           return Promise.resolve('good');
         }
@@ -115,9 +129,12 @@ export default {
           reject('필명을 입력해주세요.')
         }
 
-        if( penName.length > 40 ) {
-          reject('필명이 너무 깁니다.')
+        if( penName.length > 80 ) {
+          reject('필명은 80자 이하 이어야 합니다.')
+        }else if ( penName.length <  2) {
+          reject('필명은 3글자 이상이어야 합니다.')
         }
+
       }
     },
     'saveIntroduction': {
@@ -145,15 +162,17 @@ export default {
         var newCategory = val.newCategory;
         var parentCategoryNode = val.parentCategoryNode;
 
-        console.log('[createCategory] validator')
-        console.log(newCategory);
-        console.log(parentCategoryNode);
+
         if( !(newCategory && parentCategoryNode) ) {
           reject('invalid parameters')
         }
 
         if(newCategory.name === '') {
           reject('이름을 입력해 주세요');
+        }
+
+        if(newCategory.name.length > 30) {
+          reject('이름이 너무 깁니다. (30자 이하)');
         }
 
         if(!parentCategoryNode.validNewCategoryNameAsChild(newCategory.name)) {
@@ -164,7 +183,6 @@ export default {
     },
     'updateCategory' : {
       check (val, reject) {
-        console.log('[validator] updateCategory');
         var tobeCategory = val.tobeCategory;
         var targetCategoryNode = val.targetCategoryNode;
 
@@ -184,6 +202,9 @@ export default {
 
         if(tobeCategory.name === '') {
           reject('변경할 이름을 입력해 주세요');
+        }
+        if(tobeCategory.name.length > 30) {
+          reject('이름이 너무 깁니다. (30자 이하)');
         }
 
         if(targetCategoryNode.parent) {//if not root

@@ -18,7 +18,7 @@
           </div>
         </div>
 
-        <div v-if="getIsSignedIn" class="flex-col">
+        <div v-if="getIsSignedIn && (getAccount.username === $route.params.username)" class="flex-col">
           <div class="left-pane-menu-item"
                @click="goManager"
                @mouseover="onMenuItemMouserOver" @mouseleave="onMenuItemMouserLeave">
@@ -93,7 +93,8 @@
         'isCategoryPaneShowing'
       ]),
       ...mapGetters([
-        'getIsSignedIn'
+        'getIsSignedIn',
+        'getAccount'
       ]),
     },
     components: {

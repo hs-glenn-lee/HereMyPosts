@@ -21,9 +21,9 @@
 
       <div class="profile-picture-item setting-item center-800">
         <div class="profile-picture-display">
-          <div class="profile-picture-wrapper">
-            <div v-if="accountSetting.profilePictureFileId" class="profile-picture"> </div>
-            <div v-else class="profile-picture default-profile-picture"></div>
+          <div>
+            <div v-if="accountSetting.profilePictureFileId" class="profile-picture" :style="profilePictureStyle"></div>
+            <div v-else class="default-profile-picture profile-picture" :style="defaultProfilePictureStyle">{{accountSetting.penName.substr(0,1)}}</div>
           </div>
 
           <input type="file" id="profile-picture-input"
@@ -99,6 +99,7 @@
   import { mapGetters } from 'vuex'
   import api from '@/api/api'
   import axios from 'axios'
+  import nameToColor from '@/components/nameToColor.js'
 
   import validator from '@/model/validator/validator.js'
   export default {
@@ -199,10 +200,18 @@
         return '/uploaded-image/' + this.accountSetting.profilePictureFileId
       },
       profilePictureStyle () {
-
+        if(this.accountSetting.profilePictureFileId) {
+          let profilePictureUrl = '/uploaded-image/' + this.accountSetting.profilePictureFileId;
+          return {
+            'background-image' : 'url("' + profilePictureUrl + '")',
+            'background-position' : 'center'
+          }
+        }
       },
       defaultProfilePictureStyle () {
-
+        return {
+          'background-color': '#'+nameToColor(this.accountSetting.penName)
+        }
       }
     },
     components: {
@@ -352,11 +361,11 @@
     width:100%;
   }
 
-  div.profile-picture-display div.profile-picture-wrapper{
+  /*div.profile-picture-display div.profile-picture-wrapper{
     display: block;
     margin-left:auto;
     margin-right: auto;
-  }
+  }*/
 
   div.profile-picture-display button {
     position: relative;
@@ -370,6 +379,12 @@
     height: 100px;
     width: 100px;
     background-size: 100px;
+    margin: auto;
+
+    font-size: 86px;
+    line-height: 105px;
+    text-align: center;
+    color: #2a2a2a;
   }
 
 </style>
