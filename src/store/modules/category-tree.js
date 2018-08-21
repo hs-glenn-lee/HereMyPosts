@@ -105,7 +105,7 @@ const actions = {
     var username = payload.username;
 
     var parentCategoryNode = context.state.categoryTree.find(parentId);
-    var newCategory = new Category(null, parentCategoryNode.id, newCategoryName, parentCategoryNode.children.length, false, false);
+    var newCategory = new Category(null, parentCategoryNode.id, newCategoryName, parentCategoryNode.children.length, false, true);
 
     try {
       validator.validate('createCategory', { newCategory, parentCategoryNode });

@@ -116,10 +116,11 @@ import {mapActions, mapGetters} from 'vuex'
               this.errorMessage = err.message;
             });
         },
-        200
+        300
       ),
       toggleIsPublic: _.throttle(
         function () {
+          console.log('toggleIsPublic')
           var tobeCategory = this.categoryNode.cloneAsCategory();
           tobeCategory.isPublic = !tobeCategory.isPublic;
 
@@ -131,10 +132,11 @@ import {mapActions, mapGetters} from 'vuex'
               this.$emit('operated');
             })
             .catch( err => {
+              console.log(err.message)
               this.errorMessage = err.message;
             });
         },
-        200
+        300
       ),
       removeThisCategory: _.throttle(
         function () {

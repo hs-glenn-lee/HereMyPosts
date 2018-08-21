@@ -34,15 +34,16 @@
           return;
         }
 
-        if(!this.categoryNode.validNewCategoryNameAsChild(this.newCategoryName)) {
+        var parentNode = this.categoryNode;
+        var newCategory = new Category(null, parentNode.id, this.newCategoryName, parentNode.children.length, false, false);
+
+
+        if(!this.categoryNode.validNewCategoryNameAsChild(newCategory)) {
           var vm =  this;
           this.validatingMsg = '이미 하위에 있는 카테고리 이름입니다.';
           this.isValid = false;
         }
 
-
-        var parentNode = this.categoryNode;
-        var newCategory = new Category(null, parentNode.id, this.newCategoryName, parentNode.children.length, false, false);
 
         api.createCategory(newCategory)
           .then( data => {

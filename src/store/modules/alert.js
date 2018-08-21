@@ -20,7 +20,7 @@ const mutations = {
     state.alertIsShowing = payload;
   },
   showAlert: (state, payload) => {
-    state.alertIsShowing = payload.alertMessage;
+    state.alertMessage = payload;
     state.alertIsShowing = true;
   }
 

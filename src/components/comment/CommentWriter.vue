@@ -3,16 +3,16 @@
     <div @click="letsWriteComment">
       <div class="comment-writer">
 
-        <div class="ready-to-write" v-if="!isGoingToWriteComment"><span>댓글 쓰기 ...</span></div>
+        <div class="before-write" v-if="!isGoingToWriteComment"><span>댓글 쓰기 ...</span></div>
 
-        <div class="author-info invisible"
+        <div class="comment-meta invisible"
              :class="{'visible-ease-in-1s':isGoingToWriteComment}">
           <div v-if="getIsSignedIn"
-               class="signed-up-author-info">
+               class="signed-up-author-info author-info">
             <span v-if="authorSetting" class="author-name">{{authorSetting.penName}}</span>
           </div>
           <div v-else
-               class="anonymous-author-info">
+               class="anonymous-author-info author-info">
             <input
               v-model="anonymousAuthorName"
               placeholder="작성자 이름"
@@ -23,6 +23,9 @@
               placeholder="비밀번호"
               class="anonymous-input anonymous-password"
               type="password">
+          </div>
+          <div v-if="alertMessage !== ''" class="alert">
+            <span class="alert-message">{{alertMessage}}</span>
           </div>
         </div>
 
@@ -69,7 +72,8 @@
         anonymousPassword: '',
         isGoingToWriteComment: false,
 
-        authorSetting: null
+        authorSetting: null,
+        alertMessage: ''
       };
     },
     methods: {
@@ -94,10 +98,7 @@
         }
 
         validator.validate('writeComment', comment, exception => {
-          this.setAlert({
-            message: exception.message,
-            isShowing: true
-          })
+          this.alertMessage = '! '+exception.message;
         });
 
         api.writeComment(comment)
@@ -107,7 +108,8 @@
             //reset data
             this.isGoingToWriteComment = false;
             this.commentToWrite = new Comment();
-            this.content = ''
+            this.content = '';
+            this.alertMessage = '';
           })
 
       },
@@ -143,7 +145,7 @@
     border-radius: 4px;
     border: 1px solid #EFEB95;
   }
-  div.ready-to-write {
+  div.before-write {
     padding-top: 8px;
     padding-bottom: 8px;
     color: #4a4a4a;
@@ -176,6 +178,11 @@
     transition: 0.5s;
   }
 
+  div.author-info {
+    display:inline-block;
+  }
+
+
   div.signed-up-author-info {
     padding-top: 8px;
     font-weight: bold;
@@ -193,6 +200,12 @@
 
   input.anonymous-password {
 
+  }
+
+  div.alert {
+    display: inline-block;
+    margin-left: 16px;
+    color: red;
   }
 
   div.invisible {

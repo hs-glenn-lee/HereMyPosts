@@ -90,7 +90,8 @@
       ...mapMutations([
         'setIsTagPaneShowing',
         'addTag',
-        'removeTag'
+        'removeTag',
+        'showAlert'
       ]),
 
       onArticleClick(event) {
@@ -104,7 +105,14 @@
       },
 
       regTag () {
-        validator.validate('validateTagName', this.inputTagName);
+        try {
+          validator.validate('validateTagName', this.inputTagName);
+        }catch (err) {
+          console.error(err.message)
+          this.showAlert(err.message);
+          return;
+        }
+
         this.addTag(new Tag(this.inputTagName));
       },
 

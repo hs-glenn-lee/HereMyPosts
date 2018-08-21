@@ -161,11 +161,16 @@ const actions = {
     }
   },
   saveArticle: context => {
-    state.article.category = context.getters.getSelectedNode.cloneAsCategory();
+    state.article.category = (context.getters.getSelectedNode)? context.getters.getSelectedNode.cloneAsCategory() : null;
     state.article.author = context.getters.getAccount;
 
     //validate
-    validator.validate('saveArticle',state.article);
+    try {
+      validator.validate('saveArticle',state.article);
+    }catch (err) {
+      return Promise.reject(err);
+    }
+
     //extract summary
     let summary;
     var vSpan= document.createElement('span');
@@ -184,7 +189,6 @@ const actions = {
 
     return api.saveArticle(state.article)
       .then( data => {
-        console.log(data);
         context.commit('addToArticleList', data);
         return data;
       })

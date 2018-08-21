@@ -16,7 +16,7 @@ export default {
           reject('article is falsy.');
         }
         if(article.category === undefined || article.category === null) {
-          reject('카테고리를 선택해 주세요')
+          reject('카테고리를 선택해 주세요.')
         }
         if(article.author === undefined || article.author === null) {
           reject('로그아웃 되었습니다.')
@@ -39,9 +39,17 @@ export default {
           if(comment.anonymousAuthorName === undefined || comment.anonymousAuthorName == null || comment.anonymousAuthorName === '') {
             reject('댓글작성자 이름을 입력해주세요.')
           }
+
           if(comment.anonymousPassword === undefined || comment.anonymousPassword === '' || comment.anonymousPassword === null) {
             reject('댓글 비밀번호를 입력해주세요.')
           }
+
+
+          var regex = /[^0-9A-Za-z가-힣_\-.\s]/;
+          if(regex.test(comment.anonymousAuthorName)) {
+            reject('댓글 작성자 이름은 완성된 한글, 영문, 띄어쓰기, 일부 특수문자(-_.)만 입력해야 합니다.')
+          }
+
         }else {
 
         }
@@ -77,7 +85,7 @@ export default {
         var regex = /[^0-9A-Za-z_\-.]/;
 
         if(regex.test(val)) {
-          return Promise.reject('허용되는 특수문자 : -_.')
+          return Promise.reject('영문과 일부 특수문자 (-_.)만 입력해야 됩니다.')
         }
 
         return api.isUniqueNewUsername(val)
@@ -104,10 +112,10 @@ export default {
 
         //policy white list : alphanumeric . - _
         //following regex return true if there is at leaset one invalid character
-        var regex = /[^0-9A-Za-z_\-.]/;
+        var regex = /[^0-9A-Za-z가-힣_\-.\s]/;
 
         if(regex.test(val)) {
-          return Promise.reject('허용되는 특수문자 : -_.')
+          return Promise.reject('완성된 한글, 영문, 일부 특수문자(-_.)만 입력해야 합니다.')
         }
 
         return Promise.resolve('good!')
@@ -147,9 +155,14 @@ export default {
     'savePenName': {
       check (val, reject) {
         var penName = val;
-
         if( penName === '' || penName === undefined || penName === null ) {
           reject('필명을 입력해주세요.')
+        }
+
+        var regex = /[^0-9A-Za-z가-힣_\-.\s]/;
+
+        if(regex.test(val)) {
+          reject('완성된 한글, 영문, 띄어쓰기, 일부 특수문자(-_.)만 입력해야 합니다.')
         }
 
         if( penName.length > 31 ) {
@@ -163,7 +176,7 @@ export default {
     'saveIntroduction': {
       check (val, reject) {
         var introduction = val;
-        if( introduction === '' || introduction === undefined || introduction === null ) {
+        if( introduction === undefined || introduction === null ) {
           reject('자기소개를 입력해 주세요.')
         }
         if( introduction > 140 ) {
@@ -201,7 +214,7 @@ export default {
           reject('이름이 너무 깁니다. (40자 이하)');
         }
 
-        if(!parentCategoryNode.validNewCategoryNameAsChild(newCategory.name)) {
+        if(!parentCategoryNode.validNewCategoryNameAsChild(newCategory)) {
           reject('이미 하위에 있는 카테고리 이름입니다.');
         }
 
@@ -234,7 +247,7 @@ export default {
         }
 
         if(targetCategoryNode.parent) {//if not root
-          if(!targetCategoryNode.parent.validNewCategoryNameAsChild(tobeCategory.name)) {
+          if(!targetCategoryNode.parent.validNewCategoryNameAsChild(tobeCategory)) {
             reject('이미 있는 카테고리 이름입니다.');
           }
         }
@@ -246,6 +259,12 @@ export default {
         var tagName = val;
         if( tagName === '' || tagName === undefined || tagName === null ) {
           reject('태그를 입력해 주세요.')
+        }
+
+        var regex = /[^0-9A-Za-z가-힣_\-.\s]/;
+
+        if(regex.test(tagName)) {
+          reject('완성된 한글, 영문, 띄어쓰기, 일부 특수문자(-_.)만 입력해야 합니다.')
         }
 
         if( tagName.length > 15) {

@@ -33,18 +33,9 @@
           <button type="button"
                   @click="changeProfilePicture">변경</button>
         </div>
-
       </div>
 
-     <!-- <div class="pen-name setting-item">
-        <div class="setting-item-name">
-          <span>필명</span>
-          <button @click="savePenName" type="button">저장</button>
-        </div>
-        <div class="input-wrapper">
-          <input v-model="accountSetting.penName" type="text" placeholder="필명을 입력해 주세요.">
-        </div>
-      </div>-->
+
 
       <div class="pen-name setting-item center-800">
         <table>
@@ -131,33 +122,10 @@
         let routeData = this.$router.resolve({ name: "Manager", params: { username: this.getAccount.username }})
         window.open(routeData.href, '_self');
       },
-      saveIntroduction () {
-        validator.validate('saveIntroduction', this.accountSetting.introduction, rejectMessage => {
-          alert(rejectMessage);
-        })
-        api.saveIntroduction(this.accountSetting.introduction)
-          .then( data => {
-            this.accountSetting.introduction = data.introduction;
-          })
-      },
-      savePenName () {
-        validator.validate('savePenName', this.accountSetting.penName, rejectMessage => {
-          alert(rejectMessage);
-          return;
-        })
-
-        api.savePenName(this.accountSetting.penName)
-          .then( data => {
-            this.accountSetting.penName = data.penName;
-          })
-      },
       getMySettings () {
         api.getMySettings()
           .then(data => {
-              /*this.penName = data.penName;
-              this.introduction = data.introduction;
-              this.profilePictureFileId = data.profilePictureFileId;*/
-              this.accountSetting = data;
+            this.accountSetting = data;
           })
       },
       uploadProfilePictureFile () {
@@ -179,13 +147,40 @@
             headers: {
               'Content-Type': 'multipart/form-data'
             }
-
-          }).then(res => {
-          this.accountSetting = res.data;
-        })
-          .catch(function(){
-            console.log('FAILURE!!');
+          })
+          .then(res => {
+            this.accountSetting = res.data;
+          })
+          .catch( err => {
+            alert('에러가 발생했습니다.');
           });
+      },
+      savePenName () {
+        validator.validate('savePenName', this.accountSetting.penName, reject => {
+          alert(reject.message);
+          return;
+        });
+
+        api.savePenName(this.accountSetting.penName)
+          .then( data => {
+            this.accountSetting.penName = data.penName;
+            alert('필명이 변경되었습니다.')
+          })
+      },
+      saveIntroduction () {
+        validator.validate('saveIntroduction', this.accountSetting.introduction, reject => {
+          alert(reject.message);
+        });
+
+        if(!this.accountSetting.introduction) {
+          this.accountSetting.introduction = ''
+        }
+
+        api.saveIntroduction(this.accountSetting.introduction)
+          .then( data => {
+            this.accountSetting.introduction = data.introduction;
+            alert('자기소개가 변경되었습니다.')
+          })
       },
       changeProfilePicture () {
         var element = document.querySelector('#profile-picture-input')

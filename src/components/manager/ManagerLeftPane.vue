@@ -95,7 +95,8 @@ export default {
   methods: {
     ...mapMutations([
       'setCategoryPaneIsShowing',
-      'setIsTagPaneShowing'
+      'setIsTagPaneShowing',
+      'showAlert'
     ]),
     ...mapActions([
       'test',
@@ -117,6 +118,9 @@ export default {
             .then( () => {
               this.loadSavedArticle(savedArticle.id);
             });
+        })
+        .catch( err => {
+          this.showAlert(err.message);
         })
     },
     onClickCategoryMenu (event) {

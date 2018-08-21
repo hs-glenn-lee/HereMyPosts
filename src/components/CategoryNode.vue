@@ -164,7 +164,7 @@ export default {
     opacity: 0.6;
   }
 
-  li.category-node.private-node span.node-name {
+  li.category-node.private-node > div.node-info > span.node-name {
     color: #ccc;
   }
   span.node-name:hover{

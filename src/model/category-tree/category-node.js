@@ -76,14 +76,18 @@ export default class CategoryNode extends  Category{
     return this.parent;
   }
 
-  validNewCategoryNameAsChild (newName) { // if there's the same name in children return false
-    if(!newName) {
+  validNewCategoryNameAsChild (newCategory) { // if there's the same name in children return false
+    if(!newCategory) {
       return false;
     }
 
     for(var i in this.children) {
-      if(this.children[i].name === newName) {
-        return false;
+      if(this.children[i].name === newCategory.name) {
+        if(this.children[i].id === newCategory.id) {
+          return true
+        }else {
+          return false;
+        }
       }
     }
     return true;
