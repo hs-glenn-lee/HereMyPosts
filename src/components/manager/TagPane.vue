@@ -66,6 +66,9 @@
   import PageParameter from '@/model/PageParameter'
   import Tag from '@/model/tag/Tag.js'
   import TagArticle from '@/model/tag/TagArticle.js'
+
+  import validator from '@/model/validator/validator.js'
+
   import { mapMutations } from 'vuex';
   import { mapGetters } from 'vuex';
   import { mapActions } from 'vuex';
@@ -101,6 +104,7 @@
       },
 
       regTag () {
+        validator.validate('validateTagName', this.inputTagName);
         this.addTag(new Tag(this.inputTagName));
       },
 

@@ -68,7 +68,7 @@ export default {
 
         if(val.length < 3) {
           return Promise.reject('사용자명은 세글자 이상되어야합니다.');
-        }else if(val.length < 30) {
+        }else if(val.length > 30) {
           return Promise.reject('사용자명은 30자 이하여야 합니다.');
         }
 
@@ -88,6 +88,29 @@ export default {
               return Promise.reject('이미 사용중인 사용자명입니다.');
             }
           })
+      }
+    },
+    'validatePenName': {
+      promisedCheck (val) {
+        if(val === '' || val === undefined || val === null) {
+          return Promise.reject('필명을 입력해주세요.');
+        }
+
+        if(val.length < 3) {
+          return Promise.reject('필명은 세글자 이상되어야합니다.');
+        }else if(val.length > 30) {
+          return Promise.reject('필명은 30자 이하여야 합니다.');
+        }
+
+        //policy white list : alphanumeric . - _
+        //following regex return true if there is at leaset one invalid character
+        var regex = /[^0-9A-Za-z_\-.]/;
+
+        if(regex.test(val)) {
+          return Promise.reject('허용되는 특수문자 : -_.')
+        }
+
+        return Promise.resolve('good!')
       }
     },
     'validateEmail':  {
@@ -129,8 +152,8 @@ export default {
           reject('필명을 입력해주세요.')
         }
 
-        if( penName.length > 80 ) {
-          reject('필명은 80자 이하 이어야 합니다.')
+        if( penName.length > 31 ) {
+          reject('필명은 30자 이하 이어야 합니다.')
         }else if ( penName.length <  2) {
           reject('필명은 3글자 이상이어야 합니다.')
         }
@@ -142,6 +165,9 @@ export default {
         var introduction = val;
         if( introduction === '' || introduction === undefined || introduction === null ) {
           reject('자기소개를 입력해 주세요.')
+        }
+        if( introduction > 140 ) {
+          reject('자기소개는 140자 이하여야 합니다.')
         }
       }
     },
@@ -171,8 +197,8 @@ export default {
           reject('이름을 입력해 주세요');
         }
 
-        if(newCategory.name.length > 30) {
-          reject('이름이 너무 깁니다. (30자 이하)');
+        if(newCategory.name.length > 40) {
+          reject('이름이 너무 깁니다. (40자 이하)');
         }
 
         if(!parentCategoryNode.validNewCategoryNameAsChild(newCategory.name)) {
@@ -203,14 +229,31 @@ export default {
         if(tobeCategory.name === '') {
           reject('변경할 이름을 입력해 주세요');
         }
-        if(tobeCategory.name.length > 30) {
-          reject('이름이 너무 깁니다. (30자 이하)');
+        if(tobeCategory.name.length > 40) {
+          reject('이름이 너무 깁니다. (40자 이하)');
         }
 
         if(targetCategoryNode.parent) {//if not root
           if(!targetCategoryNode.parent.validNewCategoryNameAsChild(tobeCategory.name)) {
             reject('이미 있는 카테고리 이름입니다.');
           }
+        }
+
+      }
+    },
+    'validateTagName' : {
+      check (val, reject) {
+        var tagName = val;
+        if( tagName === '' || tagName === undefined || tagName === null ) {
+          reject('태그를 입력해 주세요.')
+        }
+
+        if( tagName.length > 15) {
+          reject('태그는 15자 이하 여야 합니다.')
+        }
+
+        if( tagName.length < 2) {
+          reject('태그는 2자 이상이어야 여야 합니다.')
         }
 
       }

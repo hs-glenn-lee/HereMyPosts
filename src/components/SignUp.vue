@@ -13,7 +13,7 @@
                  type="text"
                  placeholder="사용자명"/>
           <div class="guide-message"
-                :class="{'false-color': !isPenNameValidate, 'true-color': isPenNameValidate}">
+               :class="{'false-color': !isUserNameValidate, 'true-color': isUserNameValidate}">
             {{userNameDescription}}
           </div>
         </div>
@@ -24,7 +24,7 @@
                  type="text"
                  placeholder="펜네임"/>
           <div class="guide-message"
-               :class="{'false-color': !isUserNameValidate, 'true-color': isUserNameValidate}">
+               :class="{'false-color': !isPenNameValidate, 'true-color': isPenNameValidate}">
             {{penNameDescription}}
           </div>
         </div>
@@ -123,6 +123,21 @@ export default {
       },
       1000
     ),
+    validatePenName: _.debounce(
+      function () {
+        var penName = this.accountSetting.penName;
+        validator.promisedValidate('validatePenName', penName)
+          .then( resolveMsg => {
+            this.isPenNameValidate = true;
+            this.penNameDescription = resolveMsg;
+          })
+          .catch( rejectMsg => {
+            this.isPenNameValidate = false;
+            this.penNameDescription = rejectMsg;
+          })
+      },
+      1000
+    ),
     validateEmail: _.debounce(
       function () {
         var email = this.account.email;
@@ -208,6 +223,9 @@ export default {
   watch: {
     'account.username': function (newVal, oldVal) {
       this.validateUsername()
+    },
+    'accountSetting.penName': function (newVal, oldVal) {
+      this.validatePenName()
     },
     'account.password' : function (newVal, oldVal) {
       this.validatePassword()

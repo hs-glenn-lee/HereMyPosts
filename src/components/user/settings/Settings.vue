@@ -379,6 +379,9 @@
     height: 100px;
     width: 100px;
     background-size: 100px;
+    background-position: center;
+    background-repeat: no-repeat;
+
     margin: auto;
 
     font-size: 86px;
