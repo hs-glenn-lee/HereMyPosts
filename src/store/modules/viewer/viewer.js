@@ -48,7 +48,6 @@ const mutations = {
 };
 const actions = {
   initViewer: (context, payload) => {
-    console.log('initViewer')
     context.commit('setIsLoading', true);
 
     const route = payload;

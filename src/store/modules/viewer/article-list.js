@@ -87,7 +87,6 @@ const actions = {
 
     return api.getPublicArticlesOfCategory(username, categoryId)
       .then(data => {
-        console.log(data);
         context.commit('setArticleList',data, {root:false})
         context.commit('setListOf','category', {root:false})
         context.commit('sortArticleList', {root:false});
