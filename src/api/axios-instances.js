@@ -2,7 +2,7 @@ import axios from 'axios'
 import NotSignedInError from './custom-server-exception/NotSignedInError'
 import resolveCustomServerException from './custom-server-exception/resolveCustomServerException'
 const axiosAppJson = axios.create({
-  baseURL: 'http://localhost:8081'
+  /*baseURL: 'http://localhost:8081'*/
 })
 axiosAppJson.defaults.headers.post['Accepts'] = 'application/json';
 
@@ -18,7 +18,7 @@ axiosAppJson.interceptors.response.use(function (response) {
 });
 
 const axiosMultipart = axios.create({
-  baseURL: 'http://localhost:8081'
+  /*baseURL: 'http://localhost:8081'*/
 })
 axiosMultipart.defaults.headers.post['Content-Type'] = 'multipart/form-data';
 

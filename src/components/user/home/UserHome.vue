@@ -182,6 +182,7 @@
     height: 100px;
     background-position: center;
     background-size: 100px;
+    background-repeat: no-repeat;
   }
 
 

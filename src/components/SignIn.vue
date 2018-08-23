@@ -115,7 +115,7 @@ div.context-switch {
   color: #999999;
 }
 div.tip-text {
-  height: 1.5em;
+  height: 32px;
   line-height: 1.5em;
 }
 div.context-switch a{

@@ -124,26 +124,26 @@ export default {
   },
 
   getArticlesOfCategory (categoryId) {
-    return axiosAppJson.get('api/category/'+categoryId+'/articles')
+    return axiosAppJson.get('/api/category/'+categoryId+'/articles')
       .then(res => { return res.data })
       .catch( err => {throw err})
   },
 
   getPublicArticlesOfCategory (username, categoryId) {
-    return axiosAppJson.get('api/'+username+'/category/'+categoryId+'/public-articles')
+    return axiosAppJson.get('/api/'+username+'/category/'+categoryId+'/public-articles')
       .then(res => { return res.data })
       .catch( err => {throw err})
   },
 
   getArticle(articleId) {
-    return axiosAppJson.get('api/article/'+articleId)
+    return axiosAppJson.get('/api/article/'+articleId)
       .then(res => {
         return res.data })
       .catch( err => {throw err})
   },
 
   getPublicArticle(articleId) {
-    return axiosAppJson.get('api/article/public/'+articleId)
+    return axiosAppJson.get('/api/article/public/'+articleId)
       .then(res => {
         console.log('getPublicArticle!')
         console.log(res)
@@ -155,7 +155,7 @@ export default {
   },
 
   getRecentArticles(username, pageParameter) {
-    return axiosAppJson.post('api/'+username+'/recent-articles', pageParameter)
+    return axiosAppJson.post('/api/'+username+'/recent-articles', pageParameter)
       .then(res => {
         console.log(res)
         return res.data })
@@ -163,7 +163,7 @@ export default {
   },
 
   getRecentPublicArticles(username, pageParameter) {
-    return axiosAppJson.post('api/'+username+'/recent-public-articles', pageParameter)
+    return axiosAppJson.post('/api/'+username+'/recent-public-articles', pageParameter)
       .then(res => {
         console.log(res)
         return res.data })
@@ -171,7 +171,7 @@ export default {
   },
 
   uploadArticleImage(formData, articleId) {
-    return axiosMultipart.post('api/article/' + articleId + '/image', formData)
+    return axiosMultipart.post('/api/article/' + articleId + '/image', formData)
       .then( res => {
         return res.data;
       })
@@ -181,7 +181,7 @@ export default {
       })
   },
   deleteArticle (articleId) {
-    return axiosAppJson.delete('api/article/delete/' + articleId)
+    return axiosAppJson.delete('/api/article/delete/' + articleId)
       .then( res => {
         return res.data;
       })
@@ -193,14 +193,14 @@ export default {
 
   //---comment
   writeComment (comment) {
-    return axiosAppJson.put('api/comment/write', comment)
+    return axiosAppJson.put('/api/comment/write', comment)
       .then(res => {
         console.log(res)
         return res.data })
       .catch( err => {throw err})
   },
   getCommentsOfArticle (articleId) {
-    return axiosAppJson.get('api/article/' + articleId + '/comments')
+    return axiosAppJson.get('/api/article/' + articleId + '/comments')
       .then(res=> {
         console.log('getCommentsOfArticle')
         console.log(res.data)
@@ -211,7 +211,7 @@ export default {
 
   },
   getCountCommentsOfArticle (articleId) {
-    return axiosAppJson.get('api/article/' + articleId + '/comments/count')
+    return axiosAppJson.get('/api/article/' + articleId + '/comments/count')
       .then(res=> {
         return res.data;
       })
@@ -219,7 +219,7 @@ export default {
 
   },
   deleteComment (comment) {
-    return axiosAppJson.post('api/comment/delete',comment)
+    return axiosAppJson.post('/api/comment/delete',comment)
       .then(res=> {
         return res.data;
       })
@@ -228,14 +228,14 @@ export default {
 
   //---tag
   getMyTags () {
-    return axiosAppJson.get('api/tag/myTags')
+    return axiosAppJson.get('/api/tag/myTags')
       .then(res => {
         return res.data;
       })
       .catch(err => {throw err});
   },
   getTagArticlesOfArticle (articleId) {
-    return axiosAppJson.get('api/article/' + articleId +'/tags')
+    return axiosAppJson.get('/api/article/' + articleId +'/tags')
       .then(res => {
         console.log('getTagArticlesOfArticle')
         console.log(res.data)
@@ -245,7 +245,7 @@ export default {
   },
   updateTagsArticlesOfArticle (articleId, tagArticle) {
     console.log(tagArticle);
-    return axiosAppJson.put('api/article/update-tag/'+articleId, tagArticle)
+    return axiosAppJson.put('/api/article/update-tag/'+articleId, tagArticle)
       .then(res => {
         console.log(res.data) // data is supposed to be tagArticle
         return res.data;
@@ -258,21 +258,21 @@ export default {
 
   //---settings
   getMySettings () {
-    return axiosAppJson.get('api/account/my-settings')
+    return axiosAppJson.get('/api/account/my-settings')
       .then(res => {
         return res.data;
       })
       .catch( err => {throw err})
   },
   saveIntroduction (introduction) {
-    return axiosAppJson.put('api/account/setting/save-introduction', {introduction})
+    return axiosAppJson.put('/api/account/setting/save-introduction', {introduction})
       .then(res => {
         return res.data;
       })
       .catch( err => {throw err})
   },
   savePenName (penName) {
-    return axiosAppJson.put('api/account/setting/save-pen-name', {penName})
+    return axiosAppJson.put('/api/account/setting/save-pen-name', {penName})
       .then(res => {
         return res.data;
       })
@@ -281,7 +281,7 @@ export default {
 
   //--util
   getNewArticleId () {
-    return axiosAppJson.get('api/article/utils/getNewArticleId')
+    return axiosAppJson.get('/api/article/utils/getNewArticleId')
       .then(res => {
         return res.data.newArticleId;
       })
