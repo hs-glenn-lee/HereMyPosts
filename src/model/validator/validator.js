@@ -144,12 +144,13 @@ export default {
         if(password.length < 5 ) {
           return Promise.reject('비멀번호는 5글자 이상 이어야합니다.');
 
-        }else if(password.length < 30) {
+        }else if(password.length > 30) {
           return Promise.reject('비멀번호는 30자 이하 이어야합니다.');
 
         }else {
           return Promise.resolve('good');
         }
+
       }
     },
     'savePenName': {
