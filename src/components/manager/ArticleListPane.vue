@@ -388,7 +388,7 @@ export default {
   input.search-word {
     vertical-align: middle;
     font-size: 12px;
-    padding: 2px 4px 2px 4px;
+    padding: 4px;
     width: 85%;
     border: #999999;
   }

@@ -107,10 +107,17 @@ export default {
           //: {title: 'Insert', items: 'link media | template hr'}
         },
         plugins: 'preview fullpage autolink visualblocks fullscreen image link media codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists textcolor wordcount imagetools  contextmenu colorpicker textpattern help code',
-        toolbar1: 'insert | fontselect fontsizeselect | bold italic strikethrough forecolor backcolor | alignleft aligncenter alignright alignjustify | formatselect | removeformat | codesample | code | link ',
+        toolbar1: 'insert | fontselect fontsizeselect | bold italic strikethrough forecolor backcolor | alignleft aligncenter alignright alignjustify | codesample | code | link ', /* styleselect | removeformat | */
         statusbar: false,
         image_advtab: true,
         font_formats: '나눔손글씨=NanumBrush;나눔고딕=NanumGothic;Andale Mono=andale mono,times;Arial=arial,helvetica,sans-serif;Arial Black=arial black,avant garde;Book Antiqua=book antiqua,palatino;Comic Sans MS=comic sans ms,sans-serif;Courier New=courier new,courier;Georgia=georgia,palatino;Helvetica=helvetica;Impact=impact,chicago;Symbol=symbol;Tahoma=tahoma,arial,helvetica,sans-serif;Terminal=terminal,monaco;Times New Roman=times new roman,times;Trebuchet MS=trebuchet ms,geneva;Verdana=verdana,geneva;Webdings=webdings;Wingdings=wingdings,zapf dingbats',
+        /*
+        // custom style format
+        style_formats: [
+          { title: '아주 크고 굵게', inline: 'strong', styles: { 'font-size': '18pt' } },
+          { title: '보통 크고 굵게', inline: 'strong', styles: { 'font-size': '16pt' } }
+        ],
+        */
 
         codesample_languages: [
           {text: 'JavaScript', value: 'javascript'},
@@ -156,6 +163,8 @@ export default {
           // init tinymce
           editor.on('init', function () {
             tinymce.get('editor').setContent(vm.$store.getters.getContent);
+
+            editor.execCommand("fontName", false, "나눔고딕");
           });
 
           // when typing keyup event

@@ -125,6 +125,18 @@ const mutations = {
     state.articleList = payload;
   },
   addToArticleList: (state, payload) => {
+    let list = state.articleList;
+    let isExist = false;
+    let existingArticleIdx = -1;
+    list.forEach( (el, idx) => {
+      if(el.id === payload.id) {
+        isExist = true;
+        existingArticleIdx = idx;
+      }
+    });
+    if(isExist) {
+      list.splice(existingArticleIdx,1);
+    }
     state.articleList.push(payload);
   },
   setListOf: (state, payload) => {
