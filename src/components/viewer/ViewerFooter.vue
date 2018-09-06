@@ -18,6 +18,7 @@
   footer.viewer-footer {
     font-size: 0.7em;
     color: #5a5a5a;
+    margin-bottom: 8px;
   }
   footer.viewer-footer > p {
     line-height: 1.2;

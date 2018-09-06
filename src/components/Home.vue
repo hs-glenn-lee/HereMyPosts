@@ -18,6 +18,23 @@
     <main>
       <h1 class="hidden">Features</h1>
       <div class="main-content">
+        <div class="represent" style="background-color: #ececec; margin-top: 64px; padding-top: 32px; margin-bottom: 64px; padding-bottom: 32px;">
+          <p>페이퍼타워는 간단한 블로그서비스 입니다.</p>
+          <p>아이디어를 글로 남기고, 트리로 분류해보세요.</p>
+          <div style="">
+            <img style="padding-left: 32px; width: 1080px; margin-top: 48px; display:block; margin-left: auto; margin-right: auto;" id="home_content_pic1" src="../assets/images/home_content_pic1.png"/>
+          </div>
+          <div style="margin-top: 32px; display: flex; flex-direction: column; align-content: center; align-items: center;">
+            <div style="display: flex;">
+              <a href="/sign/sign-in" class="psd-hover-cursor-pointer" ><button style="font-size: 2em; background-color: #4a4a4a;" type="button">시작하기</button></a>
+            </div>
+          </div>
+        </div>
+        <div style="margin-bottom: 64px;">
+            <p style=" text-align: center;">
+              <span style="color: #fff; background-color: #cfcfcf; padding: 8px;">계속 개발 중입니다. 원하는 기능이나 개선할 부분이 있다면 이메일로 보내주세요.</span>
+            </p>
+        </div>
 
       </div>
     </main>
@@ -97,4 +114,13 @@
   div.main-content {
     min-height: 600px;
   }
+
+  .represent p {
+    font-size: 2em;
+    line-height: 2em;
+    color: #2a2a2a;
+    padding-left: 32px;
+  }
+
+
 </style>
