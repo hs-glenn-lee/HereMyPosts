@@ -17,7 +17,7 @@
     </header>
     <main>
       <h1 class="hidden">Features</h1>
-      <div class="main-content">
+      <div class="main-content user-select-none">
         <div class="represent" style="background-color: #ececec; margin-top: 64px; padding-top: 32px; margin-bottom: 64px; padding-bottom: 32px;">
           <p>페이퍼타워는 간단한 블로그서비스 입니다.</p>
           <p>아이디어를 글로 남기고, 트리로 분류해보세요.</p>
